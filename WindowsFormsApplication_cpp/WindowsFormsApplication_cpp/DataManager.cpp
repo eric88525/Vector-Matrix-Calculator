@@ -10,6 +10,9 @@ bool DataManager::LoadVectorData()
 	std::fstream fin;
 	//開啟檔案，傳入open函數的參數有兩個，欲開起的檔案名稱，開啟檔案的模式參數(這邊std::ios::in為讀取(輸入)狀態)
 	fin.open(FileName, std::ios::in);
+
+
+
 	//讀取失敗回傳false
 	if (!fin)
 	{
