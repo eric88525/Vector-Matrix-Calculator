@@ -207,13 +207,13 @@ const Vector projection(const Vector & x, const  Vector & y)
 
 const double area(const Vector & x, const Vector & y)
 {
-	/*Vector vec;
-	vec = x * y;
-	double db;
-	db = norm(vec);
-	db *= 0.5;
-	return db;*/
-	return 0.0;
+
+	double c = norm(x);
+	double a = component(x,y).Data[0];
+	double b = sqrt(c*c - a * a);
+	double area = norm(y)*b / 2;
+	return area;
+	
 }
 
 
@@ -226,10 +226,11 @@ const Vector pN(const Vector & x, const Vector & y)
 
 const bool isParallel(const Vector & x, const Vector & y)
 {
+	if (x.Data.size() != y.Data.size())return false;
 	double rate=-999;
 	for (int i = 0; i < x.Data.size(); i++) {
 		if (!(x.Data[i]==0 || y.Data[i]==0)) {
-			if (rate=-999) {
+			if (rate==-999) {
 				rate = y.Data[i] / x.Data[i];
 			}else if(x.Data[i]*rate!=y.Data[i]){
 				return false;
@@ -264,5 +265,8 @@ const double angle(const Vector & x, const Vector & y)
 
 const bool isLI(const Vector & x, const Vector & y)
 {
+	if (!isParallel(x,y)) {
+		return true;
+	}
 	return false;
 }

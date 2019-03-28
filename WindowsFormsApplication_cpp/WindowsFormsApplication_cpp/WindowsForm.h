@@ -275,7 +275,8 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			//op = crossProduct(vectors[2],vectors[3]);
 			//op = component(vectors[4],vectors[5]);
 			//op = projection(vectors[2],vectors[3]);
-			
+			//oopd = area(vectors[2],vectors[3]);
+
 			//-------------------------------------------------------------------	
 			String^ outputTemp = "";
 			outputTemp += "[";
@@ -288,6 +289,11 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			outputTemp += "]" + Environment::NewLine;
 			Output->Text += gcnew String(op.Name.c_str()) + " = " + outputTemp;
 			Output->Text += oopd.ToString();
+		/* ISLI
+			if (isLI(vectors[0], vectors[1])) {
+				Output->Text += "YES";
+			}
+		*/
 			
 		/*	for (int i = 0; i < 5;i+=2) {
 				if (isOrthogonal(vectors[i], vectors[i+1])) {
@@ -299,8 +305,6 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 				double x = angle(vectors[i],vectors[i+1]);
 				Output->Text += x.ToString()+"_____";
 			}*/
-
-
 		}
 #endif // DEBUG
 
