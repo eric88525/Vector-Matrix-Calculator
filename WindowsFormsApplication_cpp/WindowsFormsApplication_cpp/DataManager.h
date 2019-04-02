@@ -33,6 +33,8 @@ struct Vector
 struct Matrix {
 	std::string Name = "";
 	std::vector<std::vector<double>> Data;
+	int row;
+	int col;
 	Matrix();
 	Matrix(std::vector<std::vector<double>> data);
 	friend const Matrix operator+(const Matrix &x, const Matrix &y);

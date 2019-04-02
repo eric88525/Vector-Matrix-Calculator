@@ -281,15 +281,16 @@ Matrix::Matrix()
 Matrix::Matrix(std::vector<std::vector<double>> data):Data(data)
 {
 	Name = "";
+	row = data.size();
 }
 
 const Matrix operator+(const Matrix & x, const Matrix & y)
 {
-	std::vector<std::vector<double>>;
-	for (auto row:x.Data) {
-		
+	std::vector<std::vector<double>> data(x.row);
+	for (int i = 0; i < x.row;i++) {
+		for (int j = 0; j < x.Data[i].size();j++) {
+			data[i].push_back(x.Data[i][j]+y.Data[i][j]);
+		}
 	}
-
-
-	return Matrix();
+	return Matrix(data);
 }
