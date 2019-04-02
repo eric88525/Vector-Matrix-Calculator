@@ -266,6 +266,7 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			Vector op;
 			double oopd=0;
 			bool ob;
+
 			//´ú¸Õ¸ê®Æ--------------------------------------------------------
 			
 			//op = (vectors[4] + vectors[5]) *vectors[6] *vectors[7];

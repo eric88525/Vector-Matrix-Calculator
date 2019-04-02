@@ -270,3 +270,26 @@ const bool isLI(const Vector & x, const Vector & y)
 	}
 	return false;
 }
+
+//----------------------------------------------------------------------matrix
+
+
+Matrix::Matrix()
+{
+}
+
+Matrix::Matrix(std::vector<std::vector<double>> data):Data(data)
+{
+	Name = "";
+}
+
+const Matrix operator+(const Matrix & x, const Matrix & y)
+{
+	std::vector<std::vector<double>>;
+	for (auto row:x.Data) {
+		
+	}
+
+
+	return Matrix();
+}

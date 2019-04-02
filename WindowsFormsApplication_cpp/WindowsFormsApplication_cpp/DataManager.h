@@ -30,11 +30,25 @@ struct Vector
 	friend const Vector pN(const Vector &x, const Vector &y);
 	friend const bool isLI(const Vector &x, const Vector &y);
 };
+struct Matrix {
+	std::string Name = "";
+	std::vector<std::vector<double>> Data;
+	Matrix();
+	Matrix(std::vector<std::vector<double>> data);
+	friend const Matrix operator+(const Matrix &x, const Matrix &y);
+	friend const Matrix operator-(const Matrix &x, const Matrix &y);
+	friend const Matrix operator*(const Matrix &x, const Matrix &y);
+	friend const int rank(const Matrix &x);
+	friend const Matrix transpose(const Matrix &x);
+	friend const Matrix operator/(const Matrix &x, const Matrix &y);	//linear system
+	friend const double determinants(const Matrix &x);
+	friend const Matrix inverse(const Matrix &x);
+	friend const Matrix Adj(const Matrix &x);
+	friend const Matrix pm(const Matrix &x);
 
 
 
-
-
+};
 
 //定義控管資料class
 class DataManager
@@ -42,6 +56,10 @@ class DataManager
 private:
 	//儲存向量資料
 	std::vector<Vector> Vectors;
+	//存矩陣
+	
+
+
 	//紀錄向量ID，用於控管
 	int  VectorVariableIndex;
 	//紀錄檔案路徑名稱
