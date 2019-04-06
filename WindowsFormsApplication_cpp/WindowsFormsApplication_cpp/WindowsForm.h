@@ -1,6 +1,5 @@
 #pragma once
 #include"DataManager.h"
-#include"DotNetUtilities.h"
 #define DEBUG
 #define DEBUG_H
 
@@ -115,8 +114,8 @@ namespace WindowsFormsApplication_cpp {
 			// LoadVectorToolStripMenuItem
 			// 
 			this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(143, 22);
-			this->LoadVectorToolStripMenuItem->Text = L"Load Vector";
+			this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
 			// 
 			// tableLayoutPanel1
@@ -143,7 +142,7 @@ namespace WindowsFormsApplication_cpp {
 			this->flowLayoutPanel1->Controls->Add(this->Input);
 			this->flowLayoutPanel1->Controls->Add(this->VectorLabel);
 			this->flowLayoutPanel1->Controls->Add(this->VectorList);
-			this->flowLayoutPanel1->Location = System::Drawing::Point(355, 3);
+			this->flowLayoutPanel1->Location = System::Drawing::Point(354, 3);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
 			this->flowLayoutPanel1->Size = System::Drawing::Size(445, 476);
 			this->flowLayoutPanel1->TabIndex = 0;
@@ -270,25 +269,19 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			//測試資料--------------------------------------------------------
 			
 			//op = (vectors[4] + vectors[5]) *vectors[6] *vectors[7];
-			//op = vectors[0] * vectors[1];
+			//op = normalization(vectors[1]);
 			//opd = norm(vectors[0]);
 			//op = vectors[1].normalization();
 			//op = crossProduct(vectors[2],vectors[3]);
 			//op = component(vectors[4],vectors[5]);
 			//op = projection(vectors[2],vectors[3]);
 			//oopd = area(vectors[2],vectors[3]);
+			//std::vector < Vector > list;
+			//list = orthonormalBasis(3,vectors[0], vectors[1], vectors[2]);
 
 			//-------------------------------------------------------------------	
-			String^ outputTemp = "";
-			outputTemp += "[";
-			for (unsigned int j = 0; j < op.Data.size(); j++)
-			{
-				outputTemp += op.Data[j].ToString();
-				if (j != op.Data.size() - 1)
-					outputTemp += ",";
-			}
-			outputTemp += "]" + Environment::NewLine;
-			Output->Text += gcnew String(op.Name.c_str()) + " = " + outputTemp;
+			//String^ outputTemp = op.getResult();
+			Output->Text += op.getResult();
 			Output->Text += oopd.ToString();
 		/* ISLI
 			if (isLI(vectors[0], vectors[1])) {
@@ -381,33 +374,53 @@ private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::Co
 	//將檔案路徑名稱傳入dataManager
 	dataManager->SetFileName(tempFileName);
 	//從讀取讀取向量資料
-	if (dataManager->LoadVectorData())
+	if (dataManager->LoadData())
 	{
 		//將VectorList中項目先做清除
 		VectorList->Items->Clear();	
 		//取得所有向量資料
 		std::vector<Vector> vectors = dataManager->GetVectors();
-
-		for (unsigned int i = 0; i < vectors.size(); i++)
-		{
-			//將檔案名稱存入暫存
-			std::string tempString = vectors[i].Name;
-			//將輸出格式存入暫存
-			tempString += " [";
-			//將輸出資料存入暫存
-			for (unsigned int j = 0; j<vectors[i].Data.size(); j++)
+		std::vector<Matrix> matrices = dataManager->GetMatrix();
+		if (vectors.size()) {
+			for (unsigned int i = 0; i < vectors.size(); i++)
 			{
-				std::string scalarString = std::to_string(vectors[i].Data[j]);
-				tempString += scalarString.substr(0, scalarString.size() - 5);
-				if (j != vectors[i].Data.size() - 1)
-					tempString += ",";
+				//將檔案名稱存入暫存
+				std::string tempString = vectors[i].Name;
+				//將輸出格式存入暫存
+				tempString += " [";
+				//將輸出資料存入暫存
+				for (unsigned int j = 0; j < vectors[i].Data.size(); j++)
+				{
+					std::string scalarString = std::to_string(vectors[i].Data[j]);
+					tempString += scalarString.substr(0, scalarString.size() - 5);
+					if (j != vectors[i].Data.size() - 1)
+						tempString += ",";
+				}
+				//將輸出格式存入暫存
+				tempString += "]";
+				//將項目加入VectorList中
+				VectorList->Items->Add(gcnew String(tempString.c_str()));
 			}
-			//將輸出格式存入暫存
-			tempString += "]";
-			//將項目加入VectorList中
-			VectorList->Items->Add(gcnew String(tempString.c_str()));
+			Output->Text += "-Vector datas have been loaded-" + Environment::NewLine;
 		}
-		Output->Text += "-Vector datas have been loaded-" + Environment::NewLine;
+		else if (matrices.size()) {
+			for (auto i : matrices)
+			{
+				std::string tempString = i.Name;
+				tempString += " [";
+				for (int row = 0; row < i.row; row++) {
+					for (int col = 0; col < i.col; col++) {
+						std::string scalarString = std::to_string(i.Data[row][col]);
+						tempString += scalarString.substr(0, scalarString.size() - 5);
+						if (!(row == i.row - 1 && col == i.col - 1))
+							tempString += ",";
+					}
+				}
+				tempString += "]";
+				VectorList->Items->Add(gcnew String(tempString.c_str()));
+			}
+			Output->Text += "-Matrix datas have been loaded-" + Environment::NewLine;
+		}
 	}
 }
 };

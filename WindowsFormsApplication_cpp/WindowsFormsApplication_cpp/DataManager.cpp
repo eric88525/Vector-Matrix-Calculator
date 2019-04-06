@@ -5,79 +5,54 @@ DataManager::DataManager()
 	VectorVariableIndex = 0;
 }
 
-bool DataManager::LoadVectorData()
+bool DataManager::LoadData()
 {
 	std::fstream fin;
 	//開啟檔案，傳入open函數的參數有兩個，欲開起的檔案名稱，開啟檔案的模式參數(這邊std::ios::in為讀取(輸入)狀態)
 	fin.open(FileName, std::ios::in);
-
-
-
 	//讀取失敗回傳false
 	if (!fin)
 	{
 		return false;
 	}
 	else
-	{
-		//標記當前讀取向量ID
-		int currentLoadVectorID = 0;
-		//定義向量資料暫存變數
-		std::vector<double> tempVectorData;
-		//定義讀取檔案字串暫存變數
+	{	
+		int currentLoadVectorID = 0, currentLoadMatrixID = 0,getTimes,tempRows,tempCols;		
 		std::string tempSring;
-		//從檔案讀取字串，解析掉向量總數
 		fin >> tempSring;
-		
-		//執行讀檔迴圈，並在讀到檔案結尾時結束
-		while (fin >> tempSring)
-		{
-			//從檔案讀取字串
-			
-			//解析到向量標記"V"
-			if (tempSring == "V")
-			{
-				if (currentLoadVectorID != 0)
-				{
-					//定義暫存向量資料結構
-					Vector tempVector;
-					//存入向量資料
-					tempVector.Data = tempVectorData;
-					//定義向量變數名稱，依VectorVariableIndex變數作名稱的控管
-					std::string vectorVariableTemp = "$v" + std::to_string(VectorVariableIndex);
-					//存入向量變數名稱
-					tempVector.Name = vectorVariableTemp;
-					//存入向量
-					Vectors.push_back(tempVector);
-					//遞增VectorVariableIndex，以確保變數名稱不重複
-					VectorVariableIndex++;
-					//清除向量資料暫存
-					tempVectorData.clear();
+		while (fin>>tempSring) {
+			if (tempSring == "V") {
+				std::vector<double> tempVectorData;
+				fin >> getTimes;
+				for (int i = 0; i < getTimes;i++) {
+					double value;
+					fin >> value;
+					//double value = (double)strtod(tempSring.c_str(), NULL);
+					tempVectorData.push_back(value);
 				}
-				//遞增currentLoadVectorID，標記到當前讀取向量ID
-				currentLoadVectorID++;
-				
-				//從檔案讀取字串，解析掉向量維度
-				fin >> tempSring;
+				Vector tempVector;
+				tempVector.Name = "$v" + std::to_string(currentLoadVectorID++);
+				tempVector.Data = tempVectorData;
+				Vectors.push_back(tempVector);
 			}
-			else
-			{
-				//讀取向量資料，並將string轉為double
-				double value;
-				value = (double)strtod(tempSring.c_str(), NULL);
-				//將向量資料存入暫存
-				tempVectorData.push_back(value);
+			else if (tempSring=="M") {	
+				fin >> tempRows >> tempCols;
+				std::vector<std::vector<double>> tempMatrixData(tempRows);
+				for (int i = 0; i < tempRows;i++) {
+					for (int j = 0; j < tempCols; j++) {
+						double value;
+						fin >> value;
+						tempMatrixData[i].push_back(value);
+					}
+				}
+				Matrix tempMatrix;
+				tempMatrix.Name = "$v" + std::to_string(currentLoadVectorID++);
+				tempMatrix.Data = tempMatrixData;
+				tempMatrix.row = tempRows;
+				tempMatrix.col = tempCols;
+				Matrices.push_back(tempMatrix);
 			}
-			
 		}
-		//讀入輸入檔案中最後一個向量資訊
-		Vector tempVector;
-		tempVector.Data = tempVectorData;
-		std::string vectorVariableTemp = "$v" + std::to_string(VectorVariableIndex);
-		tempVector.Name = vectorVariableTemp;
-		Vectors.push_back(tempVector);
-		VectorVariableIndex++;
-		//讀取成功回傳false
 		return true;
 	}
 }
@@ -85,6 +60,9 @@ bool DataManager::LoadVectorData()
 std::vector<Vector> DataManager::GetVectors()
 {
 	return Vectors;
+}
+std::vector<Matrix> DataManager::GetMatrix(){
+	return Matrices;
 }
 void DataManager::SetFileName(std::string fileName)
 {
@@ -101,6 +79,24 @@ Vector::Vector(std::string name,std::vector<double> data) {
 	this->Name = name;
 	this->Data = data;
 }
+
+System::String^ Vector::getResult()
+{
+	System::String^ outputTemp = gcnew System::String(Name.c_str()) + " = ";
+	outputTemp += "[";
+	for (unsigned int j = 0; j < Data.size(); j++)
+	{
+		System::String^ buff = Data[j].ToString();
+		
+		if(buff->Length>8)buff = buff->Substring(0, 8);
+		outputTemp += buff;
+		if (j != Data.size() - 1)
+			outputTemp += ",";
+	}
+	outputTemp += "]" + System::Environment::NewLine;
+	return outputTemp;
+}
+
 
 
 const Vector operator+(const Vector &x, const Vector &y) {
@@ -271,6 +267,27 @@ const bool isLI(const Vector & x, const Vector & y)
 	return false;
 }
 
+const std::vector<Vector> orthonormalBasis(int count,Vector x ...)
+{
+	std::vector<Vector>list;
+	va_list ptr;
+	va_start(ptr, count);
+	for (int i = 0; i < count; i++) {
+		Vector buff  = va_arg(ptr, Vector);
+		list.push_back(buff);
+	}
+	list[0] = normalization(list[0]);
+	for (int i = 0; i < list.size();i++) {
+		for (int j = i-1; j >= 0;j--) {
+			list[i] = list[i]-projection(list[i], list[j]);
+		}
+		list[i] = normalization(list[i]);
+	}
+	va_end(ptr);
+	return list;
+}
+
+
 //----------------------------------------------------------------------matrix
 
 
@@ -281,16 +298,41 @@ Matrix::Matrix()
 Matrix::Matrix(std::vector<std::vector<double>> data):Data(data)
 {
 	Name = "";
-	row = data.size();
+	this->row = data.size();
+	this->col = data[0].size();
 }
 
 const Matrix operator+(const Matrix & x, const Matrix & y)
 {
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row;i++) {
-		for (int j = 0; j < x.Data[i].size();j++) {
+		for (int j = 0; j < x.col;j++) {
 			data[i].push_back(x.Data[i][j]+y.Data[i][j]);
 		}
 	}
+	return Matrix(data);
+}
+
+const Matrix operator-(const Matrix & x, const Matrix & y)
+{
+	std::vector<std::vector<double>> data(x.row);
+	for (int i = 0; i < x.row; i++) {
+		for (int j = 0; j < x.col; j++) {
+			data[i].push_back(x.Data[i][j] - y.Data[i][j]);
+		}
+	}
+	return Matrix(data);
+}
+
+const Matrix operator*(const Matrix & x, const Matrix & y)
+{
+	std::vector<std::vector<double>> data;
+	for (int i = 0; i < x.row; ++i)
+		for (int j = 0; j < y.col; ++j)
+			for (int k = 0; k < x.col; ++k)
+			{
+				data[i].push_back(x.Data[i][k] * y.Data[k][j]);
+			}
+	
 	return Matrix(data);
 }
