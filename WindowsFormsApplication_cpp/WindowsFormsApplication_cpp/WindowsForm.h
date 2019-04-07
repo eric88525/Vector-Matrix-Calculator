@@ -343,7 +343,7 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			Matrix m, m1, mResult;
 			//字串比較，若指令為"print"的情況
 		
-			if (userCommand[0]=="print") {
+			if (userCommand[0]=="printV") {
 				vResult = calV(userCommand[1], vectors);
 				Output->Text += vResult.getResult();
 			}
@@ -428,28 +428,46 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 				}
 			}
 			else if (userCommand[0]== "Ob") {
+				std::vector<Vector> varr;
+				std::vector<Vector> op;
+				for (int i = 1; i < userCommand.size();i++) {
+					varr.push_back(calV(userCommand[i],vectors));
+				}
+				//op = Ob(varr.size(),varr);
 
 			}
 			else if (userCommand[0]== "calM") {
 				mResult = calM(userCommand[1],matrices);
 				//Output->Text += .getResult();
+			}if (userCommand[0] == "printM") {
+				mResult = calM(userCommand[1], matrices);
+				Output->Text += mResult.getResult();
 			}
 			else if (userCommand[0]== "Rank") {
 				mResult = calM(userCommand[1], matrices);
 				int rk = rank(mResult);
-				Output->Text += rk + System::Environment::NewLine;;
+				Output->Text += rk + System::Environment::NewLine;
 			}
 			else if (userCommand[0] == "Trans") {
-
+				mResult = calM(userCommand[1], matrices);
+				mResult = transpose(mResult);
+				Output->Text += mResult.getResult();
 			}
 			else if (userCommand[0] == "Sol") {
-
+				m = calM(userCommand[1], matrices);
+				m1 = calM(userCommand[2], matrices);
+				mResult = m / m1;
+				Output->Text += mResult.getResult();
 			}
 			else if (userCommand[0] == "Det") {
-
+				mResult = calM(userCommand[1], matrices);
+				double db = determinants(mResult);
+				Output->Text += db + System::Environment::NewLine;
 			}
 			else if (userCommand[0] == "Inverse") {
-
+				mResult = calM(userCommand[1],matrices);
+				mResult = inverse(mResult);
+				Output->Text += mResult.getResult();
 			}
 			else if (userCommand[0] == "Adj") {
 

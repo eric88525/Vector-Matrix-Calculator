@@ -8,6 +8,7 @@
 #include <math.h> 
 #include <stdarg.h>
 #define PI 3.14159265
+#define no_v_c throw("Error  vector or matrix name");
 
 //定義向量資料結構
 
@@ -42,6 +43,7 @@ struct Matrix {
 	int col;
 	Matrix();
 	Matrix(std::vector<std::vector<double>> data);
+	System::String^ getResult();
 	friend const Matrix operator+(const Matrix &x, const Matrix &y);
 	friend const Matrix operator-(const Matrix &x, const Matrix &y);
 	friend const Matrix operator*(const Matrix &x, const Matrix &y);

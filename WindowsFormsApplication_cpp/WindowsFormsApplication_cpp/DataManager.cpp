@@ -117,6 +117,8 @@ Vector getV(std::string str, std::vector<Vector> vectors)
 	for (auto i:vectors) {
 		if (i.Name == str)return i;
 	}
+	int VnameError = 1;
+	throw VnameError;
 	return Vector();
 }
 
@@ -125,7 +127,8 @@ Matrix getM(std::string str, std::vector<Matrix> matrices)
 	for (auto i : matrices) {
 		if (i.Name == str)return i;
 	}
-	
+	int MnameError = 2;
+	throw MnameError;
 	return Matrix();
 }
 
@@ -176,7 +179,7 @@ bool DataManager::LoadData()
 					}
 				}
 				Matrix tempMatrix;
-				tempMatrix.Name = "$v" + std::to_string(currentLoadVectorID++);
+				tempMatrix.Name = "$m" + std::to_string(currentLoadVectorID++);
 				tempMatrix.Data = tempMatrixData;
 				tempMatrix.row = tempRows;
 				tempMatrix.col = tempCols;
@@ -433,6 +436,27 @@ Matrix::Matrix(std::vector<std::vector<double>> data):Data(data)
 	Name = "";
 	this->row = data.size();
 	this->col = data[0].size();
+}
+
+System::String ^ Matrix::getResult()
+{
+
+	System::String^ outputTemp = gcnew System::String(Name.c_str()) + " = " + System::Environment::NewLine;
+	outputTemp += "[";
+	for (unsigned int r = 0; r < row; r++)
+	{
+		for (unsigned int c = 0; c < col; c++) {
+			System::String^ buff = Data[r][c].ToString();
+			if (buff->Length > 8)buff = buff->Substring(0, 8);
+			outputTemp += buff;
+			if (c != col - 1)
+				outputTemp += ",";
+		}
+		if(r!=row-1)
+		outputTemp += System::Environment::NewLine;		
+	}
+	outputTemp += "]" + System::Environment::NewLine;
+	return outputTemp;
 }
 
 const Matrix operator+(const Matrix & x, const Matrix & y)
