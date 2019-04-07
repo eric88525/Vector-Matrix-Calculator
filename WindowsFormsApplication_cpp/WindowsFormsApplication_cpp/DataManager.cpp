@@ -1,4 +1,5 @@
 #include"DataManager.h"
+#include "WindowsForm.h"
 
 int priority(char op) {
 	switch (op) {
@@ -44,6 +45,9 @@ std::string IntoPost(std::string str) {
 		}	
 	}
 	postfix += stack;
+	for (int l = 0; l < postfix.length();l++) {
+		if (postfix[l] == '(' || postfix[l] == ')')postfix.erase(l,1);
+	}
 	return postfix;
 }
 Vector calV(std::string str, std::vector<Vector> vectors) {
@@ -58,11 +62,7 @@ Vector calV(std::string str, std::vector<Vector> vectors) {
 				vname.push_back(str[i]);
 				i++;
 			}
-			for (auto v : vectors) {
-				if (v.Name == vname) {
-					stack.push_back(v);
-				}
-			}
+			stack.push_back(getV(vname,vectors));			
 		}
 		else {
 			if (str[i] == '+') {
@@ -78,6 +78,55 @@ Vector calV(std::string str, std::vector<Vector> vectors) {
 		}
 	}
 	return stack[0];
+}
+
+Matrix calM(std::string str, std::vector<Matrix> matrices)
+{
+	str = IntoPost(str);
+	std::vector<Matrix> stack;
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] == '$') {
+			std::string vname = "";
+			while (str[i] != ']')
+			{
+				if (str[i] != '[')
+					vname.push_back(str[i]);
+				i++;
+			}
+			stack.push_back(getM(vname, matrices));
+		}
+		else {
+			if (str[i] == '+') {
+				stack[stack.size() - 2] = stack[stack.size() - 2] + stack[stack.size() - 1];
+			}
+			else if (str[i] == '-') {
+				stack[stack.size() - 2] = stack[stack.size() - 2] - stack[stack.size() - 1];
+			}
+			else if (str[i] == '*') {
+				stack[stack.size() - 2] = stack[stack.size() - 2] * stack[stack.size() - 1];
+			}
+			stack.pop_back();
+		}
+	}
+	return stack[0];
+	return Matrix();
+}
+
+Vector getV(std::string str, std::vector<Vector> vectors)
+{
+	for (auto i:vectors) {
+		if (i.Name == str)return i;
+	}
+	return Vector();
+}
+
+Matrix getM(std::string str, std::vector<Matrix> matrices)
+{
+	for (auto i : matrices) {
+		if (i.Name == str)return i;
+	}
+	
+	return Matrix();
 }
 
 
@@ -300,7 +349,7 @@ const double area(const Vector & x, const Vector & y)
 
 const Vector pN(const Vector & x, const Vector & y)
 {
-	return Vector();
+	return crossProduct(x,y);
 }
 
 
@@ -312,7 +361,7 @@ const bool isParallel(const Vector & x, const Vector & y)
 		if (!(x.Data[i]==0 || y.Data[i]==0)) {
 			if (rate==-999) {
 				rate = y.Data[i] / x.Data[i];
-			}else if(x.Data[i]*rate!=y.Data[i]){
+			}else if((abs(rate*x.Data[i]-y.Data[i])>0.000000001)){
 				return false;
 			}
 		}

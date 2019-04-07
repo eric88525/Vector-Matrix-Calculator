@@ -2,6 +2,9 @@
 #include"DataManager.h"
 //#define DEBUG
 Vector calV(std::string str, std::vector<Vector> vectors);
+Matrix calM(std::string str, std::vector<Matrix> matrices);
+Vector getV(std::string str, std::vector<Vector> vectors);
+Matrix getM(std::string str, std::vector<Matrix> matrices);
 namespace WindowsFormsApplication_cpp {
 
 	using namespace System;
@@ -327,77 +330,131 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 		if (Input->Text->Length - 1 >= 0 && Input->Text[Input->Text->Length - 1] == '\n')
 		{
 			//將使用者輸入字串(在userInput中)，依空白作切割
-			array<String^> ^inp = userInput->Split(' ');
-			std::string userCommand,str;
-			MarshalString(inp[0], userCommand);
-			MarshalString(inp[1], str);
+			array<String^> ^inp = userInput->Split(' ',',');
+			std::vector<std::string> userCommand(inp->Length),str;	
+			for (int s = 0; s < inp->Length;s++) {
+				MarshalString(inp[s], userCommand[s]);
+			}
+			if (inp->Length > 2) {
+				userCommand[1].erase(0, 1);
+				userCommand[userCommand.size() - 1].pop_back();
+			}
+			Vector v,v1,vResult;
+			Matrix m, m1, mResult;
 			//字串比較，若指令為"print"的情況
 		
-			if (userCommand=="print") {
+			if (userCommand[0]=="print") {
+				vResult = calV(userCommand[1], vectors);
+				Output->Text += vResult.getResult();
+			}
+			else if (userCommand[0] == "calV") {
+				vResult = calV(userCommand[1],vectors);
+				Output->Text += vResult.getResult();
+			}
+			else if (userCommand[0] == "Norm") {
+				vResult = calV(userCommand[1], vectors);
+				double db = norm(vResult);
+				Output->Text += db + System::Environment::NewLine;;
+			}
+			else if (userCommand[0]== "Normal") {
+				vResult = calV(userCommand[1], vectors);
+				vResult = normalization(vResult);
+				Output->Text += vResult.getResult();
+			}
+			else if (userCommand[0] == "Cross") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				vResult = crossProduct(v, v1);
+				Output->Text += vResult.getResult();
+			}
+			else if (userCommand[0]== "Com") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				vResult = component(v, v1);
+				Output->Text += vResult.getResult();
+			}
+			else if (userCommand[0]== "Proj") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				vResult = projection(v, v1);
+				Output->Text += vResult.getResult();
+			}
+			else if (userCommand[0]== "Area") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				double db = area(v,v1);
+				Output->Text += db+ System::Environment::NewLine;;
+			}
+			else if (userCommand[0] == "isParallel") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				if (isParallel(v, v1)) {
+					Output->Text += "Yes"+ System::Environment::NewLine;;
+				}
+				else {
+					Output->Text += "No"+ System::Environment::NewLine;;
+				}
+			}
+			else if (userCommand[0]== "isOrthogonal") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				if (isOrthogonal(v, v1)) {
+					Output->Text += "Yes" + System::Environment::NewLine;;
+				}
+				else {
+					Output->Text += "No" + System::Environment::NewLine;;
+				}
+			}
+			else if (userCommand[0] == "angle") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				double db = angle(v, v1);
+				Output->Text += db + System::Environment::NewLine;;
+			}
+			else if (userCommand[0]== "PN") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				vResult = pN(v, v1);
+				Output->Text += vResult.getResult();
+			}
+			else if (userCommand[0]== "IsLI") {
+				v = calV(userCommand[1], vectors);
+				v1 = calV(userCommand[2], vectors);
+				if (isLI(v, v1)) {
+					Output->Text += "Yes" + System::Environment::NewLine;;
+				}
+				else {
+					Output->Text += "No" + System::Environment::NewLine;;
+				}
+			}
+			else if (userCommand[0]== "Ob") {
 
 			}
-			else if (userCommand == "calV") {
-				Vector v = calV(str,vectors);
-				Output->Text += v.getResult();
+			else if (userCommand[0]== "calM") {
+				mResult = calM(userCommand[1],matrices);
+				//Output->Text += .getResult();
 			}
-			else if (userCommand == "Norm") {
+			else if (userCommand[0]== "Rank") {
+				mResult = calM(userCommand[1], matrices);
+				int rk = rank(mResult);
+				Output->Text += rk + System::Environment::NewLine;;
+			}
+			else if (userCommand[0] == "Trans") {
 
 			}
-			else if (userCommand== "Normal") {
+			else if (userCommand[0] == "Sol") {
 
 			}
-			else if (userCommand == "Cross") {
+			else if (userCommand[0] == "Det") {
 
 			}
-			else if (userCommand== "Com") {
+			else if (userCommand[0] == "Inverse") {
 
 			}
-			else if (userCommand== "Proj") {
+			else if (userCommand[0] == "Adj") {
 
 			}
-			else if (userCommand== "Area") {
-
-			}
-			else if (userCommand == "isParallel") {
-
-			}
-			else if (userCommand== "isOrthogonal") {
-
-			}
-			else if (userCommand == "angle") {
-
-			}
-			else if (userCommand== "PN") {
-
-			}
-			else if (userCommand== "IsLI") {
-
-			}
-			else if (userCommand== "Ob") {
-
-			}
-			else if (userCommand== "calM") {
-
-			}
-			else if (userCommand== "Rank") {
-
-			}
-			else if (userCommand == "Trans") {
-
-			}
-			else if (userCommand == "Sol") {
-
-			}
-			else if (userCommand == "Det") {
-
-			}
-			else if (userCommand == "Inverse") {
-
-			}
-			else if (userCommand == "Adj") {
-
-			}
-			else if (userCommand == "eigen") {
+			else if (userCommand[0] == "eigen") {
 
 			}else
 			{
