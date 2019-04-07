@@ -190,7 +190,8 @@ const Vector component(  const Vector & x, const Vector & y)
 	double n;
 	n = norm(y);
 	vec.Data[0] /= n;
-	return  Vector(vec.Data);
+	//return  Vector(vec.Data);
+	return vec;
 }
 
 const Vector projection(const Vector & x, const  Vector & y)
@@ -198,7 +199,7 @@ const Vector projection(const Vector & x, const  Vector & y)
 	Vector vec;
 	vec = component(x, y);
 	vec = vec * normalization(y);
-	return Vector(vec.Data);
+	return vec;
 }
 
 const double area(const Vector & x, const Vector & y)
@@ -267,7 +268,7 @@ const bool isLI(const Vector & x, const Vector & y)
 	return false;
 }
 
-const std::vector<Vector> orthonormalBasis(int count,Vector x ...)
+const std::vector<Vector> Ob(int count,Vector x ...)
 {
 	std::vector<Vector>list;
 	va_list ptr;
@@ -326,13 +327,58 @@ const Matrix operator-(const Matrix & x, const Matrix & y)
 
 const Matrix operator*(const Matrix & x, const Matrix & y)
 {
-	std::vector<std::vector<double>> data;
-	for (int i = 0; i < x.row; ++i)
-		for (int j = 0; j < y.col; ++j)
+	std::vector<std::vector<double>> data(x.row);
+	for (int i = 0; i < x.row; ++i) {
+		for (int j = 0; j < y.col; ++j) {
+			double sum = 0;
 			for (int k = 0; k < x.col; ++k)
 			{
-				data[i].push_back(x.Data[i][k] * y.Data[k][j]);
+				sum+=x.Data[i][k] * y.Data[k][j];
 			}
-	
+			data[i].push_back(sum);
+		}
+	}
 	return Matrix(data);
+}
+
+const int rank( Matrix  x)
+{
+	int row, col,fixP=0;
+	for (int row = 0; row < x.row; row++) {
+		if ((row + fixP) > x.col - 1)
+			return row;
+		if ( x.Data[row][row+fixP]) {	
+			double temp = x.Data[row][row + fixP];
+			for (auto &piv:x.Data[row]) {
+				piv /=temp;
+			}
+			for (int eli = row+1; eli < x.row; eli++) {
+				double r1 = x.Data[eli][row + fixP],
+				r2 = x.Data[row][row + fixP];
+				for (int i = 0; i < x.col;i++) {
+					x.Data[eli][i] -=  x.Data[row][i] *r1 / r2 ;
+					if (x.Data[eli][i]<0.000000001 && x.Data[eli][i]>-0.000000001) {
+						x.Data[eli][i] = 0;
+					}
+ 				}
+			}
+			int zz = 0;
+		}
+		else {
+			int chg;
+			for ( chg = row + 1; chg < x.row; chg++) {
+				if (x.Data[chg][row])
+				{
+					/*  Find non zero elements in the same column */
+					swap(x.Data[row], x.Data[chg]);
+					row--;
+					break;
+				}
+			}
+			if (chg == x.row) {
+				fixP++;
+				row--;
+			}
+		}
+	}
 }

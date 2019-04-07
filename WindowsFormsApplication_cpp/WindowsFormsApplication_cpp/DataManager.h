@@ -33,7 +33,7 @@ struct Vector
 	friend const double angle(const Vector &x, const Vector &y);
 	friend const Vector pN(const Vector &x, const Vector &y);
 	friend const bool isLI(const Vector &x, const Vector &y);
-	friend const std::vector<Vector> orthonormalBasis(int count,Vector x...);
+	friend const std::vector<Vector> Ob(int count,Vector x...);
 };
 struct Matrix {
 	std::string Name = "";
@@ -45,7 +45,7 @@ struct Matrix {
 	friend const Matrix operator+(const Matrix &x, const Matrix &y);
 	friend const Matrix operator-(const Matrix &x, const Matrix &y);
 	friend const Matrix operator*(const Matrix &x, const Matrix &y);
-	friend const int rank(const Matrix &x);
+	friend const int rank( Matrix x);
 	friend const Matrix transpose(const Matrix &x);
 	friend const Matrix operator/(const Matrix &x, const Matrix &y);	//linear system
 	friend const double determinants(const Matrix &x);

@@ -262,11 +262,13 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 		if (Input->Text->Length - 1 >= 0 && Input->Text[Input->Text->Length - 1] == '\n')
 		{
 			std::vector<Vector> vectors = dataManager->GetVectors();
+			std::vector<Matrix> matrices = dataManager->GetMatrix();
 			Vector op;
+			Matrix m;
 			double oopd=0;
 			bool ob;
 
-			//測試資料--------------------------------------------------------
+			//測試V--------------------------------------------------------
 			
 			//op = (vectors[4] + vectors[5]) *vectors[6] *vectors[7];
 			//op = normalization(vectors[1]);
@@ -276,11 +278,15 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			//op = component(vectors[4],vectors[5]);
 			//op = projection(vectors[2],vectors[3]);
 			//oopd = area(vectors[2],vectors[3]);
-			//std::vector < Vector > list;
-			//list = orthonormalBasis(3,vectors[0], vectors[1], vectors[2]);
+			/*std::vector < Vector > list;
+			list = Ob(3,vectors[0], vectors[1], vectors[2]);*/
 
-			//-------------------------------------------------------------------	
-			//String^ outputTemp = op.getResult();
+			//TEST M-----------------------------------------------------------	
+			//m = matrices[0] * matrices[1];
+			int rk = rank(matrices[1]);
+
+
+			//------------------------------------------------------------------
 			Output->Text += op.getResult();
 			Output->Text += oopd.ToString();
 		/* ISLI
