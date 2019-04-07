@@ -1,5 +1,86 @@
 #include"DataManager.h"
 
+int priority(char op) {
+	switch (op) {
+	case '+': case '-': return 1;
+	case '*': case '/': return 2;
+	default:            return 0;
+	}
+}
+std::string IntoPost(std::string str) {
+	Vector v;
+	std::string stack = "";
+	std::string postfix = "";
+	for (int i = 0; i < str.length(); i++) {
+		switch (str[i]) {
+		case '(':     // 運算子堆疊 	
+			stack.push_back(str[i]);
+			break;
+		case '+': case '-': case '*':
+			
+			while (stack.length() && priority(stack[stack.length() - 1]) >= priority(str[i])) {
+				postfix.push_back(stack[stack.length() - 1]);
+				stack.pop_back();
+			}
+			stack.push_back(str[i]); // 存入堆疊 
+			break;
+		case ')':
+			while (stack[stack.length() - 1] != '(') { // 遇 ) 輸出至 ( 
+				postfix.push_back(stack[stack.length() - 1]);
+				stack.pop_back();
+			}
+			if (stack[stack.length() - 1] == '(') stack.pop_back();
+			break;
+		case '$':  // 運算元直接輸出 
+			while (str[i]!=']')
+			{
+				postfix.push_back(str[i]);
+				i++;
+			}
+			postfix.push_back(']');
+			break;
+		default:
+			break;	
+		}	
+	}
+	postfix += stack;
+	return postfix;
+}
+Vector calV(std::string str, std::vector<Vector> vectors) {
+	str = IntoPost(str);
+	std::vector<Vector> stack;
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] == '$') {
+			std::string vname = "";
+			while (str[i] != ']')
+			{
+				if(str[i]!='[')
+				vname.push_back(str[i]);
+				i++;
+			}
+			for (auto v : vectors) {
+				if (v.Name == vname) {
+					stack.push_back(v);
+				}
+			}
+		}
+		else {
+			if (str[i] == '+') {
+				stack[stack.size() - 2] = stack[stack.size() - 2] + stack[stack.size() - 1];
+			}
+			else if (str[i] == '-') {
+				stack[stack.size() - 2] = stack[stack.size() - 2] - stack[stack.size() - 1];
+			}
+			else if (str[i] == '*') {
+				stack[stack.size() - 2] = stack[stack.size() - 2] * stack[stack.size() - 1];
+			}
+			stack.pop_back();
+		}
+	}
+	return stack[0];
+}
+
+
 DataManager::DataManager()
 {
 	VectorVariableIndex = 0;
@@ -61,9 +142,11 @@ std::vector<Vector> DataManager::GetVectors()
 {
 	return Vectors;
 }
-std::vector<Matrix> DataManager::GetMatrix(){
+
+std::vector<Matrix> DataManager::GetMatrices(){
 	return Matrices;
 }
+
 void DataManager::SetFileName(std::string fileName)
 {
 	FileName = fileName;

@@ -1,8 +1,7 @@
 #pragma once
 #include"DataManager.h"
-#define DEBUG
-#define DEBUG_H
-
+//#define DEBUG
+Vector calV(std::string str, std::vector<Vector> vectors);
 namespace WindowsFormsApplication_cpp {
 
 	using namespace System;
@@ -262,7 +261,7 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 		if (Input->Text->Length - 1 >= 0 && Input->Text[Input->Text->Length - 1] == '\n')
 		{
 			std::vector<Vector> vectors = dataManager->GetVectors();
-			std::vector<Matrix> matrices = dataManager->GetMatrix();
+			std::vector<Matrix> matrices = dataManager->GetMatrices();
 			Vector op;
 			Matrix m;
 			double oopd=0;
@@ -322,44 +321,85 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 #endif // DEBUG
 
 #ifndef DEBUG
-		//當Input textbox中的輸入改變時，便會進入此函式
-		//取得向量資料
+
 		std::vector<Vector> vectors = dataManager->GetVectors();
-		//判斷輸入自元為'\n'，並防止取到字串-1位置
+		std::vector<Matrix> matrices = dataManager->GetMatrices();
 		if (Input->Text->Length - 1 >= 0 && Input->Text[Input->Text->Length - 1] == '\n')
 		{
 			//將使用者輸入字串(在userInput中)，依空白作切割
-			array<String^> ^userCommand = userInput->Split(' ');
+			array<String^> ^inp = userInput->Split(' ');
+			std::string userCommand,str;
+			MarshalString(inp[0], userCommand);
+			MarshalString(inp[1], str);
 			//字串比較，若指令為"print"的情況
-			if (userCommand[0] == "print")
-			{
-				//定意輸出暫存
-				String^ outputTemp = "";
-				//透過for迴圈，從向量資料中找出對應變數
-				for (unsigned int i = 0; i < vectors.size(); i++)
-				{
-					//若變數名稱與指令變數名稱符合
-					if (userCommand[1] == gcnew String(vectors[i].Name.c_str()))
-					{
-						//將輸出格式存入暫存
-						outputTemp += "[";
-						//將輸出資料存入暫存
-						for (unsigned int j = 0; j < vectors[i].Data.size(); j++)
-						{
-							outputTemp += vectors[i].Data[j].ToString();
-							if (j != vectors[i].Data.size() - 1)
-								outputTemp += ",";
-						}
-						//將輸出格式存入暫存，並且換行
-						outputTemp += "]" + Environment::NewLine;
-						//輸出暫存資訊
-						Output->Text += gcnew String(vectors[i].Name.c_str()) + " = " + outputTemp;
-						break;
-					}
-				}
+		
+			if (userCommand=="print") {
+
 			}
-			//反之則判斷找不到指令
-			else
+			else if (userCommand == "calV") {
+				Vector v = calV(str,vectors);
+				Output->Text += v.getResult();
+			}
+			else if (userCommand == "Norm") {
+
+			}
+			else if (userCommand== "Normal") {
+
+			}
+			else if (userCommand == "Cross") {
+
+			}
+			else if (userCommand== "Com") {
+
+			}
+			else if (userCommand== "Proj") {
+
+			}
+			else if (userCommand== "Area") {
+
+			}
+			else if (userCommand == "isParallel") {
+
+			}
+			else if (userCommand== "isOrthogonal") {
+
+			}
+			else if (userCommand == "angle") {
+
+			}
+			else if (userCommand== "PN") {
+
+			}
+			else if (userCommand== "IsLI") {
+
+			}
+			else if (userCommand== "Ob") {
+
+			}
+			else if (userCommand== "calM") {
+
+			}
+			else if (userCommand== "Rank") {
+
+			}
+			else if (userCommand == "Trans") {
+
+			}
+			else if (userCommand == "Sol") {
+
+			}
+			else if (userCommand == "Det") {
+
+			}
+			else if (userCommand == "Inverse") {
+
+			}
+			else if (userCommand == "Adj") {
+
+			}
+			else if (userCommand == "eigen") {
+
+			}else
 			{
 				Output->Text += "-Command not found-" + Environment::NewLine;
 			}
@@ -374,14 +414,6 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 		}
 
 #endif // !DEBUG
-
-#ifndef DEBUG_H
-		
-#endif // !DEBUG_H
-
-
-
-
 
 }
 private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) 
@@ -399,7 +431,7 @@ private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::Co
 		VectorList->Items->Clear();	
 		//取得所有向量資料
 		std::vector<Vector> vectors = dataManager->GetVectors();
-		std::vector<Matrix> matrices = dataManager->GetMatrix();
+		std::vector<Matrix> matrices = dataManager->GetMatrices();
 		if (vectors.size()) {
 			for (unsigned int i = 0; i < vectors.size(); i++)
 			{

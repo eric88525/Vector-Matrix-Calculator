@@ -73,7 +73,7 @@ public:
 	//取得向量資料
 	std::vector<Vector> GetVectors();
 	//拿矩陣資料
-	std::vector<Matrix> GetMatrix();
+	std::vector<Matrix> GetMatrices();
 	//設置檔案路徑名稱
 	void SetFileName(std::string fileName);
 };
