@@ -31,7 +31,7 @@ struct Vector
 	friend const bool isParallel(const Vector &x, const Vector &y);
 	friend const bool isOrthogonal(const Vector &x, const Vector &y);
 	friend const double angle(const Vector &x, const Vector &y);
-	friend const Vector pN(const Vector &x, const Vector &y);
+	friend const Vector pN(const Vector &x, const Vector &y);//no
 	friend const bool isLI(const Vector &x, const Vector &y);
 	friend const std::vector<Vector> Ob(int count,Vector x...);
 };
@@ -47,9 +47,9 @@ struct Matrix {
 	friend const Matrix operator*(const Matrix &x, const Matrix &y);
 	friend const int rank( Matrix x);
 	friend const Matrix transpose(const Matrix &x);
-	friend const Matrix operator/(const Matrix &x, const Matrix &y);	//linear system
-	friend const double determinants(const Matrix &x);
-	friend const Matrix inverse(const Matrix &x);
+	friend const Matrix operator/( Matrix x,  Matrix y);	//linear system
+	friend const double determinants( Matrix x);
+	friend const Matrix inverse( Matrix x);
 	friend const Matrix Adj(const Matrix &x);
 	friend const Matrix pm(const Matrix &x);
 };

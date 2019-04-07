@@ -347,11 +347,13 @@ const int rank( Matrix  x)
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			return row;
-		if ( x.Data[row][row+fixP]) {	
+		if ( x.Data[row][row+fixP]) {
+			if (row == x.row - 1)return row+1;
 			double temp = x.Data[row][row + fixP];
 			for (auto &piv:x.Data[row]) {
 				piv /=temp;
 			}
+
 			for (int eli = row+1; eli < x.row; eli++) {
 				double r1 = x.Data[eli][row + fixP],
 				r2 = x.Data[row][row + fixP];
@@ -381,4 +383,137 @@ const int rank( Matrix  x)
 			}
 		}
 	}
+
+}
+
+const Matrix transpose(const Matrix & x)
+{
+	std::vector<std::vector<double>> data(x.col);
+	for (int row = 0; row < x.row; row++) {
+		for (int col = 0; col < x.col; col++) {
+			data[col].push_back(x.Data[row][col]);
+		}
+
+	}
+	return Matrix(data);
+}
+
+const Matrix operator/( Matrix  x,  Matrix  y)
+{
+	Matrix m;
+	m = inverse(x)*y;
+	return m;
+}
+
+const double determinants(Matrix  x)
+{
+	int row, col, fixP = 0;
+	for (int row = 0; row < x.row; row++) {
+		if ((row + fixP) > x.col - 1)
+			break;
+		if (x.Data[row][row + fixP]) {
+			double temp = x.Data[row][row + fixP];
+			for (int eli = row + 1; eli < x.row; eli++) {
+				double r1 = x.Data[eli][row + fixP],
+					r2 = x.Data[row][row + fixP];
+				for (int i = 0; i < x.col; i++) {
+					x.Data[eli][i] -= x.Data[row][i] * r1 / r2;
+					if (x.Data[eli][i]<0.000000001 && x.Data[eli][i]>-0.000000001) {
+						x.Data[eli][i] = 0;
+					}
+				}
+			}
+			int zz = 0;
+		}
+		else {
+			int chg;
+			for (chg = row + 1; chg < x.row; chg++) {
+				if (x.Data[chg][row])
+				{
+					/*  Find non zero elements in the same column */
+					swap(x.Data[row], x.Data[chg]);
+					row--;
+					break;
+				}
+			}
+			if (chg == x.row) {
+				fixP++;
+				row--;
+			}
+		}
+	}
+	double det=1;
+	for (int row = 0; row < x.row;row++) {
+		det *= x.Data[row][row];
+	}
+	return det;
+}
+
+const Matrix inverse(Matrix x)
+{
+	int rL = rank(x);
+	int error;
+	if (rL<x.row) {
+		error = 1;
+		throw error;
+	}
+	std::vector<std::vector<double>> data(x.row);
+	Matrix m(data);
+	for (int row = 0; row < x.row; row++) {
+		for (int col = 0; col < x.col; col++) {	
+			if(row==col)m.Data[row].push_back(1);
+			else m.Data[row].push_back(0);
+		}
+	}
+	m.col = x.row;
+	m.row = x.row;
+	//-------
+	int row, col, fixP = 0;
+	for (int row = 0; row < x.row; row++) {
+		if ((row + fixP) > x.col - 1)
+			break;
+		if (x.Data[row][row + fixP]) {
+			double temp = x.Data[row][row + fixP];
+			double ti= m.Data[row][row + fixP];
+			for (auto &piv : x.Data[row]) {
+				piv /= temp;
+			}
+			for (auto &pivi : m.Data[row]) {
+				pivi /= temp;
+			}
+			for (int eli =0; eli < x.row; eli++) {
+				if (eli != row) {
+					double r1 = x.Data[eli][row + fixP],
+							r2 = x.Data[row][row + fixP];
+					for (int i = 0; i < x.col; i++) {
+						x.Data[eli][i] -= x.Data[row][i] * r1 / r2;
+						m.Data[eli][i] -= m.Data[row][i] * r1 / r2;
+						if (x.Data[eli][i]<0.000000001 && x.Data[eli][i]>-0.000000001) {
+							x.Data[eli][i] = 0;
+						}
+					}
+				}	
+			}
+			int zz = 0;
+		}
+		else {
+			int chg;
+			for (chg = row + 1; chg < x.row; chg++) {
+				if (x.Data[chg][row])
+				{
+					/*  Find non zero elements in the same column */
+					swap(x.Data[row], x.Data[chg]);
+					swap(m.Data[row], m.Data[chg]);
+					row--;
+					break;
+				}
+			}
+			if (chg == x.row) {
+				fixP++;
+				row--;
+			}
+		}
+	}
+	//-------
+	return m;
 }

@@ -283,12 +283,25 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 
 			//TEST M-----------------------------------------------------------	
 			//m = matrices[0] * matrices[1];
-			int rk = rank(matrices[1]);
 
+			//int rk = rank(matrices[1]);
+
+			//m = transpose(matrices[0]);
+
+			//double dt = determinants(matrices[2]);
+
+			/*int x = rank(matrices[1]);
+			if (x) Output->Text += "rank:" + x.ToString();*/
+			
+			//m = inverse(matrices[1]);// try catch­n¥[
+			
+			m = matrices[0] / matrices[1];
+			
 
 			//------------------------------------------------------------------
 			Output->Text += op.getResult();
 			Output->Text += oopd.ToString();
+			
 		/* ISLI
 			if (isLI(vectors[0], vectors[1])) {
 				Output->Text += "YES";
