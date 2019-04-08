@@ -342,7 +342,7 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			Vector v,v1,vResult;
 			Matrix m, m1, mResult;
 			//字串比較，若指令為"print"的情況
-		
+			Output->Text += userInput + System::Environment::NewLine;
 			if (userCommand[0]=="printV") {
 				vResult = calV(userCommand[1], vectors);
 				Output->Text += vResult.getResult();
@@ -354,7 +354,7 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			else if (userCommand[0] == "Norm") {
 				vResult = calV(userCommand[1], vectors);
 				double db = norm(vResult);
-				Output->Text += db + System::Environment::NewLine;;
+				Output->Text += db + System::Environment::NewLine;
 			}
 			else if (userCommand[0]== "Normal") {
 				vResult = calV(userCommand[1], vectors);
@@ -433,13 +433,15 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 				for (int i = 1; i < userCommand.size();i++) {
 					varr.push_back(calV(userCommand[i],vectors));
 				}
-				//op = Ob(varr.size(),varr);
-
+				op = Ob(varr);
+				for (auto i:op) {
+					Output->Text += i.getResult();
+				}
 			}
 			else if (userCommand[0]== "calM") {
 				mResult = calM(userCommand[1],matrices);
 				//Output->Text += .getResult();
-			}if (userCommand[0] == "printM") {
+			}else if (userCommand[0] == "printM") {
 				mResult = calM(userCommand[1], matrices);
 				Output->Text += mResult.getResult();
 			}
@@ -474,7 +476,14 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			}
 			else if (userCommand[0] == "eigen") {
 
-			}else
+			}
+			else if (userCommand[0] == "LeastSquare") {
+				m = calM(userCommand[1], matrices);
+				m1 = calM(userCommand[2], matrices);
+				mResult = LeastSquare(m,m1);
+				Output->Text += mResult.getResult();
+			}
+			else
 			{
 				Output->Text += "-Command not found-" + Environment::NewLine;
 			}
