@@ -116,7 +116,7 @@ namespace WindowsFormsApplication_cpp {
 			// LoadVectorToolStripMenuItem
 			// 
 			this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(133, 22);
 			this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
 			// 
@@ -220,7 +220,7 @@ namespace WindowsFormsApplication_cpp {
 			this->Output->Multiline = true;
 			this->Output->Name = L"Output";
 			this->Output->ReadOnly = true;
-			this->Output->Size = System::Drawing::Size(340, 457);
+			this->Output->Size = System::Drawing::Size(354, 457);
 			this->Output->TabIndex = 1;
 			// 
 			// openFileDialog1
@@ -464,7 +464,7 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			else if (userCommand[0] == "Det") {
 				mResult = calM(userCommand[1], matrices);
 				double db = determinants(mResult);
-				Output->Text += db + System::Environment::NewLine;
+				Output->Text += db + Environment::NewLine;
 			}
 			else if (userCommand[0] == "Inverse") {
 				mResult = calM(userCommand[1],matrices);
@@ -472,10 +472,27 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 				Output->Text += mResult.getResult();
 			}
 			else if (userCommand[0] == "Adj") {
-
+				mResult = calM(userCommand[1], matrices);
+				mResult = Adj(mResult);
+				Output->Text += mResult.getResult();
+			}
+			else if (userCommand[0] == "PM") {
+				mResult = calM(userCommand[1], matrices);
+				double db=0;
+				mResult = pm(mResult,db);
+				Output->Text += "v="+ System::Environment::NewLine + mResult.getResult()+ System::Environment::NewLine;
+				Output->Text += "d=" + System::Environment::NewLine + db + System::Environment::NewLine;
 			}
 			else if (userCommand[0] == "eigen") {
+			
+			}
+			else if (userCommand[0] == "rref") {
+				
+				mResult = calM(userCommand[1], matrices);
 
+				std::vector<Matrix> result= rref(mResult);
+				Output->Text += result[1].getResult() + System::Environment::NewLine;
+				Output->Text += result[0].getResult() + System::Environment::NewLine;
 			}
 			else if (userCommand[0] == "LeastSquare") {
 				m = calM(userCommand[1], matrices);
