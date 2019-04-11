@@ -59,6 +59,7 @@ std::string IntoPost(std::string str) {
 	return postfix;
 }
 Vector calV(std::string str, std::vector<Vector> vectors) {
+	if (vectors.size() == 0)throw Vectors_empty;
 	str = IntoPost(str);
 	std::vector<Vector> stack;
 	for (int i = 0; i < str.length(); i++) {
@@ -90,6 +91,7 @@ Vector calV(std::string str, std::vector<Vector> vectors) {
 
 Matrix calM(std::string str, std::vector<Matrix> matrices)
 {
+	if (matrices.size() == 0)throw Matrices_empty;
 	str = IntoPost(str);
 	std::vector<Matrix> stack;
 	for (int i = 0; i < str.length(); i++) {
@@ -125,8 +127,8 @@ Vector getV(std::string str, std::vector<Vector> vectors)
 	for (auto i : vectors) {
 		if (i.Name == str)return i;
 	}
-	int VnameError = 1;
-	throw VnameError;
+	
+	throw Vector_name_error;
 	return Vector();
 }
 
@@ -135,7 +137,6 @@ Matrix getM(std::string str, std::vector<Matrix> matrices)
 	for (auto i : matrices) {
 		if (i.Name == str)return i;
 	}
-	int MnameError = 2;
-	throw MnameError;
+	throw Matrix_name_error;
 	return Matrix();
 }

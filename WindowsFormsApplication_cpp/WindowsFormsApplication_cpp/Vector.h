@@ -2,6 +2,7 @@
 #define PI 3.14159265
 #define misRange 0.000000001
 #include<vector>
+#include"Error.h"
 class Vector
 {
 public:

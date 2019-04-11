@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="DotNetUtilities.h" />
+    <ClInclude Include="Error.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="WindowsForm.h">

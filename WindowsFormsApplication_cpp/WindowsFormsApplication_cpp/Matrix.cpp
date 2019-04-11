@@ -34,6 +34,7 @@ System::String ^ Matrix::getResult()
 
 const Matrix operator+(const Matrix & x, const Matrix & y)
 {
+	if (x.row != y.row || x.col != y.col)throw M_Rank_different;
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; i++) {
 		for (int j = 0; j < x.col; j++) {
@@ -56,6 +57,9 @@ const Matrix operator-(const Matrix & x, const Matrix & y)
 
 const Matrix operator*(const Matrix & x, const Matrix & y)
 {
+	if (x.col != y.row) {
+		throw M_Rank_different;
+	}
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; ++i) {
 		for (int j = 0; j < y.col; ++j) {
@@ -181,10 +185,10 @@ const double determinants(Matrix  x)
 const Matrix inverse(Matrix x)
 {
 	int rL = rank(x);
-	int error;
-	if (rL < x.row) {
-		error = 1;
-		throw error;
+	
+	if (rL != x.row || x.row!=x.col) {
+		
+		throw no_Inverse;
 	}
 	std::vector<std::vector<double>> data(x.row);
 	Matrix m(data);
@@ -217,7 +221,7 @@ const Matrix inverse(Matrix x)
 					for (int i = 0; i < x.col; i++) {
 						x.Data[eli][i] -= x.Data[row][i] * r1 / r2;
 						m.Data[eli][i] -= m.Data[row][i] * r1 / r2;
-						if (x.Data[eli][i]<0.000000001 && x.Data[eli][i]>-0.000000001) {
+						if ( abs(x.Data[eli][i])  < misRange ) {
 							x.Data[eli][i] = 0;
 						}
 					}
@@ -301,7 +305,6 @@ const Matrix eigen(const Matrix & x,std::vector<double>&eigenValues)
 {	
 	std::vector<std::vector<double>> eigenVectors;
 	//std::vector<Matrix> result;
-	int eigen_Cant_zero = 0;
 	std::vector<double> tempEigenVector;
 	if (x.Data.size()==1) {
 		/*eigenValues.push_back(x.Data[0][0]);
@@ -365,6 +368,7 @@ const Matrix eigen(const Matrix & x,std::vector<double>&eigenValues)
 		eigenValues.push_back(qq*cos(agl/3)-a/3);
 		eigenValues.push_back(qq*cos(agl/3+2* M_PI /3) - a / 3);
 		eigenValues.push_back(qq*cos(agl/3-2* M_PI /3) - a / 3);
+		if ( eigenValues[0] == 0 || eigenValues[1] == 1 || eigenValues[2] == 2)throw eigen_Cant_zero;
 		for (int i = 0; i < 3; i++) {
 			M[i] = x;
 			M[i].Data[0][0] -= eigenValues[i];

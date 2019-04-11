@@ -222,6 +222,7 @@ namespace WindowsFormsApplication_cpp {
 			this->Output->Multiline = true;
 			this->Output->Name = L"Output";
 			this->Output->ReadOnly = true;
+			this->Output->ScrollBars = System::Windows::Forms::ScrollBars::Both;
 			this->Output->Size = System::Drawing::Size(449, 522);
 			this->Output->TabIndex = 1;
 			// 
@@ -282,181 +283,211 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 			Vector v,v1,vResult;
 			Matrix m, m1, mResult;
 			//字串比較，若指令為"print"的情況
-			Output->Text += userInput + System::Environment::NewLine;
-			if (userCommand[0]=="printV") {
-				vResult = calV(userCommand[1], vectors);
-				Output->Text += vResult.getResult();
-			}
-			else if (userCommand[0] == "calV") {
-				vResult = calV(userCommand[1],vectors);
-				Output->Text += vResult.getResult();
-			}
-			else if (userCommand[0] == "Norm") {
-				vResult = calV(userCommand[1], vectors);
-				double db = norm(vResult);
-				Output->Text += db + System::Environment::NewLine;
-			}
-			else if (userCommand[0]== "Normal") {
-				vResult = calV(userCommand[1], vectors);
-				vResult = normalization(vResult);
-				Output->Text += vResult.getResult();
-			}
-			else if (userCommand[0] == "Cross") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				vResult = crossProduct(v, v1);
-				Output->Text += vResult.getResult();
-			}
-			else if (userCommand[0]== "Com") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				vResult = component(v, v1);
-				Output->Text += vResult.getResult();
-			}
-			else if (userCommand[0]== "Proj") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				vResult = projection(v, v1);
-				Output->Text += vResult.getResult();
-			}
-			else if (userCommand[0]== "Area") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				double db = area(v,v1);
-				Output->Text += db+ System::Environment::NewLine;;
-			}
-			else if (userCommand[0] == "isParallel") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				if (isParallel(v, v1)) {
-					Output->Text += "Yes"+ System::Environment::NewLine;;
+			Output->Text += userInput + nL;
+			try {
+				if (userCommand[0] == "printV") {
+					vResult = calV(userCommand[1], vectors);
+					Output->Text += vResult.getResult();
 				}
-				else {
-					Output->Text += "No"+ System::Environment::NewLine;;
+				else if (userCommand[0] == "calV") {
+					vResult = calV(userCommand[1], vectors);
+					Output->Text += vResult.getResult();
 				}
-			}
-			else if (userCommand[0]== "isOrthogonal") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				if (isOrthogonal(v, v1)) {
-					Output->Text += "Yes" + System::Environment::NewLine;;
+				else if (userCommand[0] == "Norm") {
+					vResult = calV(userCommand[1], vectors);
+					double db = norm(vResult);
+					Output->Text += db + nL;
 				}
-				else {
-					Output->Text += "No" + System::Environment::NewLine;;
+				else if (userCommand[0] == "Normal") {
+					vResult = calV(userCommand[1], vectors);
+					vResult = normalization(vResult);
+					Output->Text += vResult.getResult();
 				}
-			}
-			else if (userCommand[0] == "angle") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				double db = angle(v, v1);
-				Output->Text += db + System::Environment::NewLine;;
-			}
-			else if (userCommand[0]== "PN") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				vResult = pN(v, v1);
-				Output->Text += vResult.getResult();
-			}
-			else if (userCommand[0]== "IsLI") {
-				v = calV(userCommand[1], vectors);
-				v1 = calV(userCommand[2], vectors);
-				if (isLI(v, v1)) {
-					Output->Text += "Yes" + System::Environment::NewLine;;
+				else if (userCommand[0] == "Cross") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					vResult = crossProduct(v, v1);
+					Output->Text += vResult.getResult();
 				}
-				else {
-					Output->Text += "No" + System::Environment::NewLine;;
+				else if (userCommand[0] == "Com") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					vResult = component(v, v1);
+					Output->Text += vResult.getResult();
 				}
-			}
-			else if (userCommand[0]== "Ob") {
-				std::vector<Vector> varr;
-				std::vector<Vector> op;
-				for (int i = 1; i < userCommand.size();i++) {
-					varr.push_back(calV(userCommand[i],vectors));
+				else if (userCommand[0] == "Proj") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					vResult = projection(v, v1);
+					Output->Text += vResult.getResult();
 				}
-				op = Ob(varr);
-				for (auto i:op) {
-					Output->Text += i.getResult();
+				else if (userCommand[0] == "Area") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					double db = area(v, v1);
+					Output->Text += db + nL;;
 				}
-			}
-			else if (userCommand[0]== "calM") {
-				mResult = calM(userCommand[1],matrices);
-				//Output->Text += .getResult();
-			}else if (userCommand[0] == "printM") {
-				mResult = calM(userCommand[1], matrices);
-				Output->Text += mResult.getResult();
-			}
-			else if (userCommand[0]== "Rank") {
-				mResult = calM(userCommand[1], matrices);
-				int rk = rank(mResult);
-				Output->Text += rk + System::Environment::NewLine;
-			}
-			else if (userCommand[0] == "Trans") {
-				mResult = calM(userCommand[1], matrices);
-				mResult = transpose(mResult);
-				Output->Text += mResult.getResult();
-			}
-			else if (userCommand[0] == "Sol") {
-				m = calM(userCommand[1], matrices);
-				m1 = calM(userCommand[2], matrices);
-				mResult = m / m1;
-				Output->Text += mResult.getResult();
-			}
-			else if (userCommand[0] == "Det") {
-				mResult = calM(userCommand[1], matrices);
-				double db = determinants(mResult);
-				Output->Text += db + Environment::NewLine;
-			}
-			else if (userCommand[0] == "Inverse") {
-				mResult = calM(userCommand[1],matrices);
-				mResult = inverse(mResult);
-				Output->Text += mResult.getResult();
-			}
-			else if (userCommand[0] == "Adj") {
-				mResult = calM(userCommand[1], matrices);
-				mResult = Adj(mResult);
-				Output->Text += mResult.getResult();
-			}
-			else if (userCommand[0] == "PM") {
-				mResult = calM(userCommand[1], matrices);
-				double db=0;
-				mResult = pm(mResult,db);
-				Output->Text += "v="+ System::Environment::NewLine + mResult.getResult()+ System::Environment::NewLine;
-				Output->Text += "d=" + System::Environment::NewLine + db + System::Environment::NewLine;
-			}
-			else if (userCommand[0] == "eigen") {
-				std::vector<double> eigenValues;
-				mResult = calM(userCommand[1], matrices);
-				mResult = eigen(mResult,eigenValues);
-				Output->Text += "v =" + nL+mResult.getResult()+nL+"d ="+nL;
-				for (int i = 0; i < eigenValues.size(); i++) {
-					for (int j = 0; j < eigenValues.size(); j++) {
-						if (i == j)Output->Text += eigenValues[i];
-						else Output->Text += 0;
-						Output->Text += "   ";
+				else if (userCommand[0] == "isParallel") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					if (isParallel(v, v1)) {
+						Output->Text += "Yes" + nL;;
 					}
-					Output->Text += nL;
+					else {
+						Output->Text += "No" + nL;;
+					}
 				}
-					
-			}
-			else if (userCommand[0] == "rref") {
-				
-				mResult = calM(userCommand[1], matrices);
+				else if (userCommand[0] == "isOrthogonal") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					if (isOrthogonal(v, v1)) {
+						Output->Text += "Yes" + nL;;
+					}
+					else {
+						Output->Text += "No" + nL;;
+					}
+				}
+				else if (userCommand[0] == "angle") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					double db = angle(v, v1);
+					Output->Text += "theta = "+db + nL;;
+				}
+				else if (userCommand[0] == "pN") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					vResult = pN(v, v1);
+					Output->Text += vResult.getResult();
+				}
+				else if (userCommand[0] == "IsLI") {
+					v = calV(userCommand[1], vectors);
+					v1 = calV(userCommand[2], vectors);
+					if (isLI(v, v1)) {
+						Output->Text += "Yes" + nL;;
+					}
+					else {
+						Output->Text += "No" + nL;;
+					}
+				}
+				else if (userCommand[0] == "Ob") {
+					std::vector<Vector> varr;
+					std::vector<Vector> op;
+					for (int i = 1; i < userCommand.size(); i++) {
+						varr.push_back(calV(userCommand[i], vectors));
+					}
+					op = Ob(varr);
+					for (auto i : op) {
+						Output->Text += i.getResult();
+					}
+				}
+				else if (userCommand[0] == "calM") {
+					mResult = calM(userCommand[1], matrices);
+					Output->Text += mResult.getResult();
+				}
+				else if (userCommand[0] == "printM") {
+					mResult = calM(userCommand[1], matrices);
+					Output->Text += mResult.getResult();
+				}
+				else if (userCommand[0] == "Rank") {
+					mResult = calM(userCommand[1], matrices);
+					int rk = rank(mResult);
+					Output->Text += rk + nL;
+				}
+				else if (userCommand[0] == "trans") {
+					mResult = calM(userCommand[1], matrices);
+					mResult = transpose(mResult);
+					Output->Text += mResult.getResult();
+				}
+				else if (userCommand[0] == "Sol") {
+					m = calM(userCommand[1], matrices);
+					m1 = calM(userCommand[2], matrices);
+					mResult = m / m1;
+					Output->Text += mResult.getResult();
+				}
+				else if (userCommand[0] == "det") {
+					mResult = calM(userCommand[1], matrices);
+					double db = determinants(mResult);
+					Output->Text += db + nL;
+				}
+				else if (userCommand[0] == "Inverse") {
+					mResult = calM(userCommand[1], matrices);
+					mResult = inverse(mResult);
+					Output->Text += mResult.getResult();
+				}
+				else if (userCommand[0] == "Adj") {
+					mResult = calM(userCommand[1], matrices);
+					mResult = Adj(mResult);
+					Output->Text += mResult.getResult();
+				}
+				else if (userCommand[0] == "PM") {
+					mResult = calM(userCommand[1], matrices);
+					double db = 0;
+					mResult = pm(mResult, db);
+					Output->Text += "v=" + nL + mResult.getResult() + nL;
+					Output->Text += "d=" + nL + db + nL;
+				}
+				else if (userCommand[0] == "eigen") {
+					std::vector<double> eigenValues;
+					mResult = calM(userCommand[1], matrices);
+					mResult = eigen(mResult, eigenValues);
+					Output->Text += "v =" + nL + mResult.getResult() + nL + "d =" + nL;
+					for (int i = 0; i < eigenValues.size(); i++) {
+						for (int j = 0; j < eigenValues.size(); j++) {
+							if (i == j)Output->Text += eigenValues[i];
+							else Output->Text += 0;
+							Output->Text += "   ";
+						}
+						Output->Text += nL;
+					}
 
-				std::vector<Matrix> result= rref(mResult);
-				Output->Text += result[1].getResult() + System::Environment::NewLine;
-				Output->Text += result[0].getResult() + System::Environment::NewLine;
+				}
+				else if (userCommand[0] == "rref") {
+
+					mResult = calM(userCommand[1], matrices);
+
+					std::vector<Matrix> result = rref(mResult);
+					Output->Text += result[1].getResult() + nL;
+					Output->Text += result[0].getResult() + nL;
+				}
+				else if (userCommand[0] == "LeastSquare") {
+					m = calM(userCommand[1], matrices);
+					m1 = calM(userCommand[2], matrices);
+					mResult = LeastSquare(m, m1);
+					Output->Text += mResult.getResult();
+				}
+				else
+				{
+					Output->Text += "-Command not found-" + nL;
+				}
+				userInput = "";
+
 			}
-			else if (userCommand[0] == "LeastSquare") {
-				m = calM(userCommand[1], matrices);
-				m1 = calM(userCommand[2], matrices);
-				mResult = LeastSquare(m,m1);
-				Output->Text += mResult.getResult();
+			catch (Error err) {
+				switch ( err)
+				{
+				case 0:
+					Output->Text += "Vector name error !" + nL;
+					break;
+				case 1:
+					Output->Text += "Matrix name error !" + nL;
+					break;
+				case 2:
+					Output->Text += "Vecotr rank difference  !" + nL;
+					break;
+				case 3:
+					Output->Text += "Matrix rank difference  !" + nL;
+					break;
+				case 4:
+					Output->Text += "Matrix no Inverse!" + nL;
+					break;
+				case 5:
+					Output->Text += "Eigen value can not be 0" + nL;
+					break;
+				default:
+					break;
+				}
 			}
-			else
-			{
-				Output->Text += "-Command not found-" + Environment::NewLine;
-			}
-			userInput = "";
+			
 		}
 		else
 		{

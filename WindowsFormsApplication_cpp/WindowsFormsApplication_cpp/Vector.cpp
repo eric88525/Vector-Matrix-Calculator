@@ -29,10 +29,10 @@ System::String^ Vector::getResult()
 
 
 const Vector operator+(const Vector &x, const Vector &y) {
-	int rankdiff;
+	
 	std::vector<double> data;
 	if (x.Data.size() != y.Data.size()) {
-		throw rankdiff;
+		throw V_rankdiff;
 	}
 	else {
 		for (int i = 0; i < x.Data.size(); i++) {
@@ -46,7 +46,7 @@ const Vector operator-(const Vector &x, const Vector &y) {
 	int rankdiff;
 	std::vector<double> data;
 	if (x.Data.size() != y.Data.size()) {
-		throw rankdiff;
+		throw V_rankdiff;
 	}
 	else {
 		for (int i = 0; i < x.Data.size(); i++) {
@@ -72,7 +72,7 @@ const Vector operator*(const Vector &x, const Vector &y) {
 		}
 	}
 	else if (x.Data.size() != y.Data.size()) {
-		throw rankdiff;
+		throw V_rankdiff;
 	}
 	else {
 		double sum = 0;
