@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#define _USE_MATH_DEFINES 
+#include<math.h>
 #define misRange 0.000000001
 class Matrix {
 public:
@@ -21,8 +23,7 @@ public:
 	friend const Matrix inverse(Matrix x);
 	friend const Matrix Adj(const Matrix &x);
 	friend const Matrix pm(const Matrix &x, double&);
-	friend const Matrix eigen(const Matrix &x);
-	friend const Matrix LeastSquare(const Matrix &x, const Matrix &y);
+	friend const Matrix eigen(const Matrix &x,std::vector<double>&);
 	friend const Matrix LeastSquare(const Matrix &x, const Matrix &y);
 	friend const std::vector<Matrix> rref( Matrix x);
 };

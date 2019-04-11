@@ -145,15 +145,10 @@ const double area(const Vector & x, const Vector & y)
 	return area;
 
 }
-
-
-
 const Vector pN(const Vector & x, const Vector & y)
 {
 	return crossProduct(x, y);
 }
-
-
 const bool isParallel(const Vector & x, const Vector & y)
 {
 	if (x.Data.size() != y.Data.size())return false;

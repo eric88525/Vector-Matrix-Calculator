@@ -23,7 +23,7 @@ System::String ^ Matrix::getResult()
 			//if (buff->Length > 8)buff = buff->Substring(0, 8);
 			outputTemp += buff;
 			if (c != col - 1)
-				outputTemp += ",";
+				outputTemp += " , ";
 		}
 		if (r != row - 1)
 			outputTemp += System::Environment::NewLine;
@@ -297,8 +297,106 @@ const Matrix pm(const Matrix & x,double &returnEv)
 	return xx;
 }
 
-const Matrix eigen(const Matrix & x)
+const Matrix eigen(const Matrix & x,std::vector<double>&eigenValues)
 {	
+	std::vector<std::vector<double>> eigenVectors;
+	//std::vector<Matrix> result;
+	int eigen_Cant_zero = 0;
+	std::vector<double> tempEigenVector;
+	if (x.Data.size()==1) {
+		/*eigenValues.push_back(x.Data[0][0]);
+		tempEigenVector.push_back(1);
+		eigenVectors.push_back(tempEigenVector);*/
+
+	}
+	else if (x.Data.size() == 2) {
+		
+		std::vector<Matrix> M(2);
+		std::vector<std::vector<double>> tempVector(2);
+		double X03 = x.Data[0][0] + x.Data[1][1]; 
+		double detX = determinants(x);
+		eigenValues.push_back((X03+sqrt(pow(X03,2)-4*detX ))/2);
+		eigenValues.push_back((X03-sqrt(pow(X03, 2) - 4 * detX))/2);
+		if (eigenValues[0] == 0 || eigenValues[1] == 0)throw eigen_Cant_zero;
+		for (int i = 0; i < 2;i++) {
+			M[i] = x;
+			M[i].Data[0][0] -= eigenValues[i]; M[i].Data[1][1] -= eigenValues[i];
+			if (M[i].Data[0][0]) {
+				double v[2];
+				v[0] = -M[i].Data[0][1];	
+				v[1] = M[i].Data[0][0];
+				double normD = sqrt(v[0]*v[0]+v[1]*v[1]);
+				v[0] /= normD; v[1] /= normD;
+				if (abs(v[0]) < misRange) {
+					v[0] = 0;
+				}
+				else if (abs(v[1]) < misRange) {
+					v[1] = 0;
+				}
+				tempVector[i].push_back(v[0]);
+				tempVector[i].push_back(v[1]);
+			}
+		}
+		 Matrix result(tempVector);
+		 result = transpose(result);
+		 return result;
+	}
+	else if (x.Data.size() == 3) {
+		double a, b, c, d, Q,R;
+		std::vector<Matrix> M(3);
+		std::vector<std::vector<double>> tempVector(3);
+		//--
+		a = x.Data[0][0] + x.Data[1][1] + x.Data[2][2];
+		a *= -1;
+
+		b = -1 * (x.Data[2][2] * (x.Data[0][0] + x.Data[1][1]) + x.Data[0][0] * x.Data[1][1])
+			+ (x.Data[0][2] * x.Data[2][0]) + (x.Data[1][2] * x.Data[2][1]) + (x.Data[0][1] * x.Data[1][0]);
+		b *= -1;
+
+		c = x.Data[0][0] * x.Data[1][1] * x.Data[2][2]
+			+ x.Data[1][0] * x.Data[2][1] * x.Data[0][2] + x.Data[0][1] * x.Data[1][2] * x.Data[2][0]
+			- (x.Data[0][2] * x.Data[1][1] * x.Data[2][0] + x.Data[0][0] * x.Data[1][2] * x.Data[2][1] + x.Data[1][0] * x.Data[0][1] * x.Data[2][2]);
+		c *= -1;
+		Q = (pow(a, 2) - 3 * b) / 9;
+		R = (2 * a*a*a - 9 * a*b + 27 * c) / 54;
+		//--
+		double agl = acos(R / sqrt(Q*Q*Q));
+		double qq = -2.0 * sqrt(Q);
+		eigenValues.push_back(qq*cos(agl/3)-a/3);
+		eigenValues.push_back(qq*cos(agl/3+2* M_PI /3) - a / 3);
+		eigenValues.push_back(qq*cos(agl/3-2* M_PI /3) - a / 3);
+		for (int i = 0; i < 3; i++) {
+			M[i] = x;
+			M[i].Data[0][0] -= eigenValues[i];
+			M[i].Data[1][1] -= eigenValues[i];
+			M[i].Data[2][2] -= eigenValues[i];
+			M[i] = rref(M[i])[0];
+			if (M[i].Data[0][0]) {
+				double v[3], t;
+				v[0] = (M[i].Data[1][1] * M[i].Data[0][2] - M[i].Data[1][2] * M[i].Data[0][1]) / M[i].Data[0][0];
+				v[1] = M[i].Data[1][2];
+				v[2] = -M[i].Data[1][1];
+				t = sqrt(v[0]* v[0]+ v[1]* v[1]+ v[2]* v[2]);
+				v[0] /= t; v[1] /= t; v[2] /= t;
+				for (int vv = 0; vv < 3; vv++) {
+					if (abs(v[vv]) < misRange) {
+						v[vv] = 0;
+					}
+					tempVector[vv].push_back(v[vv]);
+				}				
+			}
+		}
+		Matrix result(tempVector);
+		return result;
+
+	}
+
+
+
+
+
+
+
 
 	return Matrix();
 }
@@ -330,9 +428,10 @@ const std::vector<Matrix>  rref( Matrix  x)
 					r2 = x.Data[row][row + fixP];
 				for (int i = 0; i < x.col; i++) {
 					x.Data[eli][i] -= x.Data[row][i] * r1 / r2;
-					if (x.Data[eli][i]<misRange && x.Data[eli][i]>-misRange) {
+					if (abs(x.Data[eli][i])<misRange) {
 						x.Data[eli][i] = 0;
 					}
+					x.Data[eli][row + fixP] = 0;
 				}
 			}
 			int zz = 0;
