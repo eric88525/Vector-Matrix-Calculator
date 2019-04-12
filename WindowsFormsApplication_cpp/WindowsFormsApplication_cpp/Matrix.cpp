@@ -296,7 +296,7 @@ const Matrix pm(const Matrix & x,double &returnEv)
 		for (auto &i : xx.Data) {
 			i[0] /= d;
 		}
-	} while (fabs(d - temp) > 0.00001);
+	} while (fabs(d - temp) > misRange);
 	 returnEv = d;
 	return xx;
 }
@@ -305,12 +305,13 @@ const Matrix eigen(const Matrix & x,std::vector<double>&eigenValues)
 {	
 	std::vector<std::vector<double>> eigenVectors;
 	//std::vector<Matrix> result;
-	std::vector<double> tempEigenVector;
+	
 	if (x.Data.size()==1) {
-		/*eigenValues.push_back(x.Data[0][0]);
-		tempEigenVector.push_back(1);
-		eigenVectors.push_back(tempEigenVector);*/
-
+		std::vector<std::vector<double>> tempVector;
+		eigenValues.push_back(x.Data[0][0]);
+		tempVector[0].push_back(1);
+		Matrix result(tempVector);
+		return result;
 	}
 	else if (x.Data.size() == 2) {
 		
@@ -355,7 +356,6 @@ const Matrix eigen(const Matrix & x,std::vector<double>&eigenValues)
 		b = -1 * (x.Data[2][2] * (x.Data[0][0] + x.Data[1][1]) + x.Data[0][0] * x.Data[1][1])
 			+ (x.Data[0][2] * x.Data[2][0]) + (x.Data[1][2] * x.Data[2][1]) + (x.Data[0][1] * x.Data[1][0]);
 		b *= -1;
-
 		c = x.Data[0][0] * x.Data[1][1] * x.Data[2][2]
 			+ x.Data[1][0] * x.Data[2][1] * x.Data[0][2] + x.Data[0][1] * x.Data[1][2] * x.Data[2][0]
 			- (x.Data[0][2] * x.Data[1][1] * x.Data[2][0] + x.Data[0][0] * x.Data[1][2] * x.Data[2][1] + x.Data[1][0] * x.Data[0][1] * x.Data[2][2]);
@@ -363,12 +363,27 @@ const Matrix eigen(const Matrix & x,std::vector<double>&eigenValues)
 		Q = (pow(a, 2) - 3 * b) / 9;
 		R = (2 * a*a*a - 9 * a*b + 27 * c) / 54;
 		//--
-		double agl = acos(R / sqrt(Q*Q*Q));
-		double qq = -2.0 * sqrt(Q);
-		eigenValues.push_back(qq*cos(agl/3)-a/3);
-		eigenValues.push_back(qq*cos(agl/3+2* M_PI /3) - a / 3);
-		eigenValues.push_back(qq*cos(agl/3-2* M_PI /3) - a / 3);
-		if ( eigenValues[0] == 0 || eigenValues[1] == 1 || eigenValues[2] == 2)throw eigen_Cant_zero;
+		if (Q*Q*Q > R*R) {
+			double agl = acos(R / sqrt(Q*Q*Q));
+			double qq = -2.0 * sqrt(Q);
+			eigenValues.push_back(qq*cos(agl / 3) - a / 3);
+			eigenValues.push_back(qq*cos(agl / 3 + 2 * M_PI / 3) - a / 3);
+			eigenValues.push_back(qq*cos(agl / 3 - 2 * M_PI / 3) - a / 3);
+		}
+		/*else
+		{
+			double f, g, h, r, s, t, u;
+			f = (3 * c / a - b * b / a * a) / 3;
+			g = (2 * (b*b*b) / (a*a*a) - (9 * b*c) / (a*a) + (27 * d / a)) / 27;
+			h = (g*g / 4) + (f*f*f / 27);
+			r = -(g / 2) + sqrt(h);
+			s = pow(r, 1 / 3);
+			t = -(g / 2) - sqrt(h);
+			u = pow(t, 1 / 3);
+			eigenValues.push_back(s+u-(b/(3*a)));
+			eigenValues.push_back( -(s+u)/2 -(b/3a) + ) );	
+		}*/
+		if (eigenValues[0] == 0 || eigenValues[1] == 1 || eigenValues[2] == 2)throw eigen_Cant_zero;
 		for (int i = 0; i < 3; i++) {
 			M[i] = x;
 			M[i].Data[0][0] -= eigenValues[i];
@@ -394,14 +409,6 @@ const Matrix eigen(const Matrix & x,std::vector<double>&eigenValues)
 		return result;
 
 	}
-
-
-
-
-
-
-
-
 	return Matrix();
 }
 

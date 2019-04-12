@@ -483,6 +483,12 @@ private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^  sender,
 				case 5:
 					Output->Text += "Eigen value can not be 0" + nL;
 					break;
+				case 6:
+					Output->Text += "No vectors list" + nL;
+					break;
+				case 7:
+					Output->Text += "No matrices list" + nL;
+					break;
 				default:
 					break;
 				}
