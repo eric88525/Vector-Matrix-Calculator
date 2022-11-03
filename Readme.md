@@ -1,8 +1,6 @@
 
 
 # 工程數學 PJ1
-+ 陳哲緯
-+ 張浩民
 [GIT](https://github.com/eric88525/PJ1)
 
 # ==Vector==
