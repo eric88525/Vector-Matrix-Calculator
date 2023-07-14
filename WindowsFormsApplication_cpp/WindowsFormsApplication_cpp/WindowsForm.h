@@ -1,5 +1,6 @@
 #pragma once
 #include"DataManager.h"
+#include <string>
 #define nL System::Environment::NewLine
 //#define DEBUG
 Vector calV(std::string str, std::vector<Vector> vectors);
@@ -74,6 +75,7 @@ namespace WindowsFormsApplication_cpp {
 	private: System::Windows::Forms::ListBox^ VectorList;
 	private: System::Windows::Forms::TextBox^ Input;
 	private: System::Windows::Forms::Button^ runBtn;
+	private: System::Windows::Forms::Button^ clearOutputBtn;
 
 
 		   /// </summary>
@@ -86,19 +88,21 @@ namespace WindowsFormsApplication_cpp {
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
+			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(WindowsForm::typeid));
 			   this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
 			   this->FileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->LoadVectorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			   this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			   this->VectorLabel = (gcnew System::Windows::Forms::Label());
+			   this->clearBtn = (gcnew System::Windows::Forms::Button());
 			   this->VectorList = (gcnew System::Windows::Forms::ListBox());
 			   this->InputLabel = (gcnew System::Windows::Forms::Label());
 			   this->Input = (gcnew System::Windows::Forms::TextBox());
-			   this->clearBtn = (gcnew System::Windows::Forms::Button());
 			   this->runBtn = (gcnew System::Windows::Forms::Button());
 			   this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			   this->OutputLabel = (gcnew System::Windows::Forms::Label());
+			   this->clearOutputBtn = (gcnew System::Windows::Forms::Button());
 			   this->Output = (gcnew System::Windows::Forms::TextBox());
 			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			   this->menuStrip2->SuspendLayout();
@@ -109,10 +113,12 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // menuStrip2
 			   // 
+			   this->menuStrip2->BackColor = System::Drawing::SystemColors::ButtonFace;
+			   this->menuStrip2->ImageScalingSize = System::Drawing::Size(20, 20);
 			   this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->FileToolStripMenuItem });
 			   this->menuStrip2->Location = System::Drawing::Point(0, 0);
 			   this->menuStrip2->Name = L"menuStrip2";
-			   this->menuStrip2->Size = System::Drawing::Size(1091, 28);
+			   this->menuStrip2->Size = System::Drawing::Size(1455, 33);
 			   this->menuStrip2->TabIndex = 1;
 			   this->menuStrip2->Text = L"menuStrip2";
 			   // 
@@ -122,14 +128,14 @@ namespace WindowsFormsApplication_cpp {
 			   this->FileToolStripMenuItem->Font = (gcnew System::Drawing::Font(L"Microsoft JhengHei UI", 12, System::Drawing::FontStyle::Regular,
 				   System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(136)));
 			   this->FileToolStripMenuItem->Name = L"FileToolStripMenuItem";
-			   this->FileToolStripMenuItem->Size = System::Drawing::Size(58, 24);
-			   this->FileToolStripMenuItem->Text = L"Load";
+			   this->FileToolStripMenuItem->Size = System::Drawing::Size(78, 29);
+			   this->FileToolStripMenuItem->Text = L"Open";
 			   this->FileToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::FileToolStripMenuItem_Click);
 			   // 
 			   // LoadVectorToolStripMenuItem
 			   // 
 			   this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(155, 24);
+			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(194, 30);
 			   this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			   this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
 			   // 
@@ -142,26 +148,28 @@ namespace WindowsFormsApplication_cpp {
 				   61.12511F)));
 			   this->tableLayoutPanel1->Controls->Add(this->flowLayoutPanel1, 1, 0);
 			   this->tableLayoutPanel1->Controls->Add(this->flowLayoutPanel2, 0, 0);
-			   this->tableLayoutPanel1->Location = System::Drawing::Point(0, 24);
+			   this->tableLayoutPanel1->Location = System::Drawing::Point(0, 30);
+			   this->tableLayoutPanel1->Margin = System::Windows::Forms::Padding(4);
 			   this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			   this->tableLayoutPanel1->RowCount = 1;
 			   this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-			   this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 491)));
-			   this->tableLayoutPanel1->Size = System::Drawing::Size(1093, 590);
+			   this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 614)));
+			   this->tableLayoutPanel1->Size = System::Drawing::Size(1457, 718);
 			   this->tableLayoutPanel1->TabIndex = 2;
 			   // 
 			   // flowLayoutPanel1
 			   // 
-			   this->flowLayoutPanel1->BackColor = System::Drawing::Color::Gainsboro;
+			   this->flowLayoutPanel1->BackColor = System::Drawing::Color::LightSteelBlue;
 			   this->flowLayoutPanel1->Controls->Add(this->VectorLabel);
+			   this->flowLayoutPanel1->Controls->Add(this->clearBtn);
 			   this->flowLayoutPanel1->Controls->Add(this->VectorList);
 			   this->flowLayoutPanel1->Controls->Add(this->InputLabel);
 			   this->flowLayoutPanel1->Controls->Add(this->Input);
-			   this->flowLayoutPanel1->Controls->Add(this->clearBtn);
 			   this->flowLayoutPanel1->Controls->Add(this->runBtn);
-			   this->flowLayoutPanel1->Location = System::Drawing::Point(427, 3);
+			   this->flowLayoutPanel1->Location = System::Drawing::Point(570, 4);
+			   this->flowLayoutPanel1->Margin = System::Windows::Forms::Padding(4);
 			   this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			   this->flowLayoutPanel1->Size = System::Drawing::Size(652, 584);
+			   this->flowLayoutPanel1->Size = System::Drawing::Size(862, 710);
 			   this->flowLayoutPanel1->TabIndex = 0;
 			   // 
 			   // VectorLabel
@@ -170,11 +178,26 @@ namespace WindowsFormsApplication_cpp {
 			   this->VectorLabel->AutoSize = true;
 			   this->VectorLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   this->VectorLabel->Location = System::Drawing::Point(3, 0);
+			   this->VectorLabel->Location = System::Drawing::Point(4, 15);
+			   this->VectorLabel->Margin = System::Windows::Forms::Padding(4, 0, 2, 0);
 			   this->VectorLabel->Name = L"VectorLabel";
-			   this->VectorLabel->Size = System::Drawing::Size(90, 31);
+			   this->VectorLabel->Size = System::Drawing::Size(113, 38);
 			   this->VectorLabel->TabIndex = 2;
 			   this->VectorLabel->Text = L"Vector";
+			   // 
+			   // clearBtn
+			   // 
+			   this->clearBtn->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"clearBtn.BackgroundImage")));
+			   this->clearBtn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			   this->clearBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(136)));
+			   this->clearBtn->Location = System::Drawing::Point(146, 4);
+			   this->clearBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
+			   this->clearBtn->Name = L"clearBtn";
+			   this->clearBtn->Size = System::Drawing::Size(60, 60);
+			   this->clearBtn->TabIndex = 6;
+			   this->clearBtn->UseVisualStyleBackColor = true;
+			   this->clearBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearBtn_Click);
 			   // 
 			   // VectorList
 			   // 
@@ -182,11 +205,11 @@ namespace WindowsFormsApplication_cpp {
 			   this->VectorList->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
 			   this->VectorList->FormattingEnabled = true;
-			   this->VectorList->ItemHeight = 19;
-			   this->VectorList->Location = System::Drawing::Point(5, 34);
-			   this->VectorList->Margin = System::Windows::Forms::Padding(5, 3, 5, 3);
+			   this->VectorList->ItemHeight = 24;
+			   this->VectorList->Location = System::Drawing::Point(10, 72);
+			   this->VectorList->Margin = System::Windows::Forms::Padding(10, 4, 10, 4);
 			   this->VectorList->Name = L"VectorList";
-			   this->VectorList->Size = System::Drawing::Size(642, 251);
+			   this->VectorList->Size = System::Drawing::Size(835, 340);
 			   this->VectorList->TabIndex = 7;
 			   // 
 			   // InputLabel
@@ -195,47 +218,35 @@ namespace WindowsFormsApplication_cpp {
 			   this->InputLabel->AutoSize = true;
 			   this->InputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   this->InputLabel->Location = System::Drawing::Point(3, 288);
+			   this->InputLabel->Location = System::Drawing::Point(4, 416);
+			   this->InputLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			   this->InputLabel->Name = L"InputLabel";
-			   this->InputLabel->Size = System::Drawing::Size(76, 31);
+			   this->InputLabel->Size = System::Drawing::Size(95, 38);
 			   this->InputLabel->TabIndex = 0;
 			   this->InputLabel->Text = L"Input";
-			   this->InputLabel->Click += gcnew System::EventHandler(this, &WindowsForm::InputLabel_Click);
 			   // 
 			   // Input
 			   // 
 			   this->Input->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			   this->Input->BackColor = System::Drawing::SystemColors::Menu;
+			   this->Input->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::Suggest;
+			   this->Input->BackColor = System::Drawing::SystemColors::Window;
 			   this->Input->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   this->Input->Location = System::Drawing::Point(3, 322);
+			   this->Input->Location = System::Drawing::Point(10, 458);
+			   this->Input->Margin = System::Windows::Forms::Padding(10, 4, 10, 4);
 			   this->Input->Multiline = true;
 			   this->Input->Name = L"Input";
-			   this->Input->Size = System::Drawing::Size(648, 200);
+			   this->Input->Size = System::Drawing::Size(835, 173);
 			   this->Input->TabIndex = 8;
-			   this->Input->TextChanged += gcnew System::EventHandler(this, &WindowsForm::Input_TextChanged);
-			   // 
-			   // clearBtn
-			   // 
-			   this->clearBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->clearBtn->Location = System::Drawing::Point(20, 528);
-			   this->clearBtn->Margin = System::Windows::Forms::Padding(20, 3, 3, 3);
-			   this->clearBtn->Name = L"clearBtn";
-			   this->clearBtn->Size = System::Drawing::Size(128, 44);
-			   this->clearBtn->TabIndex = 6;
-			   this->clearBtn->Text = L"Clear";
-			   this->clearBtn->UseVisualStyleBackColor = true;
-			   this->clearBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearBtn_Click);
 			   // 
 			   // runBtn
 			   // 
 			   this->runBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   this->runBtn->Location = System::Drawing::Point(171, 528);
-			   this->runBtn->Margin = System::Windows::Forms::Padding(20, 3, 3, 3);
+			   this->runBtn->Location = System::Drawing::Point(27, 639);
+			   this->runBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
 			   this->runBtn->Name = L"runBtn";
-			   this->runBtn->Size = System::Drawing::Size(128, 44);
+			   this->runBtn->Size = System::Drawing::Size(171, 53);
 			   this->runBtn->TabIndex = 9;
 			   this->runBtn->Text = L"Run";
 			   this->runBtn->UseVisualStyleBackColor = true;
@@ -243,12 +254,14 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // flowLayoutPanel2
 			   // 
-			   this->flowLayoutPanel2->BackColor = System::Drawing::Color::Gainsboro;
+			   this->flowLayoutPanel2->BackColor = System::Drawing::Color::LightSteelBlue;
 			   this->flowLayoutPanel2->Controls->Add(this->OutputLabel);
+			   this->flowLayoutPanel2->Controls->Add(this->clearOutputBtn);
 			   this->flowLayoutPanel2->Controls->Add(this->Output);
-			   this->flowLayoutPanel2->Location = System::Drawing::Point(3, 3);
+			   this->flowLayoutPanel2->Location = System::Drawing::Point(4, 4);
+			   this->flowLayoutPanel2->Margin = System::Windows::Forms::Padding(4);
 			   this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
-			   this->flowLayoutPanel2->Size = System::Drawing::Size(418, 577);
+			   this->flowLayoutPanel2->Size = System::Drawing::Size(557, 710);
 			   this->flowLayoutPanel2->TabIndex = 1;
 			   // 
 			   // OutputLabel
@@ -257,22 +270,38 @@ namespace WindowsFormsApplication_cpp {
 			   this->OutputLabel->AutoSize = true;
 			   this->OutputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->OutputLabel->Location = System::Drawing::Point(3, 0);
+			   this->OutputLabel->Location = System::Drawing::Point(4, 15);
+			   this->OutputLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			   this->OutputLabel->Name = L"OutputLabel";
-			   this->OutputLabel->Size = System::Drawing::Size(96, 30);
+			   this->OutputLabel->Size = System::Drawing::Size(118, 38);
 			   this->OutputLabel->TabIndex = 0;
 			   this->OutputLabel->Text = L"Output";
+			   // 
+			   // clearOutputBtn
+			   // 
+			   this->clearOutputBtn->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"clearOutputBtn.BackgroundImage")));
+			   this->clearOutputBtn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			   this->clearOutputBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(136)));
+			   this->clearOutputBtn->Location = System::Drawing::Point(153, 4);
+			   this->clearOutputBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
+			   this->clearOutputBtn->Name = L"clearOutputBtn";
+			   this->clearOutputBtn->Size = System::Drawing::Size(60, 60);
+			   this->clearOutputBtn->TabIndex = 10;
+			   this->clearOutputBtn->UseVisualStyleBackColor = true;
+			   this->clearOutputBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearOutputBtn_Click);
 			   // 
 			   // Output
 			   // 
 			   this->Output->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Output->Location = System::Drawing::Point(3, 33);
+			   this->Output->Location = System::Drawing::Point(4, 72);
+			   this->Output->Margin = System::Windows::Forms::Padding(4);
 			   this->Output->Multiline = true;
 			   this->Output->Name = L"Output";
 			   this->Output->ReadOnly = true;
 			   this->Output->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-			   this->Output->Size = System::Drawing::Size(415, 544);
+			   this->Output->Size = System::Drawing::Size(552, 644);
 			   this->Output->TabIndex = 1;
 			   // 
 			   // openFileDialog1
@@ -282,11 +311,12 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // WindowsForm
 			   // 
-			   this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
+			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 15);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			   this->ClientSize = System::Drawing::Size(1091, 616);
+			   this->ClientSize = System::Drawing::Size(1455, 748);
 			   this->Controls->Add(this->tableLayoutPanel1);
 			   this->Controls->Add(this->menuStrip2);
+			   this->Margin = System::Windows::Forms::Padding(4);
 			   this->Name = L"WindowsForm";
 			   this->Text = L"VectorExample";
 			   this->Load += gcnew System::EventHandler(this, &WindowsForm::WindowsForm_Load);
@@ -304,14 +334,13 @@ namespace WindowsFormsApplication_cpp {
 #pragma endregion
 
 	private: System::Void WindowsForm_Load(System::Object^ sender, System::EventArgs^ e) {
+
+		this->Input->AutoCompleteSource = System::Windows::Forms::AutoCompleteSource::CustomSource;
 	}
 	private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		//開啟Dialog
 		openFileDialog1->ShowDialog();
-	}
-	private: System::Void Input_TextChanged(System::Object^ sender, System::EventArgs^ e)
-	{
 	}
 	private: System::Void openFileDialog1_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e)
 	{
@@ -333,15 +362,15 @@ namespace WindowsFormsApplication_cpp {
 				for (unsigned int i = 0; i < vectors.size(); i++)
 				{
 					//將檔案名稱存入暫存
-					std::string tempString = vectors[i].Name;
+					std::string tempString = vectors[i].name;
 					//將輸出格式存入暫存
 					tempString += " [";
 					//將輸出資料存入暫存
-					for (unsigned int j = 0; j < vectors[i].Data.size(); j++)
+					for (unsigned int j = 0; j < vectors[i].data.size(); j++)
 					{
-						std::string scalarString = std::to_string(vectors[i].Data[j]);
+						std::string scalarString = std::to_string(vectors[i].data[j]);
 						tempString += scalarString.substr(0, scalarString.size() - 5);
-						if (j != vectors[i].Data.size() - 1)
+						if (j != vectors[i].data.size() - 1)
 							tempString += ", ";
 					}
 					//將輸出格式存入暫存
@@ -354,11 +383,11 @@ namespace WindowsFormsApplication_cpp {
 			else if (matrices.size()) {
 				for (auto i : matrices)
 				{
-					std::string tempString = i.Name;
+					std::string tempString = i.name;
 					tempString += " [";
 					for (int row = 0; row < i.row; row++) {
 						for (int col = 0; col < i.col; col++) {
-							std::string scalarString = std::to_string(i.Data[row][col]);
+							std::string scalarString = std::to_string(i.data[row][col]);
 							tempString += scalarString.substr(0, scalarString.size() - 5);
 							if (!(row == i.row - 1 && col == i.col - 1))
 								tempString += ",";
@@ -371,9 +400,6 @@ namespace WindowsFormsApplication_cpp {
 			}
 		}
 	}
-	private: System::Void InputLabel_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-
 	private: System::Void FileToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void clearBtn_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -393,7 +419,7 @@ namespace WindowsFormsApplication_cpp {
 		{
 			//將使用者輸入字串(在userInput中)，依空白作切割
 			array<String^>^ inp = userInput->Split(' ', ',');
-			std::vector<std::string> userCommand(inp->Length), str;
+			std::vector<std::string> userCommand(inp->Length);
 
 			for (int s = 0; s < inp->Length; s++) {
 				MarshalString(inp[s], userCommand[s]);
@@ -406,69 +432,76 @@ namespace WindowsFormsApplication_cpp {
 			Matrix m, m1, mResult;
 			//字串比較，若指令為"print"的情況
 			Output->Text += userInput + nL;
+
+			std::string user_command = userCommand[0];
+
+			for (auto &c: user_command) {
+				c = tolower(c);
+			}
+
 			try {
-				if (userCommand[0] == "printV" || userCommand[0] == "calV") {
+				if (user_command == "printv" || user_command == "calv") {
 					vResult = calV(userCommand[1], vectors);
-					Output->Text += vResult.getResult();
+					Output->Text += vResult.GetResult();
 				}
-				else if (userCommand[0] == "Norm") {
+				else if (user_command == "norm") {
 					vResult = calV(userCommand[1], vectors);
-					double db = norm(vResult);
+					double db = Norm(vResult);
 					Output->Text += db + nL;
 				}
-				else if (userCommand[0] == "Normal") {
+				else if (user_command == "normal") {
 					vResult = calV(userCommand[1], vectors);
-					vResult = normalization(vResult);
-					Output->Text += vResult.getResult();
+					vResult = Normalization(vResult);
+					Output->Text += vResult.GetResult();
 				}
-				else if (userCommand[0] == "Cross" || userCommand[0] == "Com" || userCommand[0] == "Proj") {
+				else if (user_command == "cross" || user_command == "com" || user_command == "proj") {
 					v = calV(userCommand[1], vectors);
 					v1 = calV(userCommand[2], vectors);
-					if (userCommand[0] == "Cross") {
-						vResult = crossProduct(v, v1);
+					if (user_command == "cross") {
+						vResult = CrossProduct(v, v1);
 					}
-					else if (userCommand[0] == "Com") {
-						vResult = component(v, v1);
+					else if (user_command == "com") {
+						vResult = ::Component(v, v1);
 					}
 					else {
-						vResult = projection(v, v1);
+						vResult = Projection(v, v1);
 					}
-					Output->Text += vResult.getResult();
+					Output->Text += vResult.GetResult();
 				}
-				else if (userCommand[0] == "Area") {
+				else if (user_command == "area") {
 					v = calV(userCommand[1], vectors);
 					v1 = calV(userCommand[2], vectors);
-					double db = area(v, v1);
+					double db = Area(v, v1);
 					Output->Text += db + nL;
 				}
-				else if (userCommand[0] == "isParallel" || userCommand[0] == "isOrthogonal") {
+				else if (user_command == "IsParallel" || user_command == "IsOrthogonal") {
 					v = calV(userCommand[1], vectors);
 					v1 = calV(userCommand[2], vectors);
-					if (userCommand[0] == "isParallel") {
-						Output->Text += (isParallel(v, v1) ? "Yes" : "No") + nL;
+					if (user_command == "IsParallel") {
+						Output->Text += (IsParallel(v, v1) ? "Yes" : "No") + nL;
 					}
 					else {
-						Output->Text += (isOrthogonal(v, v1) ? "Yes" : "No") + nL;
+						Output->Text += (IsOrthogonal(v, v1) ? "Yes" : "No") + nL;
 					}
 				}
-				else if (userCommand[0] == "angle") {
+				else if (user_command == "Angle") {
 					v = calV(userCommand[1], vectors);
 					v1 = calV(userCommand[2], vectors);
-					double db = angle(v, v1);
+					double db = Angle(v, v1);
 					Output->Text += "theta = " + db + nL;
 				}
-				else if (userCommand[0] == "pN" || userCommand[0] == "IsLI") {
+				else if (user_command == "PN" || user_command == "IsLI") {
 					v = calV(userCommand[1], vectors);
 					v1 = calV(userCommand[2], vectors);
-					if (userCommand[0] == "pN") {
-						vResult = pN(v, v1);
-						Output->Text += vResult.getResult();
+					if (user_command == "PN") {
+						vResult = PN(v, v1);
+						Output->Text += vResult.GetResult();
 					}
 					else {
-						Output->Text += (isLI(v, v1) ? "Yes" : "No") + nL;
+						Output->Text += (IsLI(v, v1) ? "Yes" : "No") + nL;
 					}
 				}
-				else if (userCommand[0] == "Ob") {
+				else if (user_command == "Ob") {
 					std::vector<Vector> varr;
 					std::vector<Vector> op;
 					for (int i = 1; i < userCommand.size(); i++) {
@@ -476,56 +509,56 @@ namespace WindowsFormsApplication_cpp {
 					}
 					op = Ob(varr);
 					for (auto i : op) {
-						Output->Text += i.getResult();
+						Output->Text += i.GetResult();
 					}
 				}
-				else if (userCommand[0] == "calM" || userCommand[0] == "printM") {
+				else if (user_command == "calM" || user_command == "printM") {
 					mResult = calM(userCommand[1], matrices);
-					Output->Text += mResult.getResult();
+					Output->Text += mResult.GetResult();
 				}
-				else if (userCommand[0] == "Rank") {
+				else if (user_command == "Rank") {
 					mResult = calM(userCommand[1], matrices);
-					int rk = rank(mResult);
+					int rk = Rank(mResult);
 					Output->Text += rk + nL;
 				}
-				else if (userCommand[0] == "trans") {
+				else if (user_command == "trans") {
 					mResult = calM(userCommand[1], matrices);
-					mResult = transpose(mResult);
-					Output->Text += mResult.getResult();
+					mResult = Transpose(mResult);
+					Output->Text += mResult.GetResult();
 				}
-				else if (userCommand[0] == "Sol") {
+				else if (user_command == "Sol") {
 					m = calM(userCommand[1], matrices);
 					m1 = calM(userCommand[2], matrices);
 					mResult = m / m1;
-					Output->Text += mResult.getResult();
+					Output->Text += mResult.GetResult();
 				}
-				else if (userCommand[0] == "det") {
+				else if (user_command == "det") {
 					mResult = calM(userCommand[1], matrices);
-					double db = determinants(mResult);
+					double db = Determinants(mResult);
 					Output->Text += db + nL;
 				}
-				else if (userCommand[0] == "Inverse") {
+				else if (user_command == "Inverse") {
 					mResult = calM(userCommand[1], matrices);
-					mResult = inverse(mResult);
-					Output->Text += mResult.getResult();
+					mResult = Inverse(mResult);
+					Output->Text += mResult.GetResult();
 				}
-				else if (userCommand[0] == "Adj") {
+				else if (user_command == "Adj") {
 					mResult = calM(userCommand[1], matrices);
 					mResult = Adj(mResult);
-					Output->Text += mResult.getResult();
+					Output->Text += mResult.GetResult();
 				}
-				else if (userCommand[0] == "PM") {
+				else if (user_command == "PM") {
 					mResult = calM(userCommand[1], matrices);
 					double db = 0;
-					mResult = pm(mResult, db);
-					Output->Text += "v=" + nL + mResult.getResult() + nL;
+					mResult = Pm(mResult, db);
+					Output->Text += "v=" + nL + mResult.GetResult() + nL;
 					Output->Text += "d=" + nL + db + nL;
 				}
-				else if (userCommand[0] == "eigen") {
+				else if (user_command == "eigen") {
 					std::vector<double> eigenValues;
 					mResult = calM(userCommand[1], matrices);
-					mResult = eigen(mResult, eigenValues);
-					Output->Text += "v =" + nL + mResult.getResult() + nL + "d =" + nL;
+					mResult = Eigen(mResult, eigenValues);
+					Output->Text += "v =" + nL + mResult.GetResult() + nL + "d =" + nL;
 					for (int i = 0; i < eigenValues.size(); i++) {
 						for (int j = 0; j < eigenValues.size(); j++) {
 							Output->Text += (i == j ? eigenValues[i] : 0);
@@ -534,17 +567,17 @@ namespace WindowsFormsApplication_cpp {
 						Output->Text += nL;
 					}
 				}
-				else if (userCommand[0] == "rref") {
+				else if (user_command == "rref") {
 					mResult = calM(userCommand[1], matrices);
-					std::vector<Matrix> result = rref(mResult);
-					Output->Text += result[1].getResult() + nL;
-					Output->Text += result[0].getResult() + nL;
+					std::vector<Matrix> result = Rref(mResult);
+					Output->Text += result[1].GetResult() + nL;
+					Output->Text += result[0].GetResult() + nL;
 				}
-				else if (userCommand[0] == "LeastSquare") {
+				else if (user_command == "LeastSquare") {
 					m = calM(userCommand[1], matrices);
 					m1 = calM(userCommand[2], matrices);
 					mResult = LeastSquare(m, m1);
-					Output->Text += mResult.getResult();
+					Output->Text += mResult.GetResult();
 				}
 				else {
 					Output->Text += "[ERROR] Command not exist." + nL;
@@ -591,7 +624,10 @@ namespace WindowsFormsApplication_cpp {
 			//並將最後一行，作為目前使用者輸入指令
 			userInput = userCommand[userCommand->Length - 1];
 		}
-
+		Input->Text = "";
 	}
-	};
+	private: System::Void clearOutputBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		Output->Text = "";
+	}
+};
 }
