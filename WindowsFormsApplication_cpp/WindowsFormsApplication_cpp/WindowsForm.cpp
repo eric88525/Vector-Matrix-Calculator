@@ -16,33 +16,42 @@ int priority(char op) {
 	default:            return 0;
 	}
 }
+/**
+ * Converts an infix expression to postfix notation.
+ *
+ * @param str The infix expression to convert.
+ * @return The equivalent postfix expression.
+ */
 std::string IntoPost(std::string str) {
-	Vector v;
-	std::string stack = "";
-	std::string postfix = "";
+	Vector v;  // TODO: Document the purpose of the 'Vector v' variable.
+	std::string stack = "";  // The stack used for storing operators.
+	std::string postfix = "";  // The resulting postfix expression.
+
+	// Iterate through each character in the input string.
 	for (int i = 0; i < str.length(); i++) {
 		switch (str[i]) {
-		case '(':     // 運算子堆疊 	
+		case '(':  // Push '(' onto the operator stack.
 			stack.push_back(str[i]);
 			break;
 		case '+': case '-': case '*':
-
+			// Pop operators with higher or equal priority from the stack and append them to the postfix expression.
 			while (stack.length() && priority(stack[stack.length() - 1]) >= priority(str[i])) {
 				postfix.push_back(stack[stack.length() - 1]);
 				stack.pop_back();
 			}
-			stack.push_back(str[i]); // 存入堆疊 
+			stack.push_back(str[i]);  // Push the current operator onto the stack.
 			break;
 		case ')':
-			while (stack[stack.length() - 1] != '(') { // 遇 ) 輸出至 ( 
+			// Pop operators from the stack and append them to the postfix expression until '(' is encountered.
+			while (stack[stack.length() - 1] != '(') {
 				postfix.push_back(stack[stack.length() - 1]);
 				stack.pop_back();
 			}
-			if (stack[stack.length() - 1] == '(') stack.pop_back();
+			if (stack[stack.length() - 1] == '(') stack.pop_back();  // Remove the '(' from the stack.
 			break;
-		case '$':  // 運算元直接輸出 
-			while (str[i] != ']')
-			{
+		case '$':
+			// Append operands directly to the postfix expression.
+			while (str[i] != ']') {
 				postfix.push_back(str[i]);
 				i++;
 			}
@@ -52,12 +61,17 @@ std::string IntoPost(std::string str) {
 			break;
 		}
 	}
-	postfix += stack;
+
+	postfix += stack;  // Append any remaining operators in the stack to the postfix expression.
+
+	// Remove any remaining parentheses from the postfix expression.
 	for (int l = 0; l < postfix.length(); l++) {
-		if (postfix[l] == '(' || postfix[l] == ')')postfix.erase(l, 1);
+		if (postfix[l] == '(' || postfix[l] == ')') postfix.erase(l, 1);
 	}
-	return postfix;
+
+	return postfix;  // Return the converted postfix expression.
 }
+
 Vector calV(std::string str, std::vector<Vector> vectors) {
 	if (vectors.size() == 0)throw Vectors_empty;
 	str = IntoPost(str);
@@ -127,7 +141,6 @@ Vector getV(std::string str, std::vector<Vector> vectors)
 	for (auto i : vectors) {
 		if (i.Name == str)return i;
 	}
-	
 	throw Vector_name_error;
 	return Vector();
 }

@@ -547,35 +547,35 @@ namespace WindowsFormsApplication_cpp {
 					Output->Text += mResult.getResult();
 				}
 				else {
-					Output->Text += "-Command not found-" + nL;
+					Output->Text += "[ERROR] Command not exist." + nL;
 				}
 				userInput = "";
 			}
 			catch (Error err) {
 				switch (err) {
-				case 0:
-					Output->Text += "Vector name error !" + nL;
+				case Vector_name_error:
+					Output->Text += "[ERROR] Vector name error." + nL;
 					break;
-				case 1:
-					Output->Text += "Matrix name error !" + nL;
+				case Matrix_name_error:
+					Output->Text += "[ERROR] Matrix name error." + nL;
 					break;
-				case 2:
-					Output->Text += "Vecotr rank difference  !" + nL;
+				case V_rankdiff:
+					Output->Text += "[ERROR] Vector rank difference." + nL;
 					break;
-				case 3:
-					Output->Text += "Matrix rank difference  !" + nL;
+				case M_Rank_different:
+					Output->Text += "[ERROR] Matrix rank difference." + nL;
 					break;
-				case 4:
-					Output->Text += "Matrix no Inverse!" + nL;
+				case no_Inverse:
+					Output->Text += "[ERROR] Matrix no Inverse." + nL;
 					break;
-				case 5:
-					Output->Text += "Eigen value can not be 0" + nL;
+				case eigen_Cant_zero:
+					Output->Text += "[ERROR] Eigen value can not be 0." + nL;
 					break;
-				case 6:
-					Output->Text += "No vectors list" + nL;
+				case Vectors_empty:
+					Output->Text += "[ERROR] No vectors list." + nL;
 					break;
-				case 7:
-					Output->Text += "No matrices list" + nL;
+				case Matrices_empty:
+					Output->Text += "[ERROR] No matrices list." + nL;
 					break;
 				default:
 					break;
