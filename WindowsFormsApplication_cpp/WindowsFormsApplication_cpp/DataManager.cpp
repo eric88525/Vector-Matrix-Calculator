@@ -19,14 +19,14 @@ bool DataManager::LoadData()
 		return false;
 	}
 	else
-	{	
-		int currentLoadVectorID = 0, currentLoadMatrixID = 0,getTimes,tempRows,tempCols;		
+	{
+		int currentLoadVectorID = VectorCount(), currentLoadMatrixID = MatruxCount(), vector_dim, rows, cols;
 		std::string tempSring;
-		while (fin>>tempSring) {
+		while (fin >> tempSring) {
 			if (tempSring == "V") {
 				std::vector<double> tempVectorData;
-				fin >> getTimes;
-				for (int i = 0; i < getTimes;i++) {
+				fin >> vector_dim;
+				for (int i = 0; i < vector_dim; i++) {
 					double value;
 					fin >> value;
 					tempVectorData.push_back(value);
@@ -36,11 +36,11 @@ bool DataManager::LoadData()
 				tempVector.data = tempVectorData;
 				Vectors.push_back(tempVector);
 			}
-			else if (tempSring=="M") {	
-				fin >> tempRows >> tempCols;
-				std::vector<std::vector<double>> tempMatrixData(tempRows);
-				for (int i = 0; i < tempRows;i++) {
-					for (int j = 0; j < tempCols; j++) {
+			else if (tempSring == "M") {
+				fin >> rows >> cols;
+				std::vector<std::vector<double>> tempMatrixData(rows);
+				for (int i = 0; i < rows; i++) {
+					for (int j = 0; j < cols; j++) {
 						double value;
 						fin >> value;
 						tempMatrixData[i].push_back(value);
@@ -49,8 +49,8 @@ bool DataManager::LoadData()
 				Matrix tempMatrix;
 				tempMatrix.name = "$m" + std::to_string(currentLoadMatrixID++);
 				tempMatrix.data = tempMatrixData;
-				tempMatrix.row = tempRows;
-				tempMatrix.col = tempCols;
+				tempMatrix.row = rows;
+				tempMatrix.col = cols;
 				Matrices.push_back(tempMatrix);
 			}
 		}
@@ -63,13 +63,23 @@ std::vector<Vector> DataManager::GetVectors()
 	return Vectors;
 }
 
-std::vector<Matrix> DataManager::GetMatrices(){
+std::vector<Matrix> DataManager::GetMatrices() {
 	return Matrices;
 }
 
 void DataManager::SetFileName(std::string fileName)
 {
 	FileName = fileName;
+}
+
+int DataManager::VectorCount()
+{
+	return Vectors.size();
+}
+
+int DataManager::MatruxCount()
+{
+	return Matrices.size();
 }
 
 void DataManager::clear()

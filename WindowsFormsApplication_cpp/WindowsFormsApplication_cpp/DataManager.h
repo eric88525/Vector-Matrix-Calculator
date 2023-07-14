@@ -34,5 +34,7 @@ public:
 	//設置檔案路徑名稱
 	void SetFileName(std::string fileName);
 
+	int VectorCount();
+	int MatruxCount();
 	void clear();
 };
