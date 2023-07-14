@@ -138,7 +138,7 @@ Matrix calM(std::string str, std::vector<Matrix> matrices)
 Vector getV(std::string str, std::vector<Vector> vectors)
 {
 	for (auto i : vectors) {
-		if (i.Name == str)return i;
+		if (i.name == str)return i;
 	}
 	throw Vector_name_error;
 }
@@ -146,7 +146,7 @@ Vector getV(std::string str, std::vector<Vector> vectors)
 Matrix getM(std::string str, std::vector<Matrix> matrices)
 {
 	for (auto i : matrices) {
-		if (i.Name == str)return i;
+		if (i.name == str)return i;
 	}
 	throw Matrix_name_error;
 }

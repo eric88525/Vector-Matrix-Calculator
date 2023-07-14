@@ -32,8 +32,8 @@ bool DataManager::LoadData()
 					tempVectorData.push_back(value);
 				}
 				Vector tempVector;
-				tempVector.Name = "$v" + std::to_string(currentLoadVectorID++);
-				tempVector.Data = tempVectorData;
+				tempVector.name = "$v" + std::to_string(currentLoadVectorID++);
+				tempVector.data = tempVectorData;
 				Vectors.push_back(tempVector);
 			}
 			else if (tempSring=="M") {	
@@ -47,8 +47,8 @@ bool DataManager::LoadData()
 					}
 				}
 				Matrix tempMatrix;
-				tempMatrix.Name = "$m" + std::to_string(currentLoadMatrixID++);
-				tempMatrix.Data = tempMatrixData;
+				tempMatrix.name = "$m" + std::to_string(currentLoadMatrixID++);
+				tempMatrix.data = tempMatrixData;
 				tempMatrix.row = tempRows;
 				tempMatrix.col = tempCols;
 				Matrices.push_back(tempMatrix);
