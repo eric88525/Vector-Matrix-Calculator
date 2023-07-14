@@ -72,4 +72,10 @@ void DataManager::SetFileName(std::string fileName)
 	FileName = fileName;
 }
 
+void DataManager::clear()
+{
+	Vectors.clear();
+	Matrices.clear();
+}
+
 
