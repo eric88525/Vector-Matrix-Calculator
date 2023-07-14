@@ -1,0 +1,4 @@
+﻿  DataManager.cpp
+D:\vsprojects\PJ1\WindowsFormsApplication_cpp\WindowsFormsApplication_cpp\WindowsForm.h(437,29): warning C4965: 整數 0 的隱含 Box，請使用 nullptr 或明確轉換
+  DataManager.obj : 發現 MSIL 模組。MSIL 的累加連結已停用。正在執行完整連結
+  WindowsFormsApplication_cpp.vcxproj -> D:\vsprojects\PJ1\WindowsFormsApplication_cpp\x64\Debug\WindowsFormsApplication_cpp.exe

@@ -1,10 +1,15 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#define _USE_MATH_DEFINES 
 #include<math.h>
-#define misRange 0.000000001
 #include"Error.h"
+#include<string>
+
+
+#define M_PI 3.1415926
+#define misRange 0.000000001
+#define _USE_MATH_DEFINES 
+
 class Matrix {
 public:
 	std::string Name = "";

@@ -1,12 +1,13 @@
 #pragma once
-#define PI 3.14159265
-#define misRange 0.000000001
+#include<string>
 #include<vector>
 #include"Error.h"
+#define PI 3.14159265
+#define misRange 0.000000001
 class Vector
 {
 public:
-	std::string Name = "";
+	std::string Name;
 	std::vector<double> Data;
 	Vector() {};
 	Vector(std::vector<double> data);
