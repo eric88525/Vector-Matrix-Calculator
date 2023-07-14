@@ -96,11 +96,11 @@ namespace WindowsFormsApplication_cpp {
 			   this->InputLabel = (gcnew System::Windows::Forms::Label());
 			   this->Input = (gcnew System::Windows::Forms::TextBox());
 			   this->clearBtn = (gcnew System::Windows::Forms::Button());
+			   this->runBtn = (gcnew System::Windows::Forms::Button());
 			   this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			   this->OutputLabel = (gcnew System::Windows::Forms::Label());
 			   this->Output = (gcnew System::Windows::Forms::TextBox());
 			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
-			   this->runBtn = (gcnew System::Windows::Forms::Button());
 			   this->menuStrip2->SuspendLayout();
 			   this->tableLayoutPanel1->SuspendLayout();
 			   this->flowLayoutPanel1->SuspendLayout();
@@ -228,6 +228,19 @@ namespace WindowsFormsApplication_cpp {
 			   this->clearBtn->UseVisualStyleBackColor = true;
 			   this->clearBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearBtn_Click);
 			   // 
+			   // runBtn
+			   // 
+			   this->runBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(136)));
+			   this->runBtn->Location = System::Drawing::Point(171, 528);
+			   this->runBtn->Margin = System::Windows::Forms::Padding(20, 3, 3, 3);
+			   this->runBtn->Name = L"runBtn";
+			   this->runBtn->Size = System::Drawing::Size(128, 44);
+			   this->runBtn->TabIndex = 9;
+			   this->runBtn->Text = L"Run";
+			   this->runBtn->UseVisualStyleBackColor = true;
+			   this->runBtn->Click += gcnew System::EventHandler(this, &WindowsForm::runBtn_Click);
+			   // 
 			   // flowLayoutPanel2
 			   // 
 			   this->flowLayoutPanel2->BackColor = System::Drawing::Color::Gainsboro;
@@ -252,8 +265,8 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // Output
 			   // 
-			   this->Output->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
+			   this->Output->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
 			   this->Output->Location = System::Drawing::Point(3, 33);
 			   this->Output->Multiline = true;
 			   this->Output->Name = L"Output";
@@ -266,19 +279,6 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   this->openFileDialog1->FileName = L"openFileDialog1";
 			   this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &WindowsForm::openFileDialog1_FileOk);
-			   // 
-			   // runBtn
-			   // 
-			   this->runBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->runBtn->Location = System::Drawing::Point(171, 528);
-			   this->runBtn->Margin = System::Windows::Forms::Padding(20, 3, 3, 3);
-			   this->runBtn->Name = L"runBtn";
-			   this->runBtn->Size = System::Drawing::Size(128, 44);
-			   this->runBtn->TabIndex = 9;
-			   this->runBtn->Text = L"Run";
-			   this->runBtn->UseVisualStyleBackColor = true;
-			   this->runBtn->Click += gcnew System::EventHandler(this, &WindowsForm::runBtn_Click);
 			   // 
 			   // WindowsForm
 			   // 

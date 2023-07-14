@@ -133,7 +133,6 @@ Matrix calM(std::string str, std::vector<Matrix> matrices)
 		}
 	}
 	return stack[0];
-	return Matrix();
 }
 
 Vector getV(std::string str, std::vector<Vector> vectors)
@@ -142,7 +141,6 @@ Vector getV(std::string str, std::vector<Vector> vectors)
 		if (i.Name == str)return i;
 	}
 	throw Vector_name_error;
-	return Vector();
 }
 
 Matrix getM(std::string str, std::vector<Matrix> matrices)
@@ -151,5 +149,4 @@ Matrix getM(std::string str, std::vector<Matrix> matrices)
 		if (i.Name == str)return i;
 	}
 	throw Matrix_name_error;
-	return Matrix();
 }
