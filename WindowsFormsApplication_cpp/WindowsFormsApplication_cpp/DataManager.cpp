@@ -22,7 +22,6 @@ bool DataManager::LoadData()
 	{	
 		int currentLoadVectorID = 0, currentLoadMatrixID = 0,getTimes,tempRows,tempCols;		
 		std::string tempSring;
-		fin >> tempSring;
 		while (fin>>tempSring) {
 			if (tempSring == "V") {
 				std::vector<double> tempVectorData;
@@ -48,7 +47,7 @@ bool DataManager::LoadData()
 					}
 				}
 				Matrix tempMatrix;
-				tempMatrix.Name = "$m" + std::to_string(currentLoadVectorID++);
+				tempMatrix.Name = "$m" + std::to_string(currentLoadMatrixID++);
 				tempMatrix.Data = tempMatrixData;
 				tempMatrix.row = tempRows;
 				tempMatrix.col = tempCols;
