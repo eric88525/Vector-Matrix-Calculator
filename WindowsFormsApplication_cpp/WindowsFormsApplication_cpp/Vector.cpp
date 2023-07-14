@@ -110,7 +110,7 @@ const Vector Normalization(const Vector &x) {
 const Vector CrossProduct(const Vector & x, const Vector & y)
 {
 	double i = x.data[1] * y.data[2] - y.data[1] * x.data[2],
-		j = x.data[0] * y.data[2] - y.data[0] * x.data[2],
+		j = y.data[0] * x.data[2] - x.data[0] * y.data[2],
 		k = x.data[0] * y.data[1] - y.data[0] * x.data[1];
 	std::vector<double>data = { i,j,k };
 	return Vector(data);
