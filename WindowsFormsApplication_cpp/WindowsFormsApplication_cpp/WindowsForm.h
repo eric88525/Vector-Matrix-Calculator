@@ -56,7 +56,7 @@ namespace WindowsFormsApplication_cpp {
 	private: System::Windows::Forms::Label^  InputLabel;
 	private: System::Windows::Forms::TextBox^  Input;
 	private: System::Windows::Forms::Label^  VectorLabel;
-	private: System::Windows::Forms::ListBox^  VectorList;
+
 
 
 
@@ -69,7 +69,11 @@ namespace WindowsFormsApplication_cpp {
 			String^ userInput;
 			int lastInputLength;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
-			 /// </summary>
+	private: System::Windows::Forms::ListBox^ VectorList;
+	private: System::Windows::Forms::Button^ clearBtn;
+
+
+		   /// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
@@ -88,6 +92,7 @@ namespace WindowsFormsApplication_cpp {
 			this->Input = (gcnew System::Windows::Forms::TextBox());
 			this->VectorLabel = (gcnew System::Windows::Forms::Label());
 			this->VectorList = (gcnew System::Windows::Forms::ListBox());
+			this->clearBtn = (gcnew System::Windows::Forms::Button());
 			this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->OutputLabel = (gcnew System::Windows::Forms::Label());
 			this->Output = (gcnew System::Windows::Forms::TextBox());
@@ -103,21 +108,24 @@ namespace WindowsFormsApplication_cpp {
 			this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->FileToolStripMenuItem });
 			this->menuStrip2->Location = System::Drawing::Point(0, 0);
 			this->menuStrip2->Name = L"menuStrip2";
-			this->menuStrip2->Size = System::Drawing::Size(1079, 24);
+			this->menuStrip2->Size = System::Drawing::Size(1091, 28);
 			this->menuStrip2->TabIndex = 1;
 			this->menuStrip2->Text = L"menuStrip2";
 			// 
 			// FileToolStripMenuItem
 			// 
 			this->FileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->LoadVectorToolStripMenuItem });
+			this->FileToolStripMenuItem->Font = (gcnew System::Drawing::Font(L"Microsoft JhengHei UI", 12, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(136)));
 			this->FileToolStripMenuItem->Name = L"FileToolStripMenuItem";
-			this->FileToolStripMenuItem->Size = System::Drawing::Size(38, 20);
-			this->FileToolStripMenuItem->Text = L"File";
+			this->FileToolStripMenuItem->Size = System::Drawing::Size(58, 24);
+			this->FileToolStripMenuItem->Text = L"Load";
+			this->FileToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::FileToolStripMenuItem_Click);
 			// 
 			// LoadVectorToolStripMenuItem
 			// 
 			this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(133, 22);
+			this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(155, 24);
 			this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
 			// 
@@ -125,9 +133,9 @@ namespace WindowsFormsApplication_cpp {
 			// 
 			this->tableLayoutPanel1->ColumnCount = 2;
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				43.34975F)));
+				38.87489F)));
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				56.65025F)));
+				61.12511F)));
 			this->tableLayoutPanel1->Controls->Add(this->flowLayoutPanel1, 1, 0);
 			this->tableLayoutPanel1->Controls->Add(this->flowLayoutPanel2, 0, 0);
 			this->tableLayoutPanel1->Location = System::Drawing::Point(0, 24);
@@ -135,40 +143,45 @@ namespace WindowsFormsApplication_cpp {
 			this->tableLayoutPanel1->RowCount = 1;
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 491)));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(1079, 564);
+			this->tableLayoutPanel1->Size = System::Drawing::Size(1093, 590);
 			this->tableLayoutPanel1->TabIndex = 2;
 			// 
 			// flowLayoutPanel1
 			// 
+			this->flowLayoutPanel1->BackColor = System::Drawing::Color::Gainsboro;
 			this->flowLayoutPanel1->Controls->Add(this->InputLabel);
 			this->flowLayoutPanel1->Controls->Add(this->Input);
 			this->flowLayoutPanel1->Controls->Add(this->VectorLabel);
 			this->flowLayoutPanel1->Controls->Add(this->VectorList);
-			this->flowLayoutPanel1->Location = System::Drawing::Point(470, 3);
+			this->flowLayoutPanel1->Controls->Add(this->clearBtn);
+			this->flowLayoutPanel1->Location = System::Drawing::Point(427, 3);
 			this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			this->flowLayoutPanel1->Size = System::Drawing::Size(597, 558);
+			this->flowLayoutPanel1->Size = System::Drawing::Size(652, 584);
 			this->flowLayoutPanel1->TabIndex = 0;
 			// 
 			// InputLabel
 			// 
 			this->InputLabel->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->InputLabel->AutoSize = true;
-			this->InputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 9, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(136)));
-			this->InputLabel->Location = System::Drawing::Point(3, 95);
+			this->InputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(136)));
+			this->InputLabel->Location = System::Drawing::Point(3, 0);
 			this->InputLabel->Name = L"InputLabel";
-			this->InputLabel->Size = System::Drawing::Size(41, 16);
+			this->InputLabel->Size = System::Drawing::Size(76, 31);
 			this->InputLabel->TabIndex = 0;
 			this->InputLabel->Text = L"Input";
 			this->InputLabel->Click += gcnew System::EventHandler(this, &WindowsForm::InputLabel_Click);
 			// 
 			// Input
 			// 
-			this->Input->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->Input->Location = System::Drawing::Point(50, 3);
+			this->Input->Anchor = System::Windows::Forms::AnchorStyles::Top;
+			this->Input->BackColor = System::Drawing::SystemColors::Menu;
+			this->Input->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(136)));
+			this->Input->Location = System::Drawing::Point(3, 34);
 			this->Input->Multiline = true;
 			this->Input->Name = L"Input";
-			this->Input->Size = System::Drawing::Size(533, 200);
+			this->Input->Size = System::Drawing::Size(648, 200);
 			this->Input->TabIndex = 1;
 			this->Input->TextChanged += gcnew System::EventHandler(this, &WindowsForm::Input_TextChanged);
 			// 
@@ -176,54 +189,72 @@ namespace WindowsFormsApplication_cpp {
 			// 
 			this->VectorLabel->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->VectorLabel->AutoSize = true;
-			this->VectorLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 9, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(136)));
-			this->VectorLabel->Location = System::Drawing::Point(3, 359);
+			this->VectorLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(136)));
+			this->VectorLabel->Location = System::Drawing::Point(3, 237);
 			this->VectorLabel->Name = L"VectorLabel";
-			this->VectorLabel->Size = System::Drawing::Size(47, 16);
+			this->VectorLabel->Size = System::Drawing::Size(90, 31);
 			this->VectorLabel->TabIndex = 2;
 			this->VectorLabel->Text = L"Vector";
 			// 
 			// VectorList
 			// 
+			this->VectorList->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->VectorList->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(136)));
 			this->VectorList->FormattingEnabled = true;
-			this->VectorList->ItemHeight = 12;
-			this->VectorList->Location = System::Drawing::Point(56, 209);
+			this->VectorList->ItemHeight = 19;
+			this->VectorList->Location = System::Drawing::Point(5, 271);
+			this->VectorList->Margin = System::Windows::Forms::Padding(5, 3, 5, 3);
 			this->VectorList->Name = L"VectorList";
-			this->VectorList->Size = System::Drawing::Size(533, 316);
-			this->VectorList->TabIndex = 3;
+			this->VectorList->Size = System::Drawing::Size(642, 251);
+			this->VectorList->TabIndex = 5;
+			// 
+			// clearBtn
+			// 
+			this->clearBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(136)));
+			this->clearBtn->Location = System::Drawing::Point(20, 528);
+			this->clearBtn->Margin = System::Windows::Forms::Padding(20, 3, 3, 3);
+			this->clearBtn->Name = L"clearBtn";
+			this->clearBtn->Size = System::Drawing::Size(128, 44);
+			this->clearBtn->TabIndex = 6;
+			this->clearBtn->Text = L"Clear";
+			this->clearBtn->UseVisualStyleBackColor = true;
+			this->clearBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearBtn_Click);
 			// 
 			// flowLayoutPanel2
 			// 
+			this->flowLayoutPanel2->BackColor = System::Drawing::Color::Gainsboro;
 			this->flowLayoutPanel2->Controls->Add(this->OutputLabel);
 			this->flowLayoutPanel2->Controls->Add(this->Output);
 			this->flowLayoutPanel2->Location = System::Drawing::Point(3, 3);
 			this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
-			this->flowLayoutPanel2->Size = System::Drawing::Size(452, 558);
+			this->flowLayoutPanel2->Size = System::Drawing::Size(418, 577);
 			this->flowLayoutPanel2->TabIndex = 1;
 			// 
 			// OutputLabel
 			// 
 			this->OutputLabel->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->OutputLabel->AutoSize = true;
-			this->OutputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 9, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(136)));
+			this->OutputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->OutputLabel->Location = System::Drawing::Point(3, 0);
 			this->OutputLabel->Name = L"OutputLabel";
-			this->OutputLabel->Size = System::Drawing::Size(52, 16);
+			this->OutputLabel->Size = System::Drawing::Size(96, 30);
 			this->OutputLabel->TabIndex = 0;
 			this->OutputLabel->Text = L"Output";
 			// 
 			// Output
 			// 
-			this->Output->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->Output->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(136)));
-			this->Output->Location = System::Drawing::Point(3, 19);
+			this->Output->Location = System::Drawing::Point(3, 33);
 			this->Output->Multiline = true;
 			this->Output->Name = L"Output";
 			this->Output->ReadOnly = true;
 			this->Output->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-			this->Output->Size = System::Drawing::Size(449, 522);
+			this->Output->Size = System::Drawing::Size(415, 544);
 			this->Output->TabIndex = 1;
 			// 
 			// openFileDialog1
@@ -235,7 +266,7 @@ namespace WindowsFormsApplication_cpp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1079, 589);
+			this->ClientSize = System::Drawing::Size(1091, 616);
 			this->Controls->Add(this->tableLayoutPanel1);
 			this->Controls->Add(this->menuStrip2);
 			this->Name = L"WindowsForm";
@@ -535,7 +566,7 @@ private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::Co
 					std::string scalarString = std::to_string(vectors[i].Data[j]);
 					tempString += scalarString.substr(0, scalarString.size() - 5);
 					if (j != vectors[i].Data.size() - 1)
-						tempString += ",";
+						tempString += ", ";
 				}
 				//將輸出格式存入暫存
 				tempString += "]";
@@ -577,5 +608,13 @@ private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::Co
 private: System::Void InputLabel_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 
+private: System::Void FileToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void clearBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+	
+	VectorList->Items->Clear();
+	dataManager->clear();
+	Input->Text = "";
+}
 };
 }

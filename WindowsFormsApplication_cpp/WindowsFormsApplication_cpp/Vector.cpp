@@ -20,7 +20,7 @@ System::String^ Vector::getResult()
 		//if (buff->Length > 8)buff = buff->Substring(0, 8);
 		outputTemp += buff;
 		if (j != Data.size() - 1)
-			outputTemp += ",";
+			outputTemp += ", ";
 	}
 	outputTemp += "]" + System::Environment::NewLine;
 	return outputTemp;
