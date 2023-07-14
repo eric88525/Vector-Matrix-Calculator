@@ -16,9 +16,9 @@ System::String ^ Matrix::getResult()
 
 	System::String^ outputTemp = gcnew System::String(Name.c_str()) + " = " + System::Environment::NewLine;
 	outputTemp += "[";
-	for (unsigned int r = 0; r < row; r++)
+	for (int r = 0; r < row; r++)
 	{
-		for (unsigned int c = 0; c < col; c++) {
+		for (int c = 0; c < col; c++) {
 			System::String^ buff = Data[r][c].ToString();
 			//if (buff->Length > 8)buff = buff->Substring(0, 8);
 			outputTemp += buff;
