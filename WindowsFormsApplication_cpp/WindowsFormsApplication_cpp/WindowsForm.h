@@ -43,22 +43,22 @@ namespace WindowsFormsApplication_cpp {
 			}
 		}
 
-	private: System::Windows::Forms::MenuStrip^ menuStrip2;
-	private: System::Windows::Forms::ToolStripMenuItem^ FileToolStripMenuItem;
-
-	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
-	private: System::Windows::Forms::ToolStripMenuItem^ LoadVectorToolStripMenuItem;
 
 
 
-	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel1;
-	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel2;
-	private: System::Windows::Forms::Label^ OutputLabel;
-	private: System::Windows::Forms::TextBox^ Output;
 
-	private: System::Windows::Forms::Label^ InputLabel;
 
-	private: System::Windows::Forms::Label^ VectorLabel;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -73,11 +73,53 @@ namespace WindowsFormsApplication_cpp {
 		int lastInputLength;
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
 
-	private: System::Windows::Forms::Button^ clearBtn;
-	private: System::Windows::Forms::ListBox^ VectorList;
-	private: System::Windows::Forms::TextBox^ Input;
+
+
+
+
+
+
+
+
+
+
+
+	private: System::Windows::Forms::ToolStripMenuItem^ FileToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ LoadVectorToolStripMenuItem;
+	private: System::Windows::Forms::MenuStrip^ menuStrip2;
 	private: System::Windows::Forms::Button^ runBtn;
-	private: System::Windows::Forms::Button^ clearOutputBtn;
+
+
+
+	private: System::Windows::Forms::Button^ clearBtn;
+
+	private: System::Windows::Forms::TextBox^ Output;
+
+	private: System::Windows::Forms::Panel^ panel1;
+
+
+	private: System::Windows::Forms::Panel^ panel4;
+	private: System::Windows::Forms::Label^ InputLabel;
+	private: System::Windows::Forms::TextBox^ Input;
+
+	private: System::Windows::Forms::ListBox^ VectorList;
+	private: System::Windows::Forms::SplitContainer^ splitContainer1;
+	private: System::Windows::Forms::SplitContainer^ splitContainer2;
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Label^ label2;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 		   /// </summary>
@@ -91,104 +133,79 @@ namespace WindowsFormsApplication_cpp {
 		   void InitializeComponent(void)
 		   {
 			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(WindowsForm::typeid));
-			   this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
+			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			   this->FileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->LoadVectorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			   this->tableLayoutPanel1 = (gcnew System::Windows::Forms::TableLayoutPanel());
-			   this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			   this->VectorLabel = (gcnew System::Windows::Forms::Label());
+			   this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
+			   this->runBtn = (gcnew System::Windows::Forms::Button());
 			   this->clearBtn = (gcnew System::Windows::Forms::Button());
-			   this->VectorList = (gcnew System::Windows::Forms::ListBox());
+			   this->Output = (gcnew System::Windows::Forms::TextBox());
+			   this->panel1 = (gcnew System::Windows::Forms::Panel());
+			   this->panel4 = (gcnew System::Windows::Forms::Panel());
 			   this->InputLabel = (gcnew System::Windows::Forms::Label());
 			   this->Input = (gcnew System::Windows::Forms::TextBox());
-			   this->runBtn = (gcnew System::Windows::Forms::Button());
-			   this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			   this->OutputLabel = (gcnew System::Windows::Forms::Label());
-			   this->clearOutputBtn = (gcnew System::Windows::Forms::Button());
-			   this->Output = (gcnew System::Windows::Forms::TextBox());
-			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			   this->VectorList = (gcnew System::Windows::Forms::ListBox());
+			   this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
+			   this->splitContainer2 = (gcnew System::Windows::Forms::SplitContainer());
+			   this->label1 = (gcnew System::Windows::Forms::Label());
+			   this->label2 = (gcnew System::Windows::Forms::Label());
 			   this->menuStrip2->SuspendLayout();
-			   this->tableLayoutPanel1->SuspendLayout();
-			   this->flowLayoutPanel1->SuspendLayout();
-			   this->flowLayoutPanel2->SuspendLayout();
+			   this->panel4->SuspendLayout();
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
+			   this->splitContainer1->Panel1->SuspendLayout();
+			   this->splitContainer1->Panel2->SuspendLayout();
+			   this->splitContainer1->SuspendLayout();
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer2))->BeginInit();
+			   this->splitContainer2->Panel1->SuspendLayout();
+			   this->splitContainer2->Panel2->SuspendLayout();
+			   this->splitContainer2->SuspendLayout();
 			   this->SuspendLayout();
 			   // 
-			   // menuStrip2
+			   // openFileDialog1
 			   // 
-			   this->menuStrip2->BackColor = System::Drawing::SystemColors::ButtonFace;
-			   this->menuStrip2->ImageScalingSize = System::Drawing::Size(20, 20);
-			   this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->FileToolStripMenuItem });
-			   this->menuStrip2->Location = System::Drawing::Point(0, 0);
-			   this->menuStrip2->Name = L"menuStrip2";
-			   this->menuStrip2->Size = System::Drawing::Size(1455, 33);
-			   this->menuStrip2->TabIndex = 1;
-			   this->menuStrip2->Text = L"menuStrip2";
+			   this->openFileDialog1->FileName = L"openFileDialog1";
+			   this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &WindowsForm::openFileDialog1_FileOk);
 			   // 
 			   // FileToolStripMenuItem
 			   // 
 			   this->FileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->LoadVectorToolStripMenuItem });
-			   this->FileToolStripMenuItem->Font = (gcnew System::Drawing::Font(L"Microsoft JhengHei UI", 12, System::Drawing::FontStyle::Regular,
-				   System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(136)));
+			   this->FileToolStripMenuItem->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
 			   this->FileToolStripMenuItem->Name = L"FileToolStripMenuItem";
-			   this->FileToolStripMenuItem->Size = System::Drawing::Size(78, 29);
+			   this->FileToolStripMenuItem->Size = System::Drawing::Size(74, 32);
 			   this->FileToolStripMenuItem->Text = L"Open";
 			   this->FileToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::FileToolStripMenuItem_Click);
 			   // 
 			   // LoadVectorToolStripMenuItem
 			   // 
 			   this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(194, 30);
+			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(224, 32);
 			   this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			   this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
 			   // 
-			   // tableLayoutPanel1
+			   // menuStrip2
 			   // 
-			   this->tableLayoutPanel1->AutoSize = true;
-			   this->tableLayoutPanel1->BackColor = System::Drawing::Color::Transparent;
-			   this->tableLayoutPanel1->ColumnCount = 2;
-			   this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				   38.87489F)));
-			   this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				   61.12511F)));
-			   this->tableLayoutPanel1->Controls->Add(this->flowLayoutPanel1, 1, 0);
-			   this->tableLayoutPanel1->Controls->Add(this->flowLayoutPanel2, 0, 0);
-			   this->tableLayoutPanel1->Location = System::Drawing::Point(0, 30);
-			   this->tableLayoutPanel1->Margin = System::Windows::Forms::Padding(4);
-			   this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
-			   this->tableLayoutPanel1->RowCount = 1;
-			   this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-			   this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 614)));
-			   this->tableLayoutPanel1->Size = System::Drawing::Size(1460, 719);
-			   this->tableLayoutPanel1->TabIndex = 2;
+			   this->menuStrip2->BackColor = System::Drawing::SystemColors::Menu;
+			   this->menuStrip2->ImageScalingSize = System::Drawing::Size(20, 20);
+			   this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->FileToolStripMenuItem });
+			   this->menuStrip2->Location = System::Drawing::Point(0, 0);
+			   this->menuStrip2->Name = L"menuStrip2";
+			   this->menuStrip2->Size = System::Drawing::Size(1133, 36);
+			   this->menuStrip2->TabIndex = 1;
+			   this->menuStrip2->Text = L"menuStrip2";
 			   // 
-			   // flowLayoutPanel1
+			   // runBtn
 			   // 
-			   this->flowLayoutPanel1->AutoSize = true;
-			   this->flowLayoutPanel1->BackColor = System::Drawing::Color::LightSteelBlue;
-			   this->flowLayoutPanel1->Controls->Add(this->VectorLabel);
-			   this->flowLayoutPanel1->Controls->Add(this->clearBtn);
-			   this->flowLayoutPanel1->Controls->Add(this->VectorList);
-			   this->flowLayoutPanel1->Controls->Add(this->InputLabel);
-			   this->flowLayoutPanel1->Controls->Add(this->Input);
-			   this->flowLayoutPanel1->Controls->Add(this->runBtn);
-			   this->flowLayoutPanel1->Location = System::Drawing::Point(571, 4);
-			   this->flowLayoutPanel1->Margin = System::Windows::Forms::Padding(4);
-			   this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			   this->flowLayoutPanel1->Size = System::Drawing::Size(855, 711);
-			   this->flowLayoutPanel1->TabIndex = 0;
-			   // 
-			   // VectorLabel
-			   // 
-			   this->VectorLabel->Anchor = System::Windows::Forms::AnchorStyles::None;
-			   this->VectorLabel->AutoSize = true;
-			   this->VectorLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->VectorLabel->Location = System::Drawing::Point(4, 15);
-			   this->VectorLabel->Margin = System::Windows::Forms::Padding(4, 0, 2, 0);
-			   this->VectorLabel->Name = L"VectorLabel";
-			   this->VectorLabel->Size = System::Drawing::Size(113, 38);
-			   this->VectorLabel->TabIndex = 2;
-			   this->VectorLabel->Text = L"Vector";
+			   this->runBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->runBtn->Location = System::Drawing::Point(942, 6);
+			   this->runBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
+			   this->runBtn->Name = L"runBtn";
+			   this->runBtn->Size = System::Drawing::Size(162, 48);
+			   this->runBtn->TabIndex = 9;
+			   this->runBtn->Text = L"Execute";
+			   this->runBtn->UseVisualStyleBackColor = true;
+			   this->runBtn->Click += gcnew System::EventHandler(this, &WindowsForm::runBtn_Click);
 			   // 
 			   // clearBtn
 			   // 
@@ -196,137 +213,173 @@ namespace WindowsFormsApplication_cpp {
 			   this->clearBtn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			   this->clearBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   this->clearBtn->Location = System::Drawing::Point(146, 4);
+			   this->clearBtn->Location = System::Drawing::Point(9, 6);
 			   this->clearBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
 			   this->clearBtn->Name = L"clearBtn";
-			   this->clearBtn->Size = System::Drawing::Size(60, 60);
+			   this->clearBtn->Size = System::Drawing::Size(50, 48);
 			   this->clearBtn->TabIndex = 6;
 			   this->clearBtn->UseVisualStyleBackColor = true;
 			   this->clearBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearBtn_Click);
 			   // 
-			   // VectorList
-			   // 
-			   this->VectorList->Anchor = System::Windows::Forms::AnchorStyles::None;
-			   this->VectorList->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->VectorList->FormattingEnabled = true;
-			   this->VectorList->ItemHeight = 24;
-			   this->VectorList->Location = System::Drawing::Point(10, 72);
-			   this->VectorList->Margin = System::Windows::Forms::Padding(10, 4, 10, 4);
-			   this->VectorList->Name = L"VectorList";
-			   this->VectorList->Size = System::Drawing::Size(835, 340);
-			   this->VectorList->TabIndex = 7;
-			   // 
-			   // InputLabel
-			   // 
-			   this->InputLabel->Anchor = System::Windows::Forms::AnchorStyles::None;
-			   this->InputLabel->AutoSize = true;
-			   this->InputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->InputLabel->Location = System::Drawing::Point(4, 416);
-			   this->InputLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
-			   this->InputLabel->Name = L"InputLabel";
-			   this->InputLabel->Size = System::Drawing::Size(95, 38);
-			   this->InputLabel->TabIndex = 0;
-			   this->InputLabel->Text = L"Input";
-			   // 
-			   // Input
-			   // 
-			   this->Input->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			   this->Input->AutoCompleteCustomSource->AddRange(gcnew cli::array< System::String^  >(26) {
-				   L"printv", L"calv", L"norm", L"normal",
-					   L"cross", L"com", L"proj", L"area", L"isparallel", L"isorthogonal", L"angle", L"pn", L"isli", L"ob", L"cal<Matrix>", L"printm", L"rank",
-					   L"trans", L"sol", L"det", L"inverse", L"adj", L"pm", L"eigen", L"rref", L"leastsquare"
-			   });
-			   this->Input->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::Append;
-			   this->Input->BackColor = System::Drawing::SystemColors::Window;
-			   this->Input->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->Input->Location = System::Drawing::Point(10, 458);
-			   this->Input->Margin = System::Windows::Forms::Padding(10, 4, 10, 4);
-			   this->Input->Multiline = true;
-			   this->Input->Name = L"Input";
-			   this->Input->Size = System::Drawing::Size(835, 188);
-			   this->Input->TabIndex = 8;
-			   this->Input->TextChanged += gcnew System::EventHandler(this, &WindowsForm::Input_TextChanged);
-			   // 
-			   // runBtn
-			   // 
-			   this->runBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->runBtn->Location = System::Drawing::Point(27, 654);
-			   this->runBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
-			   this->runBtn->Name = L"runBtn";
-			   this->runBtn->Size = System::Drawing::Size(171, 53);
-			   this->runBtn->TabIndex = 9;
-			   this->runBtn->Text = L"Run";
-			   this->runBtn->UseVisualStyleBackColor = true;
-			   this->runBtn->Click += gcnew System::EventHandler(this, &WindowsForm::runBtn_Click);
-			   // 
-			   // flowLayoutPanel2
-			   // 
-			   this->flowLayoutPanel2->BackColor = System::Drawing::Color::LightSteelBlue;
-			   this->flowLayoutPanel2->Controls->Add(this->OutputLabel);
-			   this->flowLayoutPanel2->Controls->Add(this->clearOutputBtn);
-			   this->flowLayoutPanel2->Controls->Add(this->Output);
-			   this->flowLayoutPanel2->Location = System::Drawing::Point(4, 4);
-			   this->flowLayoutPanel2->Margin = System::Windows::Forms::Padding(4);
-			   this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
-			   this->flowLayoutPanel2->Size = System::Drawing::Size(557, 710);
-			   this->flowLayoutPanel2->TabIndex = 1;
-			   // 
-			   // OutputLabel
-			   // 
-			   this->OutputLabel->Anchor = System::Windows::Forms::AnchorStyles::None;
-			   this->OutputLabel->AutoSize = true;
-			   this->OutputLabel->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(0)));
-			   this->OutputLabel->Location = System::Drawing::Point(4, 15);
-			   this->OutputLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
-			   this->OutputLabel->Name = L"OutputLabel";
-			   this->OutputLabel->Size = System::Drawing::Size(118, 38);
-			   this->OutputLabel->TabIndex = 0;
-			   this->OutputLabel->Text = L"Output";
-			   // 
-			   // clearOutputBtn
-			   // 
-			   this->clearOutputBtn->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"clearOutputBtn.BackgroundImage")));
-			   this->clearOutputBtn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			   this->clearOutputBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->clearOutputBtn->Location = System::Drawing::Point(153, 4);
-			   this->clearOutputBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
-			   this->clearOutputBtn->Name = L"clearOutputBtn";
-			   this->clearOutputBtn->Size = System::Drawing::Size(60, 60);
-			   this->clearOutputBtn->TabIndex = 10;
-			   this->clearOutputBtn->UseVisualStyleBackColor = true;
-			   this->clearOutputBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearOutputBtn_Click);
-			   // 
 			   // Output
 			   // 
 			   this->Output->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			   this->Output->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			   this->Output->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Output->Location = System::Drawing::Point(4, 72);
+			   this->Output->Location = System::Drawing::Point(4, 57);
 			   this->Output->Margin = System::Windows::Forms::Padding(4);
 			   this->Output->Multiline = true;
 			   this->Output->Name = L"Output";
 			   this->Output->ReadOnly = true;
 			   this->Output->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-			   this->Output->Size = System::Drawing::Size(543, 644);
+			   this->Output->Size = System::Drawing::Size(364, 493);
 			   this->Output->TabIndex = 1;
 			   // 
-			   // openFileDialog1
+			   // panel1
 			   // 
-			   this->openFileDialog1->FileName = L"openFileDialog1";
-			   this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &WindowsForm::openFileDialog1_FileOk);
+			   this->panel1->AutoSize = true;
+			   this->panel1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			   this->panel1->Dock = System::Windows::Forms::DockStyle::Left;
+			   this->panel1->Location = System::Drawing::Point(0, 36);
+			   this->panel1->Name = L"panel1";
+			   this->panel1->Size = System::Drawing::Size(2, 632);
+			   this->panel1->TabIndex = 11;
+			   this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &WindowsForm::panel1_Paint);
+			   // 
+			   // panel4
+			   // 
+			   this->panel4->AutoScroll = true;
+			   this->panel4->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->panel4->Controls->Add(this->runBtn);
+			   this->panel4->Controls->Add(this->clearBtn);
+			   this->panel4->Location = System::Drawing::Point(16, 598);
+			   this->panel4->Name = L"panel4";
+			   this->panel4->Size = System::Drawing::Size(1112, 64);
+			   this->panel4->TabIndex = 13;
+			   // 
+			   // InputLabel
+			   // 
+			   this->InputLabel->AutoSize = true;
+			   this->InputLabel->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->InputLabel->Location = System::Drawing::Point(8, 5);
+			   this->InputLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
+			   this->InputLabel->Name = L"InputLabel";
+			   this->InputLabel->Size = System::Drawing::Size(134, 31);
+			   this->InputLabel->TabIndex = 0;
+			   this->InputLabel->Text = L"Commands";
+			   // 
+			   // Input
+			   // 
+			   this->Input->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
+			   this->Input->AutoCompleteCustomSource->AddRange(gcnew cli::array< System::String^  >(26) {
+				   L"printv", L"calv", L"norm", L"normal",
+					   L"cross", L"com", L"proj", L"area", L"isparallel", L"isorthogonal", L"angle", L"pn", L"isli", L"ob", L"cal<Matrix>", L"printm",
+					   L"rank", L"trans", L"sol", L"det", L"inverse", L"adj", L"pm", L"eigen", L"rref", L"leastsquare"
+			   });
+			   this->Input->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::Append;
+			   this->Input->BackColor = System::Drawing::SystemColors::Window;
+			   this->Input->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			   this->Input->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(136)));
+			   this->Input->Location = System::Drawing::Point(7, 43);
+			   this->Input->Margin = System::Windows::Forms::Padding(0);
+			   this->Input->Multiline = true;
+			   this->Input->Name = L"Input";
+			   this->Input->Size = System::Drawing::Size(724, 267);
+			   this->Input->TabIndex = 8;
+			   this->Input->TextChanged += gcnew System::EventHandler(this, &WindowsForm::Input_TextChanged);
+			   // 
+			   // VectorList
+			   // 
+			   this->VectorList->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
+			   this->VectorList->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			   this->VectorList->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->VectorList->FormattingEnabled = true;
+			   this->VectorList->ItemHeight = 31;
+			   this->VectorList->Location = System::Drawing::Point(7, 57);
+			   this->VectorList->Margin = System::Windows::Forms::Padding(0, 4, 0, 4);
+			   this->VectorList->Name = L"VectorList";
+			   this->VectorList->ScrollAlwaysVisible = true;
+			   this->VectorList->Size = System::Drawing::Size(724, 155);
+			   this->VectorList->TabIndex = 7;
+			   // 
+			   // splitContainer1
+			   // 
+			   this->splitContainer1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			   this->splitContainer1->Location = System::Drawing::Point(12, 36);
+			   this->splitContainer1->Name = L"splitContainer1";
+			   // 
+			   // splitContainer1.Panel1
+			   // 
+			   this->splitContainer1->Panel1->Controls->Add(this->label2);
+			   this->splitContainer1->Panel1->Controls->Add(this->Output);
+			   // 
+			   // splitContainer1.Panel2
+			   // 
+			   this->splitContainer1->Panel2->Controls->Add(this->splitContainer2);
+			   this->splitContainer1->Size = System::Drawing::Size(1116, 556);
+			   this->splitContainer1->SplitterDistance = 372;
+			   this->splitContainer1->TabIndex = 14;
+			   // 
+			   // splitContainer2
+			   // 
+			   this->splitContainer2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			   this->splitContainer2->Dock = System::Windows::Forms::DockStyle::Fill;
+			   this->splitContainer2->Location = System::Drawing::Point(0, 0);
+			   this->splitContainer2->Name = L"splitContainer2";
+			   this->splitContainer2->Orientation = System::Windows::Forms::Orientation::Horizontal;
+			   // 
+			   // splitContainer2.Panel1
+			   // 
+			   this->splitContainer2->Panel1->Controls->Add(this->label1);
+			   this->splitContainer2->Panel1->Controls->Add(this->VectorList);
+			   // 
+			   // splitContainer2.Panel2
+			   // 
+			   this->splitContainer2->Panel2->Controls->Add(this->Input);
+			   this->splitContainer2->Panel2->Controls->Add(this->InputLabel);
+			   this->splitContainer2->Size = System::Drawing::Size(740, 556);
+			   this->splitContainer2->SplitterDistance = 239;
+			   this->splitContainer2->TabIndex = 0;
+			   // 
+			   // label1
+			   // 
+			   this->label1->AutoSize = true;
+			   this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->label1->Location = System::Drawing::Point(13, 13);
+			   this->label1->Name = L"label1";
+			   this->label1->Size = System::Drawing::Size(93, 31);
+			   this->label1->TabIndex = 8;
+			   this->label1->Text = L"Vectors";
+			   // 
+			   // label2
+			   // 
+			   this->label2->AutoSize = true;
+			   this->label2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->label2->Location = System::Drawing::Point(7, 13);
+			   this->label2->Name = L"label2";
+			   this->label2->Size = System::Drawing::Size(91, 31);
+			   this->label2->TabIndex = 9;
+			   this->label2->Text = L"Output";
 			   // 
 			   // WindowsForm
 			   // 
 			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 15);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			   this->ClientSize = System::Drawing::Size(1455, 748);
-			   this->Controls->Add(this->tableLayoutPanel1);
+			   this->ClientSize = System::Drawing::Size(1133, 668);
+			   this->Controls->Add(this->splitContainer1);
+			   this->Controls->Add(this->panel4);
+			   this->Controls->Add(this->panel1);
 			   this->Controls->Add(this->menuStrip2);
 			   this->Margin = System::Windows::Forms::Padding(4);
 			   this->Name = L"WindowsForm";
@@ -334,12 +387,18 @@ namespace WindowsFormsApplication_cpp {
 			   this->Load += gcnew System::EventHandler(this, &WindowsForm::WindowsForm_Load);
 			   this->menuStrip2->ResumeLayout(false);
 			   this->menuStrip2->PerformLayout();
-			   this->tableLayoutPanel1->ResumeLayout(false);
-			   this->tableLayoutPanel1->PerformLayout();
-			   this->flowLayoutPanel1->ResumeLayout(false);
-			   this->flowLayoutPanel1->PerformLayout();
-			   this->flowLayoutPanel2->ResumeLayout(false);
-			   this->flowLayoutPanel2->PerformLayout();
+			   this->panel4->ResumeLayout(false);
+			   this->splitContainer1->Panel1->ResumeLayout(false);
+			   this->splitContainer1->Panel1->PerformLayout();
+			   this->splitContainer1->Panel2->ResumeLayout(false);
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->EndInit();
+			   this->splitContainer1->ResumeLayout(false);
+			   this->splitContainer2->Panel1->ResumeLayout(false);
+			   this->splitContainer2->Panel1->PerformLayout();
+			   this->splitContainer2->Panel2->ResumeLayout(false);
+			   this->splitContainer2->Panel2->PerformLayout();
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer2))->EndInit();
+			   this->splitContainer2->ResumeLayout(false);
 			   this->ResumeLayout(false);
 			   this->PerformLayout();
 
@@ -663,5 +722,9 @@ namespace WindowsFormsApplication_cpp {
 	}
 	private: System::Void Input_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
-	};
+
+private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+
+};
 }
