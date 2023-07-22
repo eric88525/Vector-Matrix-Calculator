@@ -33,7 +33,6 @@ System::String^ Vector::GetResult()
 }
 
 
-
 const Vector operator+(const Vector &x, const Vector &y) {
 	
 	std::vector<double> data;

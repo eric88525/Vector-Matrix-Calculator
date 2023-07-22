@@ -96,8 +96,8 @@ T cal(std::string polynomial, std::unordered_map<std::string, T> v_lookup) {
 			op_stk.pop();
 			auto right = op_stk.top();
 			op_stk.pop();
-			
-			switch (op[0]){
+
+			switch (op[0]) {
 			case '+':
 				op_stk.push(left + right);
 				break;

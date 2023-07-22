@@ -26,8 +26,8 @@ bool DataManager::LoadData()
 			if (tempSring == "V") {
 				std::vector<double> tempVectorData;
 				fin >> vector_dim;
+				double value;
 				for (int i = 0; i < vector_dim; i++) {
-					double value;
 					fin >> value;
 					tempVectorData.push_back(value);
 				}
@@ -39,16 +39,15 @@ bool DataManager::LoadData()
 			else if (tempSring == "M") {
 				fin >> rows >> cols;
 				std::vector<std::vector<double>> tempMatrixData(rows);
+				double value;
 				for (int i = 0; i < rows; i++) {
 					for (int j = 0; j < cols; j++) {
-						double value;
 						fin >> value;
 						tempMatrixData[i].push_back(value);
 					}
 				}
-				Matrix tempMatrix;
+				Matrix tempMatrix(tempMatrixData);
 				tempMatrix.name = "m[" + std::to_string(currentLoadMatrixID++) + "]";
-				tempMatrix.data = tempMatrixData;
 				tempMatrix.row = rows;
 				tempMatrix.col = cols;
 				Matrices.push_back(tempMatrix);
