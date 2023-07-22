@@ -95,18 +95,33 @@ namespace WindowsFormsApplication_cpp {
 
 	private: System::Windows::Forms::TextBox^ Output;
 
-	private: System::Windows::Forms::Panel^ panel1;
 
 
-	private: System::Windows::Forms::Panel^ panel4;
+
+
 	private: System::Windows::Forms::Label^ InputLabel;
 	private: System::Windows::Forms::TextBox^ Input;
 
-	private: System::Windows::Forms::ListBox^ VectorList;
+
 	private: System::Windows::Forms::SplitContainer^ splitContainer1;
 	private: System::Windows::Forms::SplitContainer^ splitContainer2;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::SplitContainer^ splitContainer3;
+	private: System::Windows::Forms::DataGridView^ dataTable;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Variable;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Value;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,6 +148,11 @@ namespace WindowsFormsApplication_cpp {
 		   void InitializeComponent(void)
 		   {
 			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(WindowsForm::typeid));
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle5 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle4 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			   this->FileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->LoadVectorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -140,17 +160,17 @@ namespace WindowsFormsApplication_cpp {
 			   this->runBtn = (gcnew System::Windows::Forms::Button());
 			   this->clearBtn = (gcnew System::Windows::Forms::Button());
 			   this->Output = (gcnew System::Windows::Forms::TextBox());
-			   this->panel1 = (gcnew System::Windows::Forms::Panel());
-			   this->panel4 = (gcnew System::Windows::Forms::Panel());
 			   this->InputLabel = (gcnew System::Windows::Forms::Label());
 			   this->Input = (gcnew System::Windows::Forms::TextBox());
-			   this->VectorList = (gcnew System::Windows::Forms::ListBox());
 			   this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			   this->label2 = (gcnew System::Windows::Forms::Label());
 			   this->splitContainer2 = (gcnew System::Windows::Forms::SplitContainer());
+			   this->dataTable = (gcnew System::Windows::Forms::DataGridView());
 			   this->label1 = (gcnew System::Windows::Forms::Label());
+			   this->splitContainer3 = (gcnew System::Windows::Forms::SplitContainer());
+			   this->Variable = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			   this->Value = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			   this->menuStrip2->SuspendLayout();
-			   this->panel4->SuspendLayout();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			   this->splitContainer1->Panel1->SuspendLayout();
 			   this->splitContainer1->Panel2->SuspendLayout();
@@ -159,6 +179,11 @@ namespace WindowsFormsApplication_cpp {
 			   this->splitContainer2->Panel1->SuspendLayout();
 			   this->splitContainer2->Panel2->SuspendLayout();
 			   this->splitContainer2->SuspendLayout();
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataTable))->BeginInit();
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer3))->BeginInit();
+			   this->splitContainer3->Panel1->SuspendLayout();
+			   this->splitContainer3->Panel2->SuspendLayout();
+			   this->splitContainer3->SuspendLayout();
 			   this->SuspendLayout();
 			   // 
 			   // openFileDialog1
@@ -185,7 +210,7 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // menuStrip2
 			   // 
-			   this->menuStrip2->BackColor = System::Drawing::SystemColors::Menu;
+			   this->menuStrip2->BackColor = System::Drawing::SystemColors::HighlightText;
 			   this->menuStrip2->ImageScalingSize = System::Drawing::Size(20, 20);
 			   this->menuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->FileToolStripMenuItem });
 			   this->menuStrip2->Location = System::Drawing::Point(0, 0);
@@ -196,9 +221,10 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // runBtn
 			   // 
+			   this->runBtn->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			   this->runBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->runBtn->Location = System::Drawing::Point(942, 6);
+			   this->runBtn->Location = System::Drawing::Point(957, 17);
 			   this->runBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
 			   this->runBtn->Name = L"runBtn";
 			   this->runBtn->Size = System::Drawing::Size(162, 48);
@@ -213,7 +239,7 @@ namespace WindowsFormsApplication_cpp {
 			   this->clearBtn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			   this->clearBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   this->clearBtn->Location = System::Drawing::Point(9, 6);
+			   this->clearBtn->Location = System::Drawing::Point(8, 16);
 			   this->clearBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
 			   this->clearBtn->Name = L"clearBtn";
 			   this->clearBtn->Size = System::Drawing::Size(50, 48);
@@ -223,9 +249,12 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // Output
 			   // 
+			   this->Output->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->Output->BackColor = System::Drawing::SystemColors::ButtonHighlight;
 			   this->Output->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			   this->Output->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   this->Output->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->Output->Location = System::Drawing::Point(4, 57);
 			   this->Output->Margin = System::Windows::Forms::Padding(4);
@@ -233,31 +262,8 @@ namespace WindowsFormsApplication_cpp {
 			   this->Output->Name = L"Output";
 			   this->Output->ReadOnly = true;
 			   this->Output->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-			   this->Output->Size = System::Drawing::Size(364, 493);
+			   this->Output->Size = System::Drawing::Size(367, 475);
 			   this->Output->TabIndex = 1;
-			   // 
-			   // panel1
-			   // 
-			   this->panel1->AutoSize = true;
-			   this->panel1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			   this->panel1->Dock = System::Windows::Forms::DockStyle::Left;
-			   this->panel1->Location = System::Drawing::Point(0, 36);
-			   this->panel1->Name = L"panel1";
-			   this->panel1->Size = System::Drawing::Size(2, 632);
-			   this->panel1->TabIndex = 11;
-			   this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &WindowsForm::panel1_Paint);
-			   // 
-			   // panel4
-			   // 
-			   this->panel4->AutoScroll = true;
-			   this->panel4->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->panel4->Controls->Add(this->runBtn);
-			   this->panel4->Controls->Add(this->clearBtn);
-			   this->panel4->Location = System::Drawing::Point(16, 598);
-			   this->panel4->Name = L"panel4";
-			   this->panel4->Size = System::Drawing::Size(1112, 64);
-			   this->panel4->TabIndex = 13;
 			   // 
 			   // InputLabel
 			   // 
@@ -285,37 +291,23 @@ namespace WindowsFormsApplication_cpp {
 			   this->Input->AutoCompleteSource = System::Windows::Forms::AutoCompleteSource::CustomSource;
 			   this->Input->BackColor = System::Drawing::SystemColors::Window;
 			   this->Input->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			   this->Input->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
+			   this->Input->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
 			   this->Input->Location = System::Drawing::Point(7, 43);
 			   this->Input->Margin = System::Windows::Forms::Padding(0);
 			   this->Input->Multiline = true;
 			   this->Input->Name = L"Input";
-			   this->Input->Size = System::Drawing::Size(724, 267);
+			   this->Input->Size = System::Drawing::Size(730, 257);
 			   this->Input->TabIndex = 8;
 			   this->Input->TextChanged += gcnew System::EventHandler(this, &WindowsForm::Input_TextChanged);
 			   // 
-			   // VectorList
-			   // 
-			   this->VectorList->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-				   | System::Windows::Forms::AnchorStyles::Left)
-				   | System::Windows::Forms::AnchorStyles::Right));
-			   this->VectorList->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			   this->VectorList->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(0)));
-			   this->VectorList->FormattingEnabled = true;
-			   this->VectorList->ItemHeight = 31;
-			   this->VectorList->Location = System::Drawing::Point(7, 57);
-			   this->VectorList->Margin = System::Windows::Forms::Padding(0, 4, 0, 4);
-			   this->VectorList->Name = L"VectorList";
-			   this->VectorList->ScrollAlwaysVisible = true;
-			   this->VectorList->Size = System::Drawing::Size(724, 155);
-			   this->VectorList->TabIndex = 7;
-			   // 
 			   // splitContainer1
 			   // 
+			   this->splitContainer1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->splitContainer1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			   this->splitContainer1->Location = System::Drawing::Point(12, 36);
+			   this->splitContainer1->Location = System::Drawing::Point(3, 3);
 			   this->splitContainer1->Name = L"splitContainer1";
 			   // 
 			   // splitContainer1.Panel1
@@ -326,8 +318,8 @@ namespace WindowsFormsApplication_cpp {
 			   // splitContainer1.Panel2
 			   // 
 			   this->splitContainer1->Panel2->Controls->Add(this->splitContainer2);
-			   this->splitContainer1->Size = System::Drawing::Size(1116, 556);
-			   this->splitContainer1->SplitterDistance = 372;
+			   this->splitContainer1->Size = System::Drawing::Size(1125, 538);
+			   this->splitContainer1->SplitterDistance = 375;
 			   this->splitContainer1->TabIndex = 14;
 			   // 
 			   // label2
@@ -353,36 +345,122 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // splitContainer2.Panel1
 			   // 
+			   this->splitContainer2->Panel1->Controls->Add(this->dataTable);
 			   this->splitContainer2->Panel1->Controls->Add(this->label1);
-			   this->splitContainer2->Panel1->Controls->Add(this->VectorList);
 			   // 
 			   // splitContainer2.Panel2
 			   // 
 			   this->splitContainer2->Panel2->Controls->Add(this->Input);
 			   this->splitContainer2->Panel2->Controls->Add(this->InputLabel);
-			   this->splitContainer2->Size = System::Drawing::Size(740, 556);
-			   this->splitContainer2->SplitterDistance = 239;
+			   this->splitContainer2->Size = System::Drawing::Size(746, 538);
+			   this->splitContainer2->SplitterDistance = 231;
 			   this->splitContainer2->TabIndex = 0;
+			   // 
+			   // dataTable
+			   // 
+			   this->dataTable->AllowUserToDeleteRows = false;
+			   this->dataTable->AllowUserToOrderColumns = true;
+			   dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   this->dataTable->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			   this->dataTable->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
+			   this->dataTable->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
+			   this->dataTable->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
+			   dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			   dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   dataGridViewCellStyle2->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle2->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			   this->dataTable->ColumnHeadersHeight = 40;
+			   this->dataTable->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->Variable, this->Value });
+			   this->dataTable->Location = System::Drawing::Point(3, 55);
+			   this->dataTable->Name = L"dataTable";
+			   dataGridViewCellStyle5->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   dataGridViewCellStyle5->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle5->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(136)));
+			   dataGridViewCellStyle5->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle5->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle5->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle5->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			   this->dataTable->RowHeadersWidth = 51;
+			   this->dataTable->RowTemplate->Height = 27;
+			   this->dataTable->Size = System::Drawing::Size(734, 162);
+			   this->dataTable->TabIndex = 9;
+			   this->dataTable->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &WindowsForm::dataGridView1_CellContentClick);
 			   // 
 			   // label1
 			   // 
 			   this->label1->AutoSize = true;
 			   this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->label1->Location = System::Drawing::Point(13, 13);
+			   this->label1->Location = System::Drawing::Point(10, 13);
 			   this->label1->Name = L"label1";
-			   this->label1->Size = System::Drawing::Size(74, 31);
+			   this->label1->Padding = System::Windows::Forms::Padding(0, 4, 0, 4);
+			   this->label1->Size = System::Drawing::Size(74, 39);
 			   this->label1->TabIndex = 8;
 			   this->label1->Text = L"Datas";
+			   // 
+			   // splitContainer3
+			   // 
+			   this->splitContainer3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
+			   this->splitContainer3->BackColor = System::Drawing::Color::Transparent;
+			   this->splitContainer3->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			   this->splitContainer3->Location = System::Drawing::Point(0, 39);
+			   this->splitContainer3->Name = L"splitContainer3";
+			   this->splitContainer3->Orientation = System::Windows::Forms::Orientation::Horizontal;
+			   // 
+			   // splitContainer3.Panel1
+			   // 
+			   this->splitContainer3->Panel1->BackColor = System::Drawing::SystemColors::ControlLight;
+			   this->splitContainer3->Panel1->Controls->Add(this->splitContainer1);
+			   // 
+			   // splitContainer3.Panel2
+			   // 
+			   this->splitContainer3->Panel2->BackColor = System::Drawing::SystemColors::ControlLight;
+			   this->splitContainer3->Panel2->Controls->Add(this->clearBtn);
+			   this->splitContainer3->Panel2->Controls->Add(this->runBtn);
+			   this->splitContainer3->Size = System::Drawing::Size(1133, 630);
+			   this->splitContainer3->SplitterDistance = 546;
+			   this->splitContainer3->TabIndex = 15;
+			   // 
+			   // Variable
+			   // 
+			   this->Variable->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
+			   dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->Variable->DefaultCellStyle = dataGridViewCellStyle3;
+			   this->Variable->HeaderText = L"Variable";
+			   this->Variable->MaxInputLength = 20;
+			   this->Variable->MinimumWidth = 6;
+			   this->Variable->Name = L"Variable";
+			   this->Variable->ReadOnly = true;
+			   this->Variable->Width = 125;
+			   // 
+			   // Value
+			   // 
+			   this->Value->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
+			   dataGridViewCellStyle4->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->Value->DefaultCellStyle = dataGridViewCellStyle4;
+			   this->Value->HeaderText = L"Value";
+			   this->Value->MinimumWidth = 6;
+			   this->Value->Name = L"Value";
 			   // 
 			   // WindowsForm
 			   // 
 			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 15);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			   this->ClientSize = System::Drawing::Size(1133, 668);
-			   this->Controls->Add(this->splitContainer1);
-			   this->Controls->Add(this->panel4);
-			   this->Controls->Add(this->panel1);
+			   this->Controls->Add(this->splitContainer3);
 			   this->Controls->Add(this->menuStrip2);
 			   this->Margin = System::Windows::Forms::Padding(4);
 			   this->Name = L"WindowsForm";
@@ -390,7 +468,6 @@ namespace WindowsFormsApplication_cpp {
 			   this->Load += gcnew System::EventHandler(this, &WindowsForm::WindowsForm_Load);
 			   this->menuStrip2->ResumeLayout(false);
 			   this->menuStrip2->PerformLayout();
-			   this->panel4->ResumeLayout(false);
 			   this->splitContainer1->Panel1->ResumeLayout(false);
 			   this->splitContainer1->Panel1->PerformLayout();
 			   this->splitContainer1->Panel2->ResumeLayout(false);
@@ -402,6 +479,11 @@ namespace WindowsFormsApplication_cpp {
 			   this->splitContainer2->Panel2->PerformLayout();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer2))->EndInit();
 			   this->splitContainer2->ResumeLayout(false);
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataTable))->EndInit();
+			   this->splitContainer3->Panel1->ResumeLayout(false);
+			   this->splitContainer3->Panel2->ResumeLayout(false);
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer3))->EndInit();
+			   this->splitContainer3->ResumeLayout(false);
 			   this->ResumeLayout(false);
 			   this->PerformLayout();
 
@@ -427,57 +509,66 @@ namespace WindowsFormsApplication_cpp {
 		if (dataManager->LoadData())
 		{
 			//將VectorList中項目先做清除
-			VectorList->Items->Clear();
+			this->dataTable->Rows->Clear();
 			//取得所有向量資料
 			std::vector<Vector> vectors = dataManager->GetVectors();
-			std::vector<Matrix> m_lookup = dataManager->GetMatrices();
+			std::vector<Matrix> matrices = dataManager->GetMatrices();
 			if (vectors.size()) {
-				for (unsigned int i = 0; i < vectors.size(); i++)
+				for (auto const &v : vectors)
 				{
 					//將檔案名稱存入暫存
-					std::string tempString = vectors[i].name;
+					std::string tempString="";
 					//將輸出格式存入暫存
-					tempString += " [";
+					tempString += "[";
 					//將輸出資料存入暫存
-					for (unsigned int j = 0; j < vectors[i].data.size(); j++)
+					for (unsigned int j = 0; j < v.data.size(); j++)
 					{
-						std::string scalarString = std::to_string(vectors[i].data[j]);
+						std::string scalarString = std::to_string(v.data[j]);
 						tempString += scalarString.substr(0, scalarString.size() - 5);
-						if (j != vectors[i].data.size() - 1)
+						if (j != v.data.size() - 1)
 							tempString += ", ";
 					}
 					//將輸出格式存入暫存
 					tempString += "]";
 					//將項目加入VectorList中
-					VectorList->Items->Add(gcnew String(tempString.c_str()));
+					//VectorList->Items->Add(gcnew String(tempString.c_str()));
+
+					this->dataTable->Rows->Add(
+						gcnew array<String^>{gcnew String(v.name.c_str()),
+						gcnew String(tempString.c_str())}
+					);
 				}
-				Output->Text += "[INFO] File loaded successfully" + nL;
 			}
-			else if (m_lookup.size()) {
-				for (auto i : m_lookup)
+			if (matrices.size()) {
+				for (auto m : matrices)
 				{
-					std::string tempString = i.name;
-					tempString += " [";
-					for (int row = 0; row < i.row; row++) {
-						for (int col = 0; col < i.col; col++) {
-							std::string scalarString = std::to_string(i.data[row][col]);
+					std::string tempString="";
+					tempString += "[";
+					for (int row = 0; row < m.row; row++) {
+						for (int col = 0; col < m.col; col++) {
+							std::string scalarString = std::to_string(m.data[row][col]);
 							tempString += scalarString.substr(0, scalarString.size() - 5);
-							if (!(row == i.row - 1 && col == i.col - 1))
+							if (!(row == m.row - 1 && col == m.col - 1))
 								tempString += ",";
 						}
 					}
 					tempString += "]";
-					VectorList->Items->Add(gcnew String(tempString.c_str()));
+					//VectorList->Items->Add(gcnew String(tempString.c_str()));
+					this->dataTable->Rows->Add(
+						gcnew array<String^>{gcnew String(m.name.c_str()),
+						gcnew String(tempString.c_str())}
+					);
 				}
-				Output->Text += "-Matrix datas have been loaded-" + Environment::NewLine;
+
 			}
+			Output->Text += "[INFO] File loaded successfully" + nL;
 		}
 	}
 	private: System::Void FileToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void clearBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		VectorList->Items->Clear();
+		dataTable->Rows->Clear();
 		dataManager->clear();
 		Input->Text = "";
 	}
@@ -498,7 +589,7 @@ namespace WindowsFormsApplication_cpp {
 		Vector v, v1, vResult;
 		Matrix m, m1, mResult;
 		//字串比較，若指令為"print"的情況
-		Output->Text += userInput + nL;
+		Output->Text += "[CMD] " + userInput + nL;
 
 		std::string command = userCommand[0];
 
@@ -518,7 +609,7 @@ namespace WindowsFormsApplication_cpp {
 
 			std::transform(command.begin(), command.end(), command.begin(), ::tolower);
 
-			if (command == "printv" || command == "cal<Vector>") {
+			if (command == "printv") {
 				vResult = cal<Vector>(userCommand[1], v_lookup);
 				Output->Text += vResult.GetResult();
 			}
@@ -590,18 +681,7 @@ namespace WindowsFormsApplication_cpp {
 					Output->Text += i.GetResult();
 				}
 			}
-			else if (command == "ob") {
-				std::vector<Vector> varr;
-				std::vector<Vector> op;
-				for (int i = 1; i < userCommand.size(); i++) {
-					varr.push_back(cal<Vector>(userCommand[i], v_lookup));
-				}
-				op = Ob(varr);
-				for (auto i : op) {
-					Output->Text += i.GetResult();
-				}
-			}
-			else if (command == "cal<Matrix>" || command == "printm") {
+			else if (command == "printm") {
 				mResult = cal<Matrix>(userCommand[1], m_lookup);
 				Output->Text += mResult.GetResult();
 			}
@@ -726,8 +806,12 @@ namespace WindowsFormsApplication_cpp {
 	private: System::Void Input_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 
-private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
+	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
 
-};
+
+
+	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+	}
+	};
 }
