@@ -146,9 +146,9 @@ namespace WindowsFormsApplication_cpp {
 			   this->Input = (gcnew System::Windows::Forms::TextBox());
 			   this->VectorList = (gcnew System::Windows::Forms::ListBox());
 			   this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
+			   this->label2 = (gcnew System::Windows::Forms::Label());
 			   this->splitContainer2 = (gcnew System::Windows::Forms::SplitContainer());
 			   this->label1 = (gcnew System::Windows::Forms::Label());
-			   this->label2 = (gcnew System::Windows::Forms::Label());
 			   this->menuStrip2->SuspendLayout();
 			   this->panel4->SuspendLayout();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
@@ -179,7 +179,7 @@ namespace WindowsFormsApplication_cpp {
 			   // LoadVectorToolStripMenuItem
 			   // 
 			   this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(224, 32);
+			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(187, 32);
 			   this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			   this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
 			   // 
@@ -281,7 +281,8 @@ namespace WindowsFormsApplication_cpp {
 					   L"cross", L"com", L"proj", L"area", L"isparallel", L"isorthogonal", L"angle", L"pn", L"isli", L"ob", L"cal<Matrix>", L"printm",
 					   L"rank", L"trans", L"sol", L"det", L"inverse", L"adj", L"pm", L"eigen", L"rref", L"leastsquare"
 			   });
-			   this->Input->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::Append;
+			   this->Input->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::SuggestAppend;
+			   this->Input->AutoCompleteSource = System::Windows::Forms::AutoCompleteSource::CustomSource;
 			   this->Input->BackColor = System::Drawing::SystemColors::Window;
 			   this->Input->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			   this->Input->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -329,10 +330,23 @@ namespace WindowsFormsApplication_cpp {
 			   this->splitContainer1->SplitterDistance = 372;
 			   this->splitContainer1->TabIndex = 14;
 			   // 
+			   // label2
+			   // 
+			   this->label2->AutoSize = true;
+			   this->label2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->label2->Location = System::Drawing::Point(7, 13);
+			   this->label2->Name = L"label2";
+			   this->label2->Size = System::Drawing::Size(91, 31);
+			   this->label2->TabIndex = 9;
+			   this->label2->Text = L"Output";
+			   // 
 			   // splitContainer2
 			   // 
+			   this->splitContainer2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->splitContainer2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			   this->splitContainer2->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->splitContainer2->Location = System::Drawing::Point(0, 0);
 			   this->splitContainer2->Name = L"splitContainer2";
 			   this->splitContainer2->Orientation = System::Windows::Forms::Orientation::Horizontal;
@@ -357,20 +371,9 @@ namespace WindowsFormsApplication_cpp {
 				   static_cast<System::Byte>(0)));
 			   this->label1->Location = System::Drawing::Point(13, 13);
 			   this->label1->Name = L"label1";
-			   this->label1->Size = System::Drawing::Size(93, 31);
+			   this->label1->Size = System::Drawing::Size(74, 31);
 			   this->label1->TabIndex = 8;
-			   this->label1->Text = L"Vectors";
-			   // 
-			   // label2
-			   // 
-			   this->label2->AutoSize = true;
-			   this->label2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(0)));
-			   this->label2->Location = System::Drawing::Point(7, 13);
-			   this->label2->Name = L"label2";
-			   this->label2->Size = System::Drawing::Size(91, 31);
-			   this->label2->TabIndex = 9;
-			   this->label2->Text = L"Output";
+			   this->label1->Text = L"Datas";
 			   // 
 			   // WindowsForm
 			   // 
@@ -706,7 +709,7 @@ namespace WindowsFormsApplication_cpp {
 		userInput = Input->Text;
 
 		//將使用者輸入字串(在Text box中)，依'\n'作切割
-		auto input_lines = Input->Text->Split('\n');
+		auto input_lines = Input->Text->Split(gcnew array<String^> { "\r\n" }, StringSplitOptions::None);
 
 		for (int i = 0; i < input_lines->Length; i++) {
 			userInput = input_lines[i];
