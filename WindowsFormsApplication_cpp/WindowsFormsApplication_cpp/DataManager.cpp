@@ -20,7 +20,7 @@ bool DataManager::LoadData()
 	}
 	else
 	{
-		int currentLoadVectorID = VectorCount(), currentLoadMatrixID = MatruxCount(), vector_dim, rows, cols;
+		int currentLoadVectorID = VectorCount(), currentLoadMatrixID = MatrixCount(), vector_dim, rows, cols;
 		std::string tempSring;
 		while (fin >> tempSring) {
 			if (tempSring == "V") {
@@ -32,7 +32,7 @@ bool DataManager::LoadData()
 					tempVectorData.push_back(value);
 				}
 				Vector tempVector;
-				tempVector.name = "$v" + std::to_string(currentLoadVectorID++);
+				tempVector.name = "v[" + std::to_string(currentLoadVectorID++) + "]";
 				tempVector.data = tempVectorData;
 				Vectors.push_back(tempVector);
 			}
@@ -47,7 +47,7 @@ bool DataManager::LoadData()
 					}
 				}
 				Matrix tempMatrix;
-				tempMatrix.name = "$m" + std::to_string(currentLoadMatrixID++);
+				tempMatrix.name = "m[" + std::to_string(currentLoadMatrixID++) + "]";
 				tempMatrix.data = tempMatrixData;
 				tempMatrix.row = rows;
 				tempMatrix.col = cols;
@@ -63,8 +63,26 @@ std::vector<Vector> DataManager::GetVectors()
 	return Vectors;
 }
 
+Vector DataManager::GetVector(std::string name)
+{
+	for (auto v : Vectors) {
+		if (v.name == name)
+			return v;
+	}
+	return Vector();
+}
+
 std::vector<Matrix> DataManager::GetMatrices() {
 	return Matrices;
+}
+
+Matrix DataManager::GetMatrix(std::string name)
+{
+	for (auto m : Matrices) {
+		if (m.name == name)
+			return m;
+	}
+	return Matrix();
 }
 
 void DataManager::SetFileName(std::string fileName)
@@ -77,7 +95,7 @@ int DataManager::VectorCount()
 	return Vectors.size();
 }
 
-int DataManager::MatruxCount()
+int DataManager::MatrixCount()
 {
 	return Matrices.size();
 }

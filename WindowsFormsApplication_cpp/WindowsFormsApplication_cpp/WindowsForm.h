@@ -1,12 +1,14 @@
 #pragma once
 #include"DataManager.h"
 #include <string>
+#include <stack>
+#include <unordered_map>
 #define nL System::Environment::NewLine
 //#define DEBUG
-Vector calV(std::string str, std::vector<Vector> vectors);
-Matrix calM(std::string str, std::vector<Matrix> matrices);
-Vector getV(std::string str, std::vector<Vector> vectors);
-Matrix getM(std::string str, std::vector<Matrix> matrices);
+
+template <typename T>
+T cal(std::string polynomial, std::unordered_map<std::string, T>);
+
 namespace WindowsFormsApplication_cpp {
 
 	using namespace System;
@@ -141,6 +143,8 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // tableLayoutPanel1
 			   // 
+			   this->tableLayoutPanel1->AutoSize = true;
+			   this->tableLayoutPanel1->BackColor = System::Drawing::Color::Transparent;
 			   this->tableLayoutPanel1->ColumnCount = 2;
 			   this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				   38.87489F)));
@@ -154,11 +158,12 @@ namespace WindowsFormsApplication_cpp {
 			   this->tableLayoutPanel1->RowCount = 1;
 			   this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
 			   this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 614)));
-			   this->tableLayoutPanel1->Size = System::Drawing::Size(1457, 718);
+			   this->tableLayoutPanel1->Size = System::Drawing::Size(1460, 719);
 			   this->tableLayoutPanel1->TabIndex = 2;
 			   // 
 			   // flowLayoutPanel1
 			   // 
+			   this->flowLayoutPanel1->AutoSize = true;
 			   this->flowLayoutPanel1->BackColor = System::Drawing::Color::LightSteelBlue;
 			   this->flowLayoutPanel1->Controls->Add(this->VectorLabel);
 			   this->flowLayoutPanel1->Controls->Add(this->clearBtn);
@@ -166,10 +171,10 @@ namespace WindowsFormsApplication_cpp {
 			   this->flowLayoutPanel1->Controls->Add(this->InputLabel);
 			   this->flowLayoutPanel1->Controls->Add(this->Input);
 			   this->flowLayoutPanel1->Controls->Add(this->runBtn);
-			   this->flowLayoutPanel1->Location = System::Drawing::Point(570, 4);
+			   this->flowLayoutPanel1->Location = System::Drawing::Point(571, 4);
 			   this->flowLayoutPanel1->Margin = System::Windows::Forms::Padding(4);
 			   this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			   this->flowLayoutPanel1->Size = System::Drawing::Size(862, 710);
+			   this->flowLayoutPanel1->Size = System::Drawing::Size(855, 711);
 			   this->flowLayoutPanel1->TabIndex = 0;
 			   // 
 			   // VectorLabel
@@ -228,7 +233,12 @@ namespace WindowsFormsApplication_cpp {
 			   // Input
 			   // 
 			   this->Input->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			   this->Input->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::Suggest;
+			   this->Input->AutoCompleteCustomSource->AddRange(gcnew cli::array< System::String^  >(26) {
+				   L"printv", L"calv", L"norm", L"normal",
+					   L"cross", L"com", L"proj", L"area", L"isparallel", L"isorthogonal", L"angle", L"pn", L"isli", L"ob", L"cal<Matrix>", L"printm", L"rank",
+					   L"trans", L"sol", L"det", L"inverse", L"adj", L"pm", L"eigen", L"rref", L"leastsquare"
+			   });
+			   this->Input->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::Append;
 			   this->Input->BackColor = System::Drawing::SystemColors::Window;
 			   this->Input->Font = (gcnew System::Drawing::Font(L"新細明體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
@@ -236,14 +246,15 @@ namespace WindowsFormsApplication_cpp {
 			   this->Input->Margin = System::Windows::Forms::Padding(10, 4, 10, 4);
 			   this->Input->Multiline = true;
 			   this->Input->Name = L"Input";
-			   this->Input->Size = System::Drawing::Size(835, 173);
+			   this->Input->Size = System::Drawing::Size(835, 188);
 			   this->Input->TabIndex = 8;
+			   this->Input->TextChanged += gcnew System::EventHandler(this, &WindowsForm::Input_TextChanged);
 			   // 
 			   // runBtn
 			   // 
 			   this->runBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   this->runBtn->Location = System::Drawing::Point(27, 639);
+			   this->runBtn->Location = System::Drawing::Point(27, 654);
 			   this->runBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
 			   this->runBtn->Name = L"runBtn";
 			   this->runBtn->Size = System::Drawing::Size(171, 53);
@@ -293,6 +304,7 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // Output
 			   // 
+			   this->Output->BackColor = System::Drawing::SystemColors::ButtonHighlight;
 			   this->Output->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->Output->Location = System::Drawing::Point(4, 72);
@@ -301,7 +313,7 @@ namespace WindowsFormsApplication_cpp {
 			   this->Output->Name = L"Output";
 			   this->Output->ReadOnly = true;
 			   this->Output->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-			   this->Output->Size = System::Drawing::Size(552, 644);
+			   this->Output->Size = System::Drawing::Size(543, 644);
 			   this->Output->TabIndex = 1;
 			   // 
 			   // openFileDialog1
@@ -323,6 +335,7 @@ namespace WindowsFormsApplication_cpp {
 			   this->menuStrip2->ResumeLayout(false);
 			   this->menuStrip2->PerformLayout();
 			   this->tableLayoutPanel1->ResumeLayout(false);
+			   this->tableLayoutPanel1->PerformLayout();
 			   this->flowLayoutPanel1->ResumeLayout(false);
 			   this->flowLayoutPanel1->PerformLayout();
 			   this->flowLayoutPanel2->ResumeLayout(false);
@@ -334,8 +347,6 @@ namespace WindowsFormsApplication_cpp {
 #pragma endregion
 
 	private: System::Void WindowsForm_Load(System::Object^ sender, System::EventArgs^ e) {
-
-		this->Input->AutoCompleteSource = System::Windows::Forms::AutoCompleteSource::CustomSource;
 	}
 	private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -357,7 +368,7 @@ namespace WindowsFormsApplication_cpp {
 			VectorList->Items->Clear();
 			//取得所有向量資料
 			std::vector<Vector> vectors = dataManager->GetVectors();
-			std::vector<Matrix> matrices = dataManager->GetMatrices();
+			std::vector<Matrix> m_lookup = dataManager->GetMatrices();
 			if (vectors.size()) {
 				for (unsigned int i = 0; i < vectors.size(); i++)
 				{
@@ -380,8 +391,8 @@ namespace WindowsFormsApplication_cpp {
 				}
 				Output->Text += "[INFO] File loaded successfully" + nL;
 			}
-			else if (matrices.size()) {
-				for (auto i : matrices)
+			else if (m_lookup.size()) {
+				for (auto i : m_lookup)
 				{
 					std::string tempString = i.name;
 					tempString += " [";
@@ -408,226 +419,249 @@ namespace WindowsFormsApplication_cpp {
 		dataManager->clear();
 		Input->Text = "";
 	}
-	private: System::Void runBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: void ProcessInput() {
 
-		std::vector<Vector> vectors = dataManager->GetVectors();
-		std::vector<Matrix> matrices = dataManager->GetMatrices();
+		//將使用者輸入字串(在userInput中)，依空白作切割
+		array<String^>^ inp = userInput->Split(' ', ',');
+
+		// convert to std::string
+		std::vector<std::string> userCommand(inp->Length);
+		for (int s = 0; s < inp->Length; s++)
+			MarshalString(inp[s], userCommand[s]);
+
+		if (inp->Length > 2) {
+			userCommand[1].erase(0, 1);
+			userCommand[userCommand.size() - 1].pop_back();
+		}
+		Vector v, v1, vResult;
+		Matrix m, m1, mResult;
+		//字串比較，若指令為"print"的情況
+		Output->Text += userInput + nL;
+
+		std::string command = userCommand[0];
+
+		for (auto& c : command)
+			c = tolower(c);
+
+		try {
+
+			std::unordered_map<std::string, Vector> v_lookup;
+			std::unordered_map<std::string, Matrix> m_lookup;
+
+			for (auto const& item : dataManager->GetVectors())
+				v_lookup[item.name] = item;
+
+			for (auto const& item : dataManager->GetMatrices())
+				m_lookup[item.name] = item;
+
+			std::transform(command.begin(), command.end(), command.begin(), ::tolower);
+
+			if (command == "printv" || command == "cal<Vector>") {
+				vResult = cal<Vector>(userCommand[1], v_lookup);
+				Output->Text += vResult.GetResult();
+			}
+			else if (command == "norm") {
+				vResult = cal<Vector>(userCommand[1], v_lookup);
+				double db = Norm(vResult);
+				Output->Text += db + nL;
+			}
+			else if (command == "normal") {
+				vResult = cal<Vector>(userCommand[1], v_lookup);
+				vResult = Normalization(vResult);
+				Output->Text += vResult.GetResult();
+			}
+			else if (command == "cross" || command == "com" || command == "proj") {
+				v = cal<Vector>(userCommand[1], v_lookup);
+				v1 = cal<Vector>(userCommand[2], v_lookup);
+				if (command == "cross") {
+					vResult = CrossProduct(v, v1);
+				}
+				else if (command == "com") {
+					vResult = ::Component(v, v1);
+				}
+				else {
+					vResult = Projection(v, v1);
+				}
+				Output->Text += vResult.GetResult();
+			}
+			else if (command == "area") {
+				v = cal<Vector>(userCommand[1], v_lookup);
+				v1 = cal<Vector>(userCommand[2], v_lookup);
+				double db = Area(v, v1);
+				Output->Text += db + nL;
+			}
+			else if (command == "isparallel" || command == "isorthogonal") {
+				v = cal<Vector>(userCommand[1], v_lookup);
+				v1 = cal<Vector>(userCommand[2], v_lookup);
+				if (command == "isparallel") {
+					Output->Text += (IsParallel(v, v1) ? "Yes" : "No") + nL;
+				}
+				else {
+					Output->Text += (IsOrthogonal(v, v1) ? "Yes" : "No") + nL;
+				}
+			}
+			else if (command == "angle") {
+				v = cal<Vector>(userCommand[1], v_lookup);
+				v1 = cal<Vector>(userCommand[2], v_lookup);
+				double db = Angle(v, v1);
+				Output->Text += "theta = " + db + nL;
+			}
+			else if (command == "pn" || command == "isli") {
+				v = cal<Vector>(userCommand[1], v_lookup);
+				v1 = cal<Vector>(userCommand[2], v_lookup);
+				if (command == "pn") {
+					vResult = PN(v, v1);
+					Output->Text += vResult.GetResult();
+				}
+				else {
+					Output->Text += (IsLI(v, v1) ? "Yes" : "No") + nL;
+				}
+			}
+			else if (command == "ob") {
+				std::vector<Vector> varr;
+				std::vector<Vector> op;
+				for (int i = 1; i < userCommand.size(); i++) {
+					varr.push_back(cal<Vector>(userCommand[i], v_lookup));
+				}
+				op = Ob(varr);
+				for (auto i : op) {
+					Output->Text += i.GetResult();
+				}
+			}
+			else if (command == "ob") {
+				std::vector<Vector> varr;
+				std::vector<Vector> op;
+				for (int i = 1; i < userCommand.size(); i++) {
+					varr.push_back(cal<Vector>(userCommand[i], v_lookup));
+				}
+				op = Ob(varr);
+				for (auto i : op) {
+					Output->Text += i.GetResult();
+				}
+			}
+			else if (command == "cal<Matrix>" || command == "printm") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				Output->Text += mResult.GetResult();
+			}
+			else if (command == "rank") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				int rk = Rank(mResult);
+				Output->Text += rk + nL;
+			}
+			else if (command == "trans") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = Transpose(mResult);
+				Output->Text += mResult.GetResult();
+			}
+			else if (command == "sol") {
+				m = cal<Matrix>(userCommand[1], m_lookup);
+				m1 = cal<Matrix>(userCommand[2], m_lookup);
+				mResult = m / m1;
+				Output->Text += mResult.GetResult();
+			}
+			else if (command == "det") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				double db = Determinants(mResult);
+				Output->Text += db + nL;
+			}
+			else if (command == "inverse") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = Inverse(mResult);
+				Output->Text += mResult.GetResult();
+			}
+			else if (command == "adj") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = Adj(mResult);
+				Output->Text += mResult.GetResult();
+			}
+			else if (command == "pm") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				double db = 0;
+				mResult = Pm(mResult, db);
+				Output->Text += "v=" + nL + mResult.GetResult() + nL;
+				Output->Text += "d=" + nL + db + nL;
+			}
+			else if (command == "eigen") {
+				std::vector<double> eigenValues;
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = Eigen(mResult, eigenValues);
+				Output->Text += "v =" + nL + mResult.GetResult() + nL + "d =" + nL;
+				for (int i = 0; i < eigenValues.size(); i++) {
+					for (int j = 0; j < eigenValues.size(); j++) {
+						Output->Text += (i == j ? eigenValues[i] : 0);
+						Output->Text += "   ";
+					}
+					Output->Text += nL;
+				}
+			}
+			else if (command == "rref") {
+				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				std::vector<Matrix> result = Rref(mResult);
+				Output->Text += result[1].GetResult() + nL;
+				Output->Text += result[0].GetResult() + nL;
+			}
+			else if (command == "leastsquare") {
+				m = cal<Matrix>(userCommand[1], m_lookup);
+				m1 = cal<Matrix>(userCommand[2], m_lookup);
+				mResult = LeastSquare(m, m1);
+				Output->Text += mResult.GetResult();
+			}
+			else {
+				Output->Text += "[ERROR] Command not exist." + nL;
+			}
+			userInput = "";
+		}
+		catch (Error err) {
+			switch (err) {
+			case Vector_name_error:
+				Output->Text += "[ERROR] Vector name error." + nL;
+				break;
+			case Matrix_name_error:
+				Output->Text += "[ERROR] Matrix name error." + nL;
+				break;
+			case V_rankdiff:
+				Output->Text += "[ERROR] Vector rank difference." + nL;
+				break;
+			case M_Rank_different:
+				Output->Text += "[ERROR] Matrix rank difference." + nL;
+				break;
+			case no_Inverse:
+				Output->Text += "[ERROR] Matrix no Inverse." + nL;
+				break;
+			case eigen_Cant_zero:
+				Output->Text += "[ERROR] Eigen value can not be 0." + nL;
+				break;
+			case Vectors_empty:
+				Output->Text += "[ERROR] No vectors list." + nL;
+				break;
+			case Matrices_empty:
+				Output->Text += "[ERROR] No m_lookup list." + nL;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	private: System::Void runBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		userInput = Input->Text;
 
-		if (userInput->Length - 1 >= 0)
-		{
-			//將使用者輸入字串(在userInput中)，依空白作切割
-			array<String^>^ inp = userInput->Split(' ', ',');
-			std::vector<std::string> userCommand(inp->Length);
+		//將使用者輸入字串(在Text box中)，依'\n'作切割
+		auto input_lines = Input->Text->Split('\n');
 
-			for (int s = 0; s < inp->Length; s++) {
-				MarshalString(inp[s], userCommand[s]);
-			}
-			if (inp->Length > 2) {
-				userCommand[1].erase(0, 1);
-				userCommand[userCommand.size() - 1].pop_back();
-			}
-			Vector v, v1, vResult;
-			Matrix m, m1, mResult;
-			//字串比較，若指令為"print"的情況
-			Output->Text += userInput + nL;
-
-			std::string user_command = userCommand[0];
-
-			for (auto &c: user_command) {
-				c = tolower(c);
-			}
-
-			try {
-				if (user_command == "printv" || user_command == "calv") {
-					vResult = calV(userCommand[1], vectors);
-					Output->Text += vResult.GetResult();
-				}
-				else if (user_command == "norm") {
-					vResult = calV(userCommand[1], vectors);
-					double db = Norm(vResult);
-					Output->Text += db + nL;
-				}
-				else if (user_command == "normal") {
-					vResult = calV(userCommand[1], vectors);
-					vResult = Normalization(vResult);
-					Output->Text += vResult.GetResult();
-				}
-				else if (user_command == "cross" || user_command == "com" || user_command == "proj") {
-					v = calV(userCommand[1], vectors);
-					v1 = calV(userCommand[2], vectors);
-					if (user_command == "cross") {
-						vResult = CrossProduct(v, v1);
-					}
-					else if (user_command == "com") {
-						vResult = ::Component(v, v1);
-					}
-					else {
-						vResult = Projection(v, v1);
-					}
-					Output->Text += vResult.GetResult();
-				}
-				else if (user_command == "area") {
-					v = calV(userCommand[1], vectors);
-					v1 = calV(userCommand[2], vectors);
-					double db = Area(v, v1);
-					Output->Text += db + nL;
-				}
-				else if (user_command == "IsParallel" || user_command == "IsOrthogonal") {
-					v = calV(userCommand[1], vectors);
-					v1 = calV(userCommand[2], vectors);
-					if (user_command == "IsParallel") {
-						Output->Text += (IsParallel(v, v1) ? "Yes" : "No") + nL;
-					}
-					else {
-						Output->Text += (IsOrthogonal(v, v1) ? "Yes" : "No") + nL;
-					}
-				}
-				else if (user_command == "Angle") {
-					v = calV(userCommand[1], vectors);
-					v1 = calV(userCommand[2], vectors);
-					double db = Angle(v, v1);
-					Output->Text += "theta = " + db + nL;
-				}
-				else if (user_command == "PN" || user_command == "IsLI") {
-					v = calV(userCommand[1], vectors);
-					v1 = calV(userCommand[2], vectors);
-					if (user_command == "PN") {
-						vResult = PN(v, v1);
-						Output->Text += vResult.GetResult();
-					}
-					else {
-						Output->Text += (IsLI(v, v1) ? "Yes" : "No") + nL;
-					}
-				}
-				else if (user_command == "Ob") {
-					std::vector<Vector> varr;
-					std::vector<Vector> op;
-					for (int i = 1; i < userCommand.size(); i++) {
-						varr.push_back(calV(userCommand[i], vectors));
-					}
-					op = Ob(varr);
-					for (auto i : op) {
-						Output->Text += i.GetResult();
-					}
-				}
-				else if (user_command == "calM" || user_command == "printM") {
-					mResult = calM(userCommand[1], matrices);
-					Output->Text += mResult.GetResult();
-				}
-				else if (user_command == "Rank") {
-					mResult = calM(userCommand[1], matrices);
-					int rk = Rank(mResult);
-					Output->Text += rk + nL;
-				}
-				else if (user_command == "trans") {
-					mResult = calM(userCommand[1], matrices);
-					mResult = Transpose(mResult);
-					Output->Text += mResult.GetResult();
-				}
-				else if (user_command == "Sol") {
-					m = calM(userCommand[1], matrices);
-					m1 = calM(userCommand[2], matrices);
-					mResult = m / m1;
-					Output->Text += mResult.GetResult();
-				}
-				else if (user_command == "det") {
-					mResult = calM(userCommand[1], matrices);
-					double db = Determinants(mResult);
-					Output->Text += db + nL;
-				}
-				else if (user_command == "Inverse") {
-					mResult = calM(userCommand[1], matrices);
-					mResult = Inverse(mResult);
-					Output->Text += mResult.GetResult();
-				}
-				else if (user_command == "Adj") {
-					mResult = calM(userCommand[1], matrices);
-					mResult = Adj(mResult);
-					Output->Text += mResult.GetResult();
-				}
-				else if (user_command == "PM") {
-					mResult = calM(userCommand[1], matrices);
-					double db = 0;
-					mResult = Pm(mResult, db);
-					Output->Text += "v=" + nL + mResult.GetResult() + nL;
-					Output->Text += "d=" + nL + db + nL;
-				}
-				else if (user_command == "eigen") {
-					std::vector<double> eigenValues;
-					mResult = calM(userCommand[1], matrices);
-					mResult = Eigen(mResult, eigenValues);
-					Output->Text += "v =" + nL + mResult.GetResult() + nL + "d =" + nL;
-					for (int i = 0; i < eigenValues.size(); i++) {
-						for (int j = 0; j < eigenValues.size(); j++) {
-							Output->Text += (i == j ? eigenValues[i] : 0);
-							Output->Text += "   ";
-						}
-						Output->Text += nL;
-					}
-				}
-				else if (user_command == "rref") {
-					mResult = calM(userCommand[1], matrices);
-					std::vector<Matrix> result = Rref(mResult);
-					Output->Text += result[1].GetResult() + nL;
-					Output->Text += result[0].GetResult() + nL;
-				}
-				else if (user_command == "LeastSquare") {
-					m = calM(userCommand[1], matrices);
-					m1 = calM(userCommand[2], matrices);
-					mResult = LeastSquare(m, m1);
-					Output->Text += mResult.GetResult();
-				}
-				else {
-					Output->Text += "[ERROR] Command not exist." + nL;
-				}
-				userInput = "";
-			}
-			catch (Error err) {
-				switch (err) {
-				case Vector_name_error:
-					Output->Text += "[ERROR] Vector name error." + nL;
-					break;
-				case Matrix_name_error:
-					Output->Text += "[ERROR] Matrix name error." + nL;
-					break;
-				case V_rankdiff:
-					Output->Text += "[ERROR] Vector rank difference." + nL;
-					break;
-				case M_Rank_different:
-					Output->Text += "[ERROR] Matrix rank difference." + nL;
-					break;
-				case no_Inverse:
-					Output->Text += "[ERROR] Matrix no Inverse." + nL;
-					break;
-				case eigen_Cant_zero:
-					Output->Text += "[ERROR] Eigen value can not be 0." + nL;
-					break;
-				case Vectors_empty:
-					Output->Text += "[ERROR] No vectors list." + nL;
-					break;
-				case Matrices_empty:
-					Output->Text += "[ERROR] No matrices list." + nL;
-					break;
-				default:
-					break;
-				}
-			}
-
-
+		for (int i = 0; i < input_lines->Length; i++) {
+			userInput = input_lines[i];
+			if (userInput->Length < 1)
+				continue;
+			ProcessInput();
 		}
-		else
-		{
-			//將使用者輸入字串(在Text box中)，依'\n'作切割
-			array<String^>^ userCommand = Input->Text->Split('\n');
-			//並將最後一行，作為目前使用者輸入指令
-			userInput = userCommand[userCommand->Length - 1];
-		}
+
 		Input->Text = "";
 	}
 	private: System::Void clearOutputBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		Output->Text = "";
 	}
-};
+	private: System::Void Input_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	};
 }

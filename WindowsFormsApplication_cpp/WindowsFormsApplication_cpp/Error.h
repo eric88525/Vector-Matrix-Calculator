@@ -7,5 +7,8 @@ enum Error{
 	no_Inverse, 
 	eigen_Cant_zero, 
 	Vectors_empty, 
-	Matrices_empty
+	Matrices_empty,
+	op_error
 };
+
+

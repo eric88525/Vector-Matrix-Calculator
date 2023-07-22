@@ -12,6 +12,7 @@ public:
 	Vector() {};
 	Vector(std::vector<double> data);
 	Vector(std::string name, std::vector<double> data);
+	Vector(const Vector& t);
 	System::String^ GetResult();
 	friend const Vector operator+(const Vector& x, const Vector& y);
 	friend const Vector operator-(const Vector& x, const Vector& y);

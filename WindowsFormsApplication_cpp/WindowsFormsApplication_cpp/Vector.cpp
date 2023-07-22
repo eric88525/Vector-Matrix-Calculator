@@ -9,6 +9,12 @@ Vector::Vector(std::string name, std::vector<double> data) {
 	this->data = data;
 }
 
+Vector::Vector(const Vector& t)
+{
+	name = t.name;
+	data = t.data;
+}
+
 System::String^ Vector::GetResult()
 {
 	System::String^ outputTemp = gcnew System::String(name.c_str()) + " = ";

@@ -27,14 +27,18 @@ public:
 	DataManager();
 	//讀取向量資料
 	bool LoadData();
+
 	//取得向量資料
 	std::vector<Vector> GetVectors();
+	Vector GetVector(std::string name);
+
 	//拿矩陣資料
 	std::vector<Matrix> GetMatrices();
+	Matrix GetMatrix(std::string name);
 	//設置檔案路徑名稱
 	void SetFileName(std::string fileName);
 
 	int VectorCount();
-	int MatruxCount();
+	int MatrixCount();
 	void clear();
 };
