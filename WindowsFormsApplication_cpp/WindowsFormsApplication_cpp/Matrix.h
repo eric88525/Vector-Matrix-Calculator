@@ -21,6 +21,7 @@ public:
 	int col;
 	Matrix();
 	Matrix(std::vector<std::vector<double>> data);
+	Matrix(const Matrix& t);
 	System::String^ GetResult();
 	friend const Matrix operator+(const Matrix& x, const Matrix& y);
 	friend const Matrix operator-(const Matrix& x, const Matrix& y);

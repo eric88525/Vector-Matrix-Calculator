@@ -7,8 +7,16 @@ Matrix::Matrix()
 Matrix::Matrix(std::vector<std::vector<double>> data) :data(data)
 {
 	name = "";
-	this->row = data.size();
-	this->col = data[0].size();
+	row = data.size();
+	col = data[0].size();
+}
+
+Matrix::Matrix(const Matrix& t)
+{
+	row = t.row;
+	col = t.col;
+	name = t.name;
+	data = t.data;
 }
 
 System::String ^ Matrix::GetResult()
