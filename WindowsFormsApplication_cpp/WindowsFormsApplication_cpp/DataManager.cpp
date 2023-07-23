@@ -34,7 +34,7 @@ bool DataManager::LoadData()
 				Vector tempVector;
 				tempVector.name = "v[" + std::to_string(currentLoadVectorID++) + "]";
 				tempVector.data = tempVectorData;
-				Vectors.push_back(tempVector);
+				vectors[tempVector.name]=tempVector;
 			}
 			else if (tempSring == "M") {
 				fin >> rows >> cols;
@@ -50,38 +50,30 @@ bool DataManager::LoadData()
 				tempMatrix.name = "m[" + std::to_string(currentLoadMatrixID++) + "]";
 				tempMatrix.row = rows;
 				tempMatrix.col = cols;
-				Matrices.push_back(tempMatrix);
+				matrices[tempMatrix.name] = tempMatrix;
 			}
 		}
 		return true;
 	}
 }
 
-std::vector<Vector> DataManager::GetVectors()
+std::unordered_map<std::string, Vector> DataManager::GetVectors()
 {
-	return Vectors;
+	return vectors;
 }
 
 Vector DataManager::GetVector(std::string name)
 {
-	for (auto v : Vectors) {
-		if (v.name == name)
-			return v;
-	}
-	return Vector();
+	return vectors[name];
 }
 
-std::vector<Matrix> DataManager::GetMatrices() {
-	return Matrices;
+std::unordered_map<std::string, Matrix> DataManager::GetMatrices() {
+	return matrices;
 }
 
 Matrix DataManager::GetMatrix(std::string name)
 {
-	for (auto m : Matrices) {
-		if (m.name == name)
-			return m;
-	}
-	return Matrix();
+	return matrices[name];
 }
 
 void DataManager::SetFileName(std::string fileName)
@@ -91,18 +83,18 @@ void DataManager::SetFileName(std::string fileName)
 
 int DataManager::VectorCount()
 {
-	return Vectors.size();
+	return vectors.size();
 }
 
 int DataManager::MatrixCount()
 {
-	return Matrices.size();
+	return matrices.size();
 }
 
 void DataManager::clear()
 {
-	Vectors.clear();
-	Matrices.clear();
+	vectors.clear();
+	matrices.clear();
 }
 
 

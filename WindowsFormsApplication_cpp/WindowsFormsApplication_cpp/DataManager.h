@@ -9,16 +9,16 @@
 #include <stdarg.h>
 #include"Matrix.h"
 #include"Vector.h"
-
+#include<unordered_map>
 
 //定義控管資料class
 class DataManager
 {
 private:
 	//儲存向量資料
-	std::vector<Vector> Vectors;
+	std::unordered_map<std::string,Vector> vectors;
 	//存矩陣
-	std::vector<Matrix> Matrices;
+	std::unordered_map<std::string, Matrix> matrices;
 	//紀錄向量ID，用於控管
 	int  VectorVariableIndex;
 	//紀錄檔案路徑名稱
@@ -29,11 +29,11 @@ public:
 	bool LoadData();
 
 	//取得向量資料
-	std::vector<Vector> GetVectors();
+	std::unordered_map<std::string, Vector> GetVectors();
 	Vector GetVector(std::string name);
 
 	//拿矩陣資料
-	std::vector<Matrix> GetMatrices();
+	std::unordered_map<std::string, Matrix> GetMatrices();
 	Matrix GetMatrix(std::string name);
 	//設置檔案路徑名稱
 	void SetFileName(std::string fileName);
