@@ -1,13 +1,15 @@
 #pragma once
+#include "Command.h"
 #include"DataManager.h"
 #include <string>
 #include <stack>
 #include <unordered_map>
+#include <regex>
+#include <iostream>
+#include <sstream>
+
 #define nL System::Environment::NewLine
 //#define DEBUG
-
-template <typename T>
-T cal(std::string polynomial, std::unordered_map<std::string, T>);
 
 namespace WindowsFormsApplication_cpp {
 
@@ -91,7 +93,7 @@ namespace WindowsFormsApplication_cpp {
 
 
 
-	private: System::Windows::Forms::Button^ clearBtn;
+
 
 	private: System::Windows::Forms::TextBox^ Output;
 
@@ -111,6 +113,12 @@ namespace WindowsFormsApplication_cpp {
 	private: System::Windows::Forms::DataGridView^ dataTable;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Variable;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Value;
+	private: System::Windows::Forms::ToolStripMenuItem^ ClearDataBtn;
+	private: System::Windows::Forms::ToolStripMenuItem^ ClearOutputBtn;
+
+
+
+
 
 
 
@@ -147,7 +155,6 @@ namespace WindowsFormsApplication_cpp {
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
-			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(WindowsForm::typeid));
 			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle6 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle7 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle10 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
@@ -156,9 +163,10 @@ namespace WindowsFormsApplication_cpp {
 			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			   this->FileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->LoadVectorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			   this->ClearDataBtn = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			   this->ClearOutputBtn = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
 			   this->runBtn = (gcnew System::Windows::Forms::Button());
-			   this->clearBtn = (gcnew System::Windows::Forms::Button());
 			   this->Output = (gcnew System::Windows::Forms::TextBox());
 			   this->InputLabel = (gcnew System::Windows::Forms::Label());
 			   this->Input = (gcnew System::Windows::Forms::TextBox());
@@ -193,20 +201,37 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // FileToolStripMenuItem
 			   // 
-			   this->FileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->LoadVectorToolStripMenuItem });
+			   this->FileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				   this->LoadVectorToolStripMenuItem,
+					   this->ClearDataBtn, this->ClearOutputBtn
+			   });
 			   this->FileToolStripMenuItem->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->FileToolStripMenuItem->Name = L"FileToolStripMenuItem";
-			   this->FileToolStripMenuItem->Size = System::Drawing::Size(74, 32);
-			   this->FileToolStripMenuItem->Text = L"Open";
+			   this->FileToolStripMenuItem->Size = System::Drawing::Size(102, 32);
+			   this->FileToolStripMenuItem->Text = L"Function";
 			   this->FileToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::FileToolStripMenuItem_Click);
 			   // 
 			   // LoadVectorToolStripMenuItem
 			   // 
 			   this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(187, 32);
+			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(224, 32);
 			   this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			   this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
+			   // 
+			   // ClearDataBtn
+			   // 
+			   this->ClearDataBtn->Name = L"ClearDataBtn";
+			   this->ClearDataBtn->Size = System::Drawing::Size(224, 32);
+			   this->ClearDataBtn->Text = L"Clear Data";
+			   this->ClearDataBtn->Click += gcnew System::EventHandler(this, &WindowsForm::ClearDataBtn_Click);
+			   // 
+			   // ClearOutputBtn
+			   // 
+			   this->ClearOutputBtn->Name = L"ClearOutputBtn";
+			   this->ClearOutputBtn->Size = System::Drawing::Size(224, 32);
+			   this->ClearOutputBtn->Text = L"Clear Output";
+			   this->ClearOutputBtn->Click += gcnew System::EventHandler(this, &WindowsForm::ClearOutputBtn_Click_1);
 			   // 
 			   // menuStrip2
 			   // 
@@ -232,20 +257,6 @@ namespace WindowsFormsApplication_cpp {
 			   this->runBtn->Text = L"Execute";
 			   this->runBtn->UseVisualStyleBackColor = true;
 			   this->runBtn->Click += gcnew System::EventHandler(this, &WindowsForm::runBtn_Click);
-			   // 
-			   // clearBtn
-			   // 
-			   this->clearBtn->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"clearBtn.BackgroundImage")));
-			   this->clearBtn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			   this->clearBtn->Font = (gcnew System::Drawing::Font(L"微軟正黑體", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(136)));
-			   this->clearBtn->Location = System::Drawing::Point(8, 16);
-			   this->clearBtn->Margin = System::Windows::Forms::Padding(27, 4, 4, 4);
-			   this->clearBtn->Name = L"clearBtn";
-			   this->clearBtn->Size = System::Drawing::Size(50, 48);
-			   this->clearBtn->TabIndex = 6;
-			   this->clearBtn->UseVisualStyleBackColor = true;
-			   this->clearBtn->Click += gcnew System::EventHandler(this, &WindowsForm::clearBtn_Click);
 			   // 
 			   // Output
 			   // 
@@ -273,9 +284,9 @@ namespace WindowsFormsApplication_cpp {
 			   this->InputLabel->Location = System::Drawing::Point(8, 5);
 			   this->InputLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			   this->InputLabel->Name = L"InputLabel";
-			   this->InputLabel->Size = System::Drawing::Size(134, 31);
+			   this->InputLabel->Size = System::Drawing::Size(124, 31);
 			   this->InputLabel->TabIndex = 0;
-			   this->InputLabel->Text = L"Commands";
+			   this->InputLabel->Text = L"Command";
 			   // 
 			   // Input
 			   // 
@@ -426,9 +437,9 @@ namespace WindowsFormsApplication_cpp {
 			   this->label1->Location = System::Drawing::Point(10, 13);
 			   this->label1->Name = L"label1";
 			   this->label1->Padding = System::Windows::Forms::Padding(0, 4, 0, 4);
-			   this->label1->Size = System::Drawing::Size(74, 39);
+			   this->label1->Size = System::Drawing::Size(64, 39);
 			   this->label1->TabIndex = 8;
-			   this->label1->Text = L"Datas";
+			   this->label1->Text = L"Data";
 			   // 
 			   // splitContainer3
 			   // 
@@ -449,7 +460,6 @@ namespace WindowsFormsApplication_cpp {
 			   // splitContainer3.Panel2
 			   // 
 			   this->splitContainer3->Panel2->BackColor = System::Drawing::SystemColors::ControlLight;
-			   this->splitContainer3->Panel2->Controls->Add(this->clearBtn);
 			   this->splitContainer3->Panel2->Controls->Add(this->runBtn);
 			   this->splitContainer3->Size = System::Drawing::Size(1133, 630);
 			   this->splitContainer3->SplitterDistance = 546;
@@ -515,10 +525,10 @@ namespace WindowsFormsApplication_cpp {
 			auto matrices = data_manager->GetMatrices();
 
 			if (vectors.size()) {
-				for (const auto &v : vectors)
+				for (const auto& v : vectors)
 				{
 					//將檔案名稱存入暫存
-					std::string tempString="";
+					std::string tempString = "";
 					//將輸出格式存入暫存
 					tempString += "[";
 					//將輸出資料存入暫存
@@ -541,9 +551,9 @@ namespace WindowsFormsApplication_cpp {
 				}
 			}
 			if (matrices.size()) {
-				for (const auto &m : matrices)
+				for (const auto& m : matrices)
 				{
-					std::string tempString="";
+					std::string tempString = "";
 					tempString += "[";
 					for (int row = 0; row < m.second.row; row++) {
 						for (int col = 0; col < m.second.col; col++) {
@@ -567,60 +577,85 @@ namespace WindowsFormsApplication_cpp {
 	}
 	private: System::Void FileToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-	private: System::Void clearBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		dataTable->Rows->Clear();
-		data_manager->clear();
-		Input->Text = "";
+	private:std::string trim(std::string& s) {
+		if (s.empty())
+			return s;
+		s.erase(0, s.find_first_not_of(" "));
+		s.erase(s.find_last_not_of(" ") + 1);
+		return s;
 	}
+	private:std::vector<std::string> SplitString(const std::string& input, char delimiter) {
+		std::vector<std::string> result;
+		std::stringstream ss(input);
+		std::string item;
+
+		while (std::getline(ss, item, delimiter)) {
+			result.push_back(item);
+		}
+
+		return result;
+	}
+	private:void ReadInput(std::string &command, std::vector<std::string> &params) {
+
+		std::string input_str = "";
+		MarshalString(userInput, input_str);
+		trim(input_str);
+		std::transform(input_str.begin(), input_str.end(), input_str.begin(), ::tolower);
+
+		std::vector<std::string> commands;
+		//commands.push_back(input_str.substr(0, input_str.find_first_of(" ")));
+		command = input_str.substr(0, input_str.find_first_of(" "));
+
+		std::string param_str = input_str.substr(input_str.find_first_of(" ") + 1);
+		std::vector<std::string> splits = SplitString(param_str, ',');
+
+		if (splits.size() >= 2) {
+			splits[0].erase(0, 1);
+			splits.back().pop_back();
+		}
+		params.clear();
+		params.insert(params.end(), splits.begin(), splits.end());
+	}
+
 	private: void ProcessInput() {
 
-		//將使用者輸入字串(在userInput中)，依空白作切割
-		array<String^>^ inp = userInput->Split(' ', ',');
+		std::vector<std::string> params;
+		std::string command = "";
+			
+		ReadInput(command, params);
 
-		// convert to std::string
-		std::vector<std::string> userCommand(inp->Length);
-		for (int s = 0; s < inp->Length; s++)
-			MarshalString(inp[s], userCommand[s]);
-
-		if (inp->Length > 2) {
-			userCommand[1].erase(0, 1);
-			userCommand[userCommand.size() - 1].pop_back();
-		}
 		Vector v, v1, vResult;
 		Matrix m, m1, mResult;
 		//字串比較，若指令為"print"的情況
-		Output->Text += "[CMD] " + userInput + nL;
-
-		std::string command = userCommand[0];
-
-		for (auto& c : command)
-			c = tolower(c);
+		// Output->Text
+		System::String^ output_temp = "[USER] " + userInput + nL;
 
 		try {
 
 			auto v_lookup = data_manager->GetVectors();
 			auto m_lookup = data_manager->GetMatrices();
 
-			std::transform(command.begin(), command.end(), command.begin(), ::tolower);
-
 			if (command == "printv") {
-				vResult = cal<Vector>(userCommand[1], v_lookup);
-				Output->Text += vResult.GetResult();
+				//userCommand.pop
+				auto cmd = PrintvCommand(v_lookup, m_lookup);
+				cmd.Execute(params);
+				//vResult = cal<Vector>(params[0], v_lookup);
+				//output_temp += vResult.GetResult();
 			}
 			else if (command == "norm") {
-				vResult = cal<Vector>(userCommand[1], v_lookup);
+				vResult = cal<Vector>(params[0], v_lookup);
 				double db = Norm(vResult);
-				Output->Text += db + nL;
+				output_temp += db + nL;
 			}
 			else if (command == "normal") {
-				vResult = cal<Vector>(userCommand[1], v_lookup);
+				vResult = cal<Vector>(params[0], v_lookup);
 				vResult = Normalization(vResult);
-				Output->Text += vResult.GetResult();
+				output_temp += vResult.GetResult();
 			}
 			else if (command == "cross" || command == "com" || command == "proj") {
-				v = cal<Vector>(userCommand[1], v_lookup);
-				v1 = cal<Vector>(userCommand[2], v_lookup);
+				v = cal<Vector>(params[0], v_lookup);
+				v1 = cal<Vector>(params[1], v_lookup);
 				if (command == "cross") {
 					vResult = CrossProduct(v, v1);
 				}
@@ -630,154 +665,156 @@ namespace WindowsFormsApplication_cpp {
 				else {
 					vResult = Projection(v, v1);
 				}
-				Output->Text += vResult.GetResult();
+				output_temp += vResult.GetResult();
 			}
 			else if (command == "area") {
-				v = cal<Vector>(userCommand[1], v_lookup);
-				v1 = cal<Vector>(userCommand[2], v_lookup);
+				v = cal<Vector>(params[0], v_lookup);
+				v1 = cal<Vector>(params[1], v_lookup);
 				double db = Area(v, v1);
-				Output->Text += db + nL;
+				output_temp += db + nL;
 			}
 			else if (command == "isparallel" || command == "isorthogonal") {
-				v = cal<Vector>(userCommand[1], v_lookup);
-				v1 = cal<Vector>(userCommand[2], v_lookup);
+				v = cal<Vector>(params[0], v_lookup);
+				v1 = cal<Vector>(params[1], v_lookup);
 				if (command == "isparallel") {
-					Output->Text += (IsParallel(v, v1) ? "Yes" : "No") + nL;
+					output_temp += (IsParallel(v, v1) ? "Yes" : "No") + nL;
 				}
 				else {
-					Output->Text += (IsOrthogonal(v, v1) ? "Yes" : "No") + nL;
+					output_temp += (IsOrthogonal(v, v1) ? "Yes" : "No") + nL;
 				}
 			}
 			else if (command == "angle") {
-				v = cal<Vector>(userCommand[1], v_lookup);
-				v1 = cal<Vector>(userCommand[2], v_lookup);
+				v = cal<Vector>(params[0], v_lookup);
+				v1 = cal<Vector>(params[1], v_lookup);
 				double db = Angle(v, v1);
-				Output->Text += "theta = " + db + nL;
+				output_temp += "theta = " + db + nL;
 			}
 			else if (command == "pn" || command == "isli") {
-				v = cal<Vector>(userCommand[1], v_lookup);
-				v1 = cal<Vector>(userCommand[2], v_lookup);
+				v = cal<Vector>(params[0], v_lookup);
+				v1 = cal<Vector>(params[1], v_lookup);
 				if (command == "pn") {
 					vResult = PN(v, v1);
-					Output->Text += vResult.GetResult();
+					output_temp += vResult.GetResult();
 				}
 				else {
-					Output->Text += (IsLI(v, v1) ? "Yes" : "No") + nL;
+					output_temp += (IsLI(v, v1) ? "Yes" : "No") + nL;
 				}
 			}
 			else if (command == "ob") {
 				std::vector<Vector> varr;
 				std::vector<Vector> op;
-				for (int i = 1; i < userCommand.size(); i++) {
-					varr.push_back(cal<Vector>(userCommand[i], v_lookup));
+				for (int i = 0; i < params.size(); i++) {
+					varr.push_back(cal<Vector>(params[i], v_lookup));
 				}
 				op = Ob(varr);
-				for (auto i : op) {
-					Output->Text += i.GetResult();
+				for (Vector& i : op) {
+					output_temp += i.GetResult();
 				}
 			}
 			else if (command == "printm") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
-				Output->Text += mResult.GetResult();
+				mResult = cal<Matrix>(params[0], m_lookup);
+				output_temp += mResult.GetResult();
 			}
 			else if (command == "rank") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				int rk = Rank(mResult);
-				Output->Text += rk + nL;
+				output_temp += rk + nL;
 			}
 			else if (command == "trans") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				mResult = Transpose(mResult);
-				Output->Text += mResult.GetResult();
+				output_temp += mResult.GetResult();
 			}
 			else if (command == "sol") {
-				m = cal<Matrix>(userCommand[1], m_lookup);
-				m1 = cal<Matrix>(userCommand[2], m_lookup);
+				m = cal<Matrix>(params[0], m_lookup);
+				m1 = cal<Matrix>(params[1], m_lookup);
 				mResult = m / m1;
-				Output->Text += mResult.GetResult();
+				output_temp += mResult.GetResult();
 			}
 			else if (command == "det") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				double db = Determinants(mResult);
-				Output->Text += db + nL;
+				output_temp += db + nL;
 			}
 			else if (command == "inverse") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				mResult = Inverse(mResult);
-				Output->Text += mResult.GetResult();
+				output_temp += mResult.GetResult();
 			}
 			else if (command == "adj") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				mResult = Adj(mResult);
-				Output->Text += mResult.GetResult();
+				output_temp += mResult.GetResult();
 			}
 			else if (command == "pm") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				double db = 0;
 				mResult = Pm(mResult, db);
-				Output->Text += "v=" + nL + mResult.GetResult() + nL;
-				Output->Text += "d=" + nL + db + nL;
+				output_temp += "v=" + nL + mResult.GetResult() + nL;
+				output_temp += "d=" + nL + db + nL;
 			}
 			else if (command == "eigen") {
 				std::vector<double> eigenValues;
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				mResult = Eigen(mResult, eigenValues);
-				Output->Text += "v =" + nL + mResult.GetResult() + nL + "d =" + nL;
+				output_temp += "v =" + nL + mResult.GetResult() + nL + "d =" + nL;
 				for (int i = 0; i < eigenValues.size(); i++) {
 					for (int j = 0; j < eigenValues.size(); j++) {
-						Output->Text += (i == j ? eigenValues[i] : 0);
-						Output->Text += "   ";
+						output_temp += (i == j ? eigenValues[i] : 0);
+						output_temp += "\t";
 					}
-					Output->Text += nL;
+					output_temp += nL;
 				}
 			}
 			else if (command == "rref") {
-				mResult = cal<Matrix>(userCommand[1], m_lookup);
+				mResult = cal<Matrix>(params[0], m_lookup);
 				std::vector<Matrix> result = Rref(mResult);
-				Output->Text += result[1].GetResult() + nL;
-				Output->Text += result[0].GetResult() + nL;
+				output_temp += result[1].GetResult() + nL;
+				output_temp += result[0].GetResult() + nL;
 			}
 			else if (command == "leastsquare") {
-				m = cal<Matrix>(userCommand[1], m_lookup);
-				m1 = cal<Matrix>(userCommand[2], m_lookup);
+				m = cal<Matrix>(params[0], m_lookup);
+				m1 = cal<Matrix>(params[1], m_lookup);
 				mResult = LeastSquare(m, m1);
-				Output->Text += mResult.GetResult();
+				output_temp += mResult.GetResult();
 			}
 			else {
-				Output->Text += "[ERROR] Command not exist." + nL;
+				output_temp += "[ERROR] Command not exist." + nL;
 			}
 			userInput = "";
 		}
 		catch (Error err) {
 			switch (err) {
 			case Vector_name_error:
-				Output->Text += "[ERROR] Vector name error." + nL;
+				output_temp += "[ERROR] Vector name error." + nL;
 				break;
 			case Matrix_name_error:
-				Output->Text += "[ERROR] Matrix name error." + nL;
+				output_temp += "[ERROR] Matrix name error." + nL;
 				break;
 			case V_rankdiff:
-				Output->Text += "[ERROR] Vector rank difference." + nL;
+				output_temp += "[ERROR] Vector rank difference." + nL;
 				break;
 			case M_Rank_different:
-				Output->Text += "[ERROR] Matrix rank difference." + nL;
+				output_temp += "[ERROR] Matrix rank difference." + nL;
 				break;
 			case no_Inverse:
-				Output->Text += "[ERROR] Matrix no Inverse." + nL;
+				output_temp += "[ERROR] Matrix no Inverse." + nL;
 				break;
 			case eigen_Cant_zero:
-				Output->Text += "[ERROR] Eigen value can not be 0." + nL;
+				output_temp += "[ERROR] Eigen value can not be 0." + nL;
 				break;
 			case Vectors_empty:
-				Output->Text += "[ERROR] No vectors list." + nL;
+
+				output_temp += "[ERROR] No vectors list." + nL;
 				break;
 			case Matrices_empty:
-				Output->Text += "[ERROR] No m_lookup list." + nL;
+				output_temp += "[ERROR] No m_lookup list." + nL;
 				break;
 			default:
 				break;
 			}
 		}
+		Output->Text += output_temp;
 	}
 	private: System::Void runBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 
@@ -807,6 +844,15 @@ namespace WindowsFormsApplication_cpp {
 
 
 	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+	}
+	private: System::Void clearToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void ClearDataBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		dataTable->Rows->Clear();
+		data_manager->clear();
+	}
+	private: System::Void ClearOutputBtn_Click_1(System::Object^ sender, System::EventArgs^ e) {
+		Output->Text = "";
 	}
 	};
 }
