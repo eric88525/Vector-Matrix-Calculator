@@ -8,7 +8,6 @@
 #include <iostream>
 #include <sstream>
 
-#define nL System::Environment::NewLine
 //#define DEBUG
 
 namespace WindowsFormsApplication_cpp {
@@ -30,7 +29,26 @@ namespace WindowsFormsApplication_cpp {
 		{
 			InitializeComponent();
 			data_manager = new DataManager();
+
+			InitializeCommands();
+
 			lastInputLength = -1;
+		}
+
+		void InitializeCommands() {
+			command_factory = new CommandFactory();
+
+			command_factory->RegisterCommand("printv", std::make_shared<PrintvCommand>());
+			command_factory->RegisterCommand("norm", std::make_shared<NormCommand>());
+			command_factory->RegisterCommand("normal", std::make_shared<NormalizationCommand>());
+			command_factory->RegisterCommand("cross", std::make_shared<CrossProductCommand>());
+			command_factory->RegisterCommand("com", std::make_shared<ComponentCommand>());
+			command_factory->RegisterCommand("isparallel", std::make_shared<IsParallelCommand>());
+			command_factory->RegisterCommand("isorthogonal", std::make_shared<IsOrthogonalCommand>());
+			command_factory->RegisterCommand("angle", std::make_shared<AngleCommand>());
+			command_factory->RegisterCommand("pn", std::make_shared<PNCommand>());
+			command_factory->RegisterCommand("isli", std::make_shared<IsLICommand>());
+			command_factory->RegisterCommand("ob", std::make_shared<ObCommand>());
 		}
 
 	protected:
@@ -73,6 +91,7 @@ namespace WindowsFormsApplication_cpp {
 		DataManager* data_manager;
 		String^ userInput;
 		int lastInputLength;
+		CommandFactory* command_factory;
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
 
 
@@ -155,11 +174,11 @@ namespace WindowsFormsApplication_cpp {
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle6 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle7 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle10 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle8 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle9 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle5 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle4 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			   this->FileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->LoadVectorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -215,21 +234,21 @@ namespace WindowsFormsApplication_cpp {
 			   // LoadVectorToolStripMenuItem
 			   // 
 			   this->LoadVectorToolStripMenuItem->Name = L"LoadVectorToolStripMenuItem";
-			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(224, 32);
+			   this->LoadVectorToolStripMenuItem->Size = System::Drawing::Size(210, 32);
 			   this->LoadVectorToolStripMenuItem->Text = L"Load Data";
 			   this->LoadVectorToolStripMenuItem->Click += gcnew System::EventHandler(this, &WindowsForm::LoadVectorToolStripMenuItem_Click);
 			   // 
 			   // ClearDataBtn
 			   // 
 			   this->ClearDataBtn->Name = L"ClearDataBtn";
-			   this->ClearDataBtn->Size = System::Drawing::Size(224, 32);
+			   this->ClearDataBtn->Size = System::Drawing::Size(210, 32);
 			   this->ClearDataBtn->Text = L"Clear Data";
 			   this->ClearDataBtn->Click += gcnew System::EventHandler(this, &WindowsForm::ClearDataBtn_Click);
 			   // 
 			   // ClearOutputBtn
 			   // 
 			   this->ClearOutputBtn->Name = L"ClearOutputBtn";
-			   this->ClearOutputBtn->Size = System::Drawing::Size(224, 32);
+			   this->ClearOutputBtn->Size = System::Drawing::Size(210, 32);
 			   this->ClearOutputBtn->Text = L"Clear Output";
 			   this->ClearOutputBtn->Click += gcnew System::EventHandler(this, &WindowsForm::ClearOutputBtn_Click_1);
 			   // 
@@ -371,35 +390,35 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   this->dataTable->AllowUserToDeleteRows = false;
 			   this->dataTable->AllowUserToOrderColumns = true;
-			   dataGridViewCellStyle6->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
-			   this->dataTable->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+			   dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   this->dataTable->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			   this->dataTable->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				   | System::Windows::Forms::AnchorStyles::Left)
 				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->dataTable->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
 			   this->dataTable->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
-			   dataGridViewCellStyle7->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			   dataGridViewCellStyle7->BackColor = System::Drawing::SystemColors::Control;
-			   dataGridViewCellStyle7->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			   dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   dataGridViewCellStyle7->ForeColor = System::Drawing::SystemColors::WindowText;
-			   dataGridViewCellStyle7->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			   dataGridViewCellStyle7->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			   dataGridViewCellStyle7->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			   this->dataTable->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			   dataGridViewCellStyle2->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle2->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			   this->dataTable->ColumnHeadersHeight = 40;
 			   this->dataTable->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->Variable, this->Value });
 			   this->dataTable->Location = System::Drawing::Point(3, 55);
 			   this->dataTable->Name = L"dataTable";
-			   dataGridViewCellStyle10->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
-			   dataGridViewCellStyle10->BackColor = System::Drawing::SystemColors::Control;
-			   dataGridViewCellStyle10->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle5->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   dataGridViewCellStyle5->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle5->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   dataGridViewCellStyle10->ForeColor = System::Drawing::SystemColors::WindowText;
-			   dataGridViewCellStyle10->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			   dataGridViewCellStyle10->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			   dataGridViewCellStyle10->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			   this->dataTable->RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+			   dataGridViewCellStyle5->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle5->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle5->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle5->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
 			   this->dataTable->RowHeadersWidth = 51;
 			   this->dataTable->RowTemplate->Height = 27;
 			   this->dataTable->Size = System::Drawing::Size(734, 162);
@@ -409,9 +428,9 @@ namespace WindowsFormsApplication_cpp {
 			   // Variable
 			   // 
 			   this->Variable->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			   dataGridViewCellStyle8->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Variable->DefaultCellStyle = dataGridViewCellStyle8;
+			   this->Variable->DefaultCellStyle = dataGridViewCellStyle3;
 			   this->Variable->HeaderText = L"Variable";
 			   this->Variable->MaxInputLength = 20;
 			   this->Variable->MinimumWidth = 6;
@@ -422,9 +441,9 @@ namespace WindowsFormsApplication_cpp {
 			   // Value
 			   // 
 			   this->Value->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
-			   dataGridViewCellStyle9->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle4->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Value->DefaultCellStyle = dataGridViewCellStyle9;
+			   this->Value->DefaultCellStyle = dataGridViewCellStyle4;
 			   this->Value->HeaderText = L"Value";
 			   this->Value->MinimumWidth = 6;
 			   this->Value->Name = L"Value";
@@ -501,6 +520,11 @@ namespace WindowsFormsApplication_cpp {
 #pragma endregion
 
 	private: System::Void WindowsForm_Load(System::Object^ sender, System::EventArgs^ e) {
+
+
+
+
+
 	}
 	private: System::Void LoadVectorToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
 	{
@@ -572,7 +596,7 @@ namespace WindowsFormsApplication_cpp {
 				}
 
 			}
-			Output->Text += "[INFO] File loaded successfully" + nL;
+			Output->Text += "[INFO] File loaded successfully" + NL;
 		}
 	}
 	private: System::Void FileToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -596,7 +620,7 @@ namespace WindowsFormsApplication_cpp {
 
 		return result;
 	}
-	private:void ReadInput(std::string &command, std::vector<std::string> &params) {
+	private:void ReadInput(std::string& command, std::vector<std::string>& params) {
 
 		std::string input_str = "";
 		MarshalString(userInput, input_str);
@@ -622,103 +646,28 @@ namespace WindowsFormsApplication_cpp {
 
 		std::vector<std::string> params;
 		std::string command = "";
-			
+
 		ReadInput(command, params);
 
 		Vector v, v1, vResult;
 		Matrix m, m1, mResult;
 		//字串比較，若指令為"print"的情況
 		// Output->Text
-		System::String^ output_temp = "[USER] " + userInput + nL;
+		System::String^ output_temp = "[USER] " + userInput + NL;
 
 		try {
 
 			auto v_lookup = data_manager->GetVectors();
 			auto m_lookup = data_manager->GetMatrices();
 
-			if (command == "printv") {
-				//userCommand.pop
-				auto cmd = PrintvCommand(v_lookup, m_lookup);
-				cmd.Execute(params);
-				//vResult = cal<Vector>(params[0], v_lookup);
-				//output_temp += vResult.GetResult();
-			}
-			else if (command == "norm") {
-				vResult = cal<Vector>(params[0], v_lookup);
-				double db = Norm(vResult);
-				output_temp += db + nL;
-			}
-			else if (command == "normal") {
-				vResult = cal<Vector>(params[0], v_lookup);
-				vResult = Normalization(vResult);
-				output_temp += vResult.GetResult();
-			}
-			else if (command == "cross" || command == "com" || command == "proj") {
-				v = cal<Vector>(params[0], v_lookup);
-				v1 = cal<Vector>(params[1], v_lookup);
-				if (command == "cross") {
-					vResult = CrossProduct(v, v1);
-				}
-				else if (command == "com") {
-					vResult = ::Component(v, v1);
-				}
-				else {
-					vResult = Projection(v, v1);
-				}
-				output_temp += vResult.GetResult();
-			}
-			else if (command == "area") {
-				v = cal<Vector>(params[0], v_lookup);
-				v1 = cal<Vector>(params[1], v_lookup);
-				double db = Area(v, v1);
-				output_temp += db + nL;
-			}
-			else if (command == "isparallel" || command == "isorthogonal") {
-				v = cal<Vector>(params[0], v_lookup);
-				v1 = cal<Vector>(params[1], v_lookup);
-				if (command == "isparallel") {
-					output_temp += (IsParallel(v, v1) ? "Yes" : "No") + nL;
-				}
-				else {
-					output_temp += (IsOrthogonal(v, v1) ? "Yes" : "No") + nL;
-				}
-			}
-			else if (command == "angle") {
-				v = cal<Vector>(params[0], v_lookup);
-				v1 = cal<Vector>(params[1], v_lookup);
-				double db = Angle(v, v1);
-				output_temp += "theta = " + db + nL;
-			}
-			else if (command == "pn" || command == "isli") {
-				v = cal<Vector>(params[0], v_lookup);
-				v1 = cal<Vector>(params[1], v_lookup);
-				if (command == "pn") {
-					vResult = PN(v, v1);
-					output_temp += vResult.GetResult();
-				}
-				else {
-					output_temp += (IsLI(v, v1) ? "Yes" : "No") + nL;
-				}
-			}
-			else if (command == "ob") {
-				std::vector<Vector> varr;
-				std::vector<Vector> op;
-				for (int i = 0; i < params.size(); i++) {
-					varr.push_back(cal<Vector>(params[i], v_lookup));
-				}
-				op = Ob(varr);
-				for (Vector& i : op) {
-					output_temp += i.GetResult();
-				}
-			}
-			else if (command == "printm") {
+			if (command == "printm") {
 				mResult = cal<Matrix>(params[0], m_lookup);
 				output_temp += mResult.GetResult();
 			}
 			else if (command == "rank") {
 				mResult = cal<Matrix>(params[0], m_lookup);
 				int rk = Rank(mResult);
-				output_temp += rk + nL;
+				output_temp += rk + NL;
 			}
 			else if (command == "trans") {
 				mResult = cal<Matrix>(params[0], m_lookup);
@@ -734,7 +683,7 @@ namespace WindowsFormsApplication_cpp {
 			else if (command == "det") {
 				mResult = cal<Matrix>(params[0], m_lookup);
 				double db = Determinants(mResult);
-				output_temp += db + nL;
+				output_temp += db + NL;
 			}
 			else if (command == "inverse") {
 				mResult = cal<Matrix>(params[0], m_lookup);
@@ -750,27 +699,27 @@ namespace WindowsFormsApplication_cpp {
 				mResult = cal<Matrix>(params[0], m_lookup);
 				double db = 0;
 				mResult = Pm(mResult, db);
-				output_temp += "v=" + nL + mResult.GetResult() + nL;
-				output_temp += "d=" + nL + db + nL;
+				output_temp += "v=" + NL + mResult.GetResult() + NL;
+				output_temp += "d=" + NL + db + NL;
 			}
 			else if (command == "eigen") {
 				std::vector<double> eigenValues;
 				mResult = cal<Matrix>(params[0], m_lookup);
 				mResult = Eigen(mResult, eigenValues);
-				output_temp += "v =" + nL + mResult.GetResult() + nL + "d =" + nL;
+				output_temp += "v =" + NL + mResult.GetResult() + NL + "d =" + NL;
 				for (int i = 0; i < eigenValues.size(); i++) {
 					for (int j = 0; j < eigenValues.size(); j++) {
 						output_temp += (i == j ? eigenValues[i] : 0);
 						output_temp += "\t";
 					}
-					output_temp += nL;
+					output_temp += NL;
 				}
 			}
 			else if (command == "rref") {
 				mResult = cal<Matrix>(params[0], m_lookup);
 				std::vector<Matrix> result = Rref(mResult);
-				output_temp += result[1].GetResult() + nL;
-				output_temp += result[0].GetResult() + nL;
+				output_temp += result[1].GetResult() + NL;
+				output_temp += result[0].GetResult() + NL;
 			}
 			else if (command == "leastsquare") {
 				m = cal<Matrix>(params[0], m_lookup);
@@ -779,36 +728,39 @@ namespace WindowsFormsApplication_cpp {
 				output_temp += mResult.GetResult();
 			}
 			else {
-				output_temp += "[ERROR] Command not exist." + nL;
+				auto cmd = command_factory->CreateCommand(command);
+				output_temp += cmd->Execute(params, v_lookup, m_lookup);
 			}
-			userInput = "";
+			//else {
+			//	output_temp += "[ERROR] Command not exist." + NL;
+			//}
 		}
 		catch (Error err) {
 			switch (err) {
 			case Vector_name_error:
-				output_temp += "[ERROR] Vector name error." + nL;
+				output_temp += "[ERROR] Vector name error." + NL;
 				break;
 			case Matrix_name_error:
-				output_temp += "[ERROR] Matrix name error." + nL;
+				output_temp += "[ERROR] Matrix name error." + NL;
 				break;
 			case V_rankdiff:
-				output_temp += "[ERROR] Vector rank difference." + nL;
+				output_temp += "[ERROR] Vector rank difference." + NL;
 				break;
 			case M_Rank_different:
-				output_temp += "[ERROR] Matrix rank difference." + nL;
+				output_temp += "[ERROR] Matrix rank difference." + NL;
 				break;
 			case no_Inverse:
-				output_temp += "[ERROR] Matrix no Inverse." + nL;
+				output_temp += "[ERROR] Matrix no Inverse." + NL;
 				break;
 			case eigen_Cant_zero:
-				output_temp += "[ERROR] Eigen value can not be 0." + nL;
+				output_temp += "[ERROR] Eigen value can not be 0." + NL;
 				break;
 			case Vectors_empty:
 
-				output_temp += "[ERROR] No vectors list." + nL;
+				output_temp += "[ERROR] No vectors list." + NL;
 				break;
 			case Matrices_empty:
-				output_temp += "[ERROR] No m_lookup list." + nL;
+				output_temp += "[ERROR] No m_lookup list." + NL;
 				break;
 			default:
 				break;
