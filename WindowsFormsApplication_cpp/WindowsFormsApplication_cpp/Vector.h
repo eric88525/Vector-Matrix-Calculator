@@ -10,10 +10,12 @@ public:
 	std::string name;
 	std::vector<double> data;
 	Vector() {};
-	Vector(std::vector<double> data);
-	Vector(std::string name, std::vector<double> data);
-	Vector(const Vector& t);
+	Vector(std::vector<double> data) :data(data) {}
+	Vector(std::string name, std::vector<double> data) :name(name), data(data) {}
+	Vector(const Vector& t) :name(t.name), data(t.data) {}
+
 	System::String^ GetResult();
+
 	friend const Vector operator+(const Vector& x, const Vector& y);
 	friend const Vector operator-(const Vector& x, const Vector& y);
 	friend const Vector operator*(const Vector& x, const Vector& y);

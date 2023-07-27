@@ -19,12 +19,10 @@ private:
 	std::unordered_map<std::string,Vector> vectors;
 	//存矩陣
 	std::unordered_map<std::string, Matrix> matrices;
-	//紀錄向量ID，用於控管
-	int  VectorVariableIndex;
 	//紀錄檔案路徑名稱
 	std::string FileName;
 public:
-	DataManager();
+	DataManager() {};
 	//讀取向量資料
 	bool LoadData();
 

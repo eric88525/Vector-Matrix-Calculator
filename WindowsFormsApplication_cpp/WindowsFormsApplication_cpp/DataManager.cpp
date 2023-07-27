@@ -2,12 +2,6 @@
 #include "WindowsForm.h"
 
 
-
-DataManager::DataManager()
-{
-	VectorVariableIndex = 0;
-}
-
 bool DataManager::LoadData()
 {
 	std::fstream fin;

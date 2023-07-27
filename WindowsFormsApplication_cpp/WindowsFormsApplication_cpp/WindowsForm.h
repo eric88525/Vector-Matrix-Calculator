@@ -164,6 +164,11 @@ namespace WindowsFormsApplication_cpp {
 
 
 
+
+
+
+
+
 		   /// </summary>
 		   System::ComponentModel::Container^ components;
 
@@ -174,11 +179,11 @@ namespace WindowsFormsApplication_cpp {
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle5 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle4 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle6 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle7 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle10 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle8 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle9 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			   this->FileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->LoadVectorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -266,6 +271,8 @@ namespace WindowsFormsApplication_cpp {
 			   // runBtn
 			   // 
 			   this->runBtn->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			   this->runBtn->AutoEllipsis = true;
+			   this->runBtn->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			   this->runBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->runBtn->Location = System::Drawing::Point(957, 17);
@@ -390,47 +397,48 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   this->dataTable->AllowUserToDeleteRows = false;
 			   this->dataTable->AllowUserToOrderColumns = true;
-			   dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
-			   this->dataTable->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			   dataGridViewCellStyle6->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   this->dataTable->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
 			   this->dataTable->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				   | System::Windows::Forms::AnchorStyles::Left)
 				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->dataTable->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
 			   this->dataTable->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
-			   dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			   dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Control;
-			   dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle7->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			   dataGridViewCellStyle7->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle7->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   dataGridViewCellStyle2->ForeColor = System::Drawing::SystemColors::WindowText;
-			   dataGridViewCellStyle2->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			   dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			   dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			   this->dataTable->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			   dataGridViewCellStyle7->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle7->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle7->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle7->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			   this->dataTable->ColumnHeadersHeight = 40;
 			   this->dataTable->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->Variable, this->Value });
+			   this->dataTable->EditMode = System::Windows::Forms::DataGridViewEditMode::EditOnEnter;
 			   this->dataTable->Location = System::Drawing::Point(3, 55);
 			   this->dataTable->Name = L"dataTable";
-			   dataGridViewCellStyle5->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
-			   dataGridViewCellStyle5->BackColor = System::Drawing::SystemColors::Control;
-			   dataGridViewCellStyle5->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle10->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   dataGridViewCellStyle10->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle10->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   dataGridViewCellStyle5->ForeColor = System::Drawing::SystemColors::WindowText;
-			   dataGridViewCellStyle5->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			   dataGridViewCellStyle5->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			   dataGridViewCellStyle5->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			   this->dataTable->RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			   dataGridViewCellStyle10->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle10->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle10->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle10->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
 			   this->dataTable->RowHeadersWidth = 51;
 			   this->dataTable->RowTemplate->Height = 27;
 			   this->dataTable->Size = System::Drawing::Size(734, 162);
 			   this->dataTable->TabIndex = 9;
-			   this->dataTable->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &WindowsForm::dataGridView1_CellContentClick);
+			   this->dataTable->CellContentDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &WindowsForm::dataTable_CellContentClick);
 			   // 
 			   // Variable
 			   // 
 			   this->Variable->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			   dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle8->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Variable->DefaultCellStyle = dataGridViewCellStyle3;
+			   this->Variable->DefaultCellStyle = dataGridViewCellStyle8;
 			   this->Variable->HeaderText = L"Variable";
 			   this->Variable->MaxInputLength = 20;
 			   this->Variable->MinimumWidth = 6;
@@ -441,9 +449,9 @@ namespace WindowsFormsApplication_cpp {
 			   // Value
 			   // 
 			   this->Value->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
-			   dataGridViewCellStyle4->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle9->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Value->DefaultCellStyle = dataGridViewCellStyle4;
+			   this->Value->DefaultCellStyle = dataGridViewCellStyle9;
 			   this->Value->HeaderText = L"Value";
 			   this->Value->MinimumWidth = 6;
 			   this->Value->Name = L"Value";
@@ -453,7 +461,7 @@ namespace WindowsFormsApplication_cpp {
 			   this->label1->AutoSize = true;
 			   this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->label1->Location = System::Drawing::Point(10, 13);
+			   this->label1->Location = System::Drawing::Point(10, 9);
 			   this->label1->Name = L"label1";
 			   this->label1->Padding = System::Windows::Forms::Padding(0, 4, 0, 4);
 			   this->label1->Size = System::Drawing::Size(64, 39);
@@ -552,46 +560,49 @@ namespace WindowsFormsApplication_cpp {
 				for (const auto& v : vectors)
 				{
 					//將檔案名稱存入暫存
-					std::string tempString = "";
+					std::string temp_str = "";
 					//將輸出格式存入暫存
-					tempString += "[";
+					temp_str += "[";
 					//將輸出資料存入暫存
 					for (unsigned int j = 0; j < v.second.data.size(); j++)
 					{
 						std::string scalarString = std::to_string(v.second.data[j]);
-						tempString += scalarString.substr(0, scalarString.size() - 5);
+						temp_str += scalarString.substr(0, scalarString.size() - 5);
 						if (j != v.second.data.size() - 1)
-							tempString += ", ";
+							temp_str += ", ";
 					}
 					//將輸出格式存入暫存
-					tempString += "]";
+					temp_str += "]";
 					//將項目加入VectorList中
 					//VectorList->Items->Add(gcnew String(tempString.c_str()));
 
 					this->dataTable->Rows->Add(
 						gcnew array<String^>{gcnew String(v.first.c_str()),
-						gcnew String(tempString.c_str())}
+						gcnew String(temp_str.c_str())}
 					);
 				}
 			}
 			if (matrices.size()) {
+
 				for (const auto& m : matrices)
 				{
-					std::string tempString = "";
-					tempString += "[";
+					std::string temp_str = "";
+					temp_str += "[";
 					for (int row = 0; row < m.second.row; row++) {
+						temp_str += "[";
 						for (int col = 0; col < m.second.col; col++) {
 							std::string scalarString = std::to_string(m.second.data[row][col]);
-							tempString += scalarString.substr(0, scalarString.size() - 5);
+							temp_str += scalarString.substr(0, scalarString.size() - 5); // precision
 							if (!(row == m.second.row - 1 && col == m.second.col - 1))
-								tempString += ",";
+								temp_str += ", ";
 						}
+						temp_str += "],";
 					}
-					tempString += "]";
+					temp_str += "]";
 					//VectorList->Items->Add(gcnew String(tempString.c_str()));
 					this->dataTable->Rows->Add(
 						gcnew array<String^>{gcnew String(m.first.c_str()),
-						gcnew String(tempString.c_str())}
+						gcnew String(temp_str.c_str())}
 					);
 				}
 
@@ -729,7 +740,11 @@ namespace WindowsFormsApplication_cpp {
 			}
 			else {
 				auto cmd = command_factory->CreateCommand(command);
-				output_temp += cmd->Execute(params, v_lookup, m_lookup);
+
+				if (cmd)
+					output_temp += cmd->Execute(params, v_lookup, m_lookup);
+				else
+					output_temp += "[ERROR] Command not exist." + NL;
 			}
 			//else {
 			//	output_temp += "[ERROR] Command not exist." + NL;
@@ -737,29 +752,28 @@ namespace WindowsFormsApplication_cpp {
 		}
 		catch (Error err) {
 			switch (err) {
-			case Vector_name_error:
+			case vector_name_error:
 				output_temp += "[ERROR] Vector name error." + NL;
 				break;
-			case Matrix_name_error:
+			case matrix_name_error:
 				output_temp += "[ERROR] Matrix name error." + NL;
 				break;
-			case V_rankdiff:
+			case v_rankdiff:
 				output_temp += "[ERROR] Vector rank difference." + NL;
 				break;
-			case M_Rank_different:
+			case m_Rank_different:
 				output_temp += "[ERROR] Matrix rank difference." + NL;
 				break;
-			case no_Inverse:
+			case no_inverse:
 				output_temp += "[ERROR] Matrix no Inverse." + NL;
 				break;
-			case eigen_Cant_zero:
+			case eigen_cant_zero:
 				output_temp += "[ERROR] Eigen value can not be 0." + NL;
 				break;
-			case Vectors_empty:
-
+			case vectors_empty:
 				output_temp += "[ERROR] No vectors list." + NL;
 				break;
-			case Matrices_empty:
+			case matrices_empty:
 				output_temp += "[ERROR] No m_lookup list." + NL;
 				break;
 			default:
@@ -792,11 +806,6 @@ namespace WindowsFormsApplication_cpp {
 
 	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
-
-
-
-	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-	}
 	private: System::Void clearToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void ClearDataBtn_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -806,5 +815,17 @@ namespace WindowsFormsApplication_cpp {
 	private: System::Void ClearOutputBtn_Click_1(System::Object^ sender, System::EventArgs^ e) {
 		Output->Text = "";
 	}
+
+	private: System::Void dataTable_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+
+		auto x = e->RowIndex;
+		auto row = dataTable->Rows[x];
+
+		Output->Text += x;
+	}
 	};
 }
+
+
+
+
