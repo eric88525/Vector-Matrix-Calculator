@@ -2,7 +2,7 @@
 
 System::String^ Vector::GetResult()
 {
-	System::String^ outputTemp = gcnew System::String(name.c_str()) + " = ";
+	System::String^ outputTemp = "";
 	outputTemp += "[";
 	for (unsigned int j = 0; j < data.size(); j++)
 	{

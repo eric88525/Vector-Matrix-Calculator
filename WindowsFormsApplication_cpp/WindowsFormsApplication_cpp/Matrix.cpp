@@ -22,7 +22,7 @@ Matrix::Matrix(const Matrix& t)
 System::String^ Matrix::GetResult()
 {
 
-	System::String^ outputTemp = gcnew System::String(name.c_str()) + " = " + System::Environment::NewLine;
+	System::String^ outputTemp = "";
 	outputTemp += "[";
 	for (int r = 0; r < row; r++)
 	{
