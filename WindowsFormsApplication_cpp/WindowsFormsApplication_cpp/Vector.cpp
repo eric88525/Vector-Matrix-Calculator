@@ -1,19 +1,4 @@
 #include"Vector.h"
-Vector::Vector(std::vector<double> data)
-{
-	this->data = data;
-}
-
-Vector::Vector(std::string name, std::vector<double> data) {
-	this->name = name;
-	this->data = data;
-}
-
-Vector::Vector(const Vector& t)
-{
-	name = t.name;
-	data = t.data;
-}
 
 System::String^ Vector::GetResult()
 {
@@ -37,7 +22,7 @@ const Vector operator+(const Vector &x, const Vector &y) {
 	
 	std::vector<double> data;
 	if (x.data.size() != y.data.size()) {
-		throw V_rankdiff;
+		throw v_rankdiff;
 	}
 	else {
 		for (int i = 0; i < x.data.size(); i++) {
@@ -51,7 +36,7 @@ const Vector operator-(const Vector &x, const Vector &y) {
 	int rankdiff;
 	std::vector<double> data;
 	if (x.data.size() != y.data.size()) {
-		throw V_rankdiff;
+		throw v_rankdiff;
 	}
 	else {
 		for (int i = 0; i < x.data.size(); i++) {
@@ -77,7 +62,7 @@ const Vector operator*(const Vector &x, const Vector &y) {
 		}
 	}
 	else if (x.data.size() != y.data.size()) {
-		throw V_rankdiff;
+		throw v_rankdiff;
 	}
 	else {
 		double sum = 0;
@@ -142,7 +127,7 @@ const Vector Projection(const Vector & x, const  Vector & y)
 
 const double Area(const Vector & x, const Vector & y)
 {
-
+	// for eval: https://onlinemschool.com/math/assistance/vector/triangle_area/
 	double c = Norm(x);
 	double a = Component(x, y).data[0];
 	double b = sqrt(c*c - a * a);
@@ -196,21 +181,11 @@ const double Angle(const Vector & x, const Vector & y)
 
 const bool IsLI(const Vector & x, const Vector & y)
 {
-	if (!IsParallel(x, y)) {
-		return true;
-	}
-	return false;
+	return !IsParallel(x, y);
 }
 
 const std::vector<Vector> Ob(std::vector<Vector>list)
 {
-	/*std::vector<Vector>list;
-	va_list ptr;
-	va_start(ptr, count);
-	for (int i = 0; i < count; i++) {
-		Vector buff  = va_arg(ptr, Vector);
-		list.push_back(buff);
-	}*/
 	list[0] = Normalization(list[0]);
 	for (int i = 0; i < list.size(); i++) {
 		for (int j = i - 1; j >= 0; j--) {

@@ -42,7 +42,7 @@ System::String ^ Matrix::GetResult()
 
 const Matrix operator+(const Matrix & x, const Matrix & y)
 {
-	if (x.row != y.row || x.col != y.col)throw M_Rank_different;
+	if (x.row != y.row || x.col != y.col)throw m_Rank_different;
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; i++) {
 		for (int j = 0; j < x.col; j++) {
@@ -66,7 +66,7 @@ const Matrix operator-(const Matrix & x, const Matrix & y)
 const Matrix operator*(const Matrix & x, const Matrix & y)
 {
 	if (x.col != y.row) {
-		throw M_Rank_different;
+		throw m_Rank_different;
 	}
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; ++i) {
@@ -84,7 +84,7 @@ const Matrix operator*(const Matrix & x, const Matrix & y)
 
 const int Rank(Matrix  x)
 {
-	int row, col, fixP = 0;
+	int row=0, col=0, fixP = 0;
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			return row;
@@ -148,7 +148,7 @@ const Matrix operator/(Matrix  x, Matrix  y)
 
 const double Determinants(Matrix  x)
 {
-	int row, col, fixP = 0;
+	int row=0, col=0, fixP = 0;
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			break;
@@ -196,7 +196,7 @@ const Matrix Inverse(Matrix x)
 	
 	if (rL != x.row || x.row!=x.col) {
 		
-		throw no_Inverse;
+		throw no_inverse;
 	}
 	std::vector<std::vector<double>> data(x.row);
 	Matrix m(data);
@@ -209,7 +209,7 @@ const Matrix Inverse(Matrix x)
 	m.col = x.row;
 	m.row = x.row;
 	//-------
-	int row, col, fixP = 0;
+	int row=0, col=0, fixP = 0;
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			break;
@@ -329,7 +329,7 @@ const Matrix Eigen(const Matrix & x,std::vector<double>&eigenValues)
 		double detX = Determinants(x);
 		eigenValues.push_back((X03+sqrt(pow(X03,2)-4*detX ))/2);
 		eigenValues.push_back((X03-sqrt(pow(X03, 2) - 4 * detX))/2);
-		if (eigenValues[0] == 0 || eigenValues[1] == 0)throw eigen_Cant_zero;
+		if (eigenValues[0] == 0 || eigenValues[1] == 0)throw eigen_cant_zero;
 		for (int i = 0; i < 2;i++) {
 			M[i] = x;
 			M[i].data[0][0] -= eigenValues[i]; M[i].data[1][1] -= eigenValues[i];
@@ -391,7 +391,7 @@ const Matrix Eigen(const Matrix & x,std::vector<double>&eigenValues)
 			eigenValues.push_back(s+u-(b/(3*a)));
 			eigenValues.push_back( -(s+u)/2 -(b/3a) + ) );	
 		}*/
-		if (eigenValues[0] == 0 || eigenValues[1] == 1 || eigenValues[2] == 2)throw eigen_Cant_zero;
+		if (eigenValues[0] == 0 || eigenValues[1] == 1 || eigenValues[2] == 2)throw eigen_cant_zero;
 		for (int i = 0; i < 3; i++) {
 			M[i] = x;
 			M[i].data[0][0] -= eigenValues[i];

@@ -1,13 +1,13 @@
 #pragma once
 enum Error{
-	Vector_name_error, 
-	Matrix_name_error,
-	V_rankdiff,
-	M_Rank_different, 
-	no_Inverse, 
-	eigen_Cant_zero, 
-	Vectors_empty, 
-	Matrices_empty,
+	vector_name_error, 
+	matrix_name_error,
+	v_rankdiff,
+	m_Rank_different, 
+	no_inverse, 
+	eigen_cant_zero, 
+	vectors_empty, 
+	matrices_empty,
 	op_error
 };
 

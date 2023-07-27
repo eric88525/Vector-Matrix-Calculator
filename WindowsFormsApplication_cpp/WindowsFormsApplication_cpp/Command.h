@@ -10,7 +10,7 @@ int priority(std::string op);
 std::vector<std::string> IntoPost(std::string str);
 
 template<typename T>
-inline T cal(std::string polynomial, std::unordered_map<std::string, T>  v_lookup)
+inline T cal(std::string polynomial,  std::unordered_map<std::string, T>   &symbol_table)
 {
 	std::vector<std::string> post = IntoPost(polynomial);
 	std::stack<T> op_stk;
@@ -18,8 +18,13 @@ inline T cal(std::string polynomial, std::unordered_map<std::string, T>  v_looku
 	for (auto const& op : post) {
 
 		if (op.size() > 1) {
-			auto item = v_lookup[op];
-			op_stk.push(item);
+			if (symbol_table.find(op) != symbol_table.end()) {
+				auto item = symbol_table[op];
+				op_stk.push(item);
+			}
+			else {
+				throw vector_name_error;
+			}
 		}
 		else {
 			auto left = op_stk.top();
