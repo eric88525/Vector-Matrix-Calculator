@@ -70,26 +70,26 @@ std::vector<std::string> IntoPost(std::string str) {
 
 
 
-System::String^ PrintvCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ PrintvCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector result = cal<Vector>(params[0], v_lookup);
 	return result.GetResult();
 }
 
-System::String^ NormCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ NormCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector result = cal<Vector>(params[0], v_lookup);
 	return Norm(result) + NL;
 }
 
-System::String^ NormalizationCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ NormalizationCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector result = cal<Vector>(params[0], v_lookup);
 	result = Normalization(result);
 	return result.GetResult();
 }
 
-System::String^ CrossProductCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ CrossProductCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
@@ -97,7 +97,7 @@ System::String^ CrossProductCommand::Execute(std::vector<std::string>& params, c
 	return result.GetResult();
 }
 
-System::String^ ComponentCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ ComponentCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
@@ -105,7 +105,7 @@ System::String^ ComponentCommand::Execute(std::vector<std::string>& params, cons
 	return result.GetResult();
 }
 
-System::String^ ProjectionCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ ProjectionCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
@@ -113,7 +113,7 @@ System::String^ ProjectionCommand::Execute(std::vector<std::string>& params, con
 	return result.GetResult();
 }
 
-System::String^ AreatCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ AreatCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
@@ -121,7 +121,7 @@ System::String^ AreatCommand::Execute(std::vector<std::string>& params, const st
 	return result.GetResult();
 }
 
-System::String^ IsParallelCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ IsParallelCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
@@ -129,21 +129,21 @@ System::String^ IsParallelCommand::Execute(std::vector<std::string>& params, con
 
 }
 
-System::String^ IsOrthogonalCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ IsOrthogonalCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
 	return IsOrthogonal(left, right) ? "Yes" : "No" + NL;
 }
 
-System::String^ AngleCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ AngleCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
 	return "theta = " + Angle(left, right) + NL;
 }
 
-System::String^ PNCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ PNCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
@@ -151,14 +151,14 @@ System::String^ PNCommand::Execute(std::vector<std::string>& params, const std::
 	return result.GetResult();
 }
 
-System::String^ IsLICommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ IsLICommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	Vector left = cal<Vector>(params[0], v_lookup);
 	Vector right = cal<Vector>(params[1], v_lookup);
 	return IsLI(left, right) ? "Yes" : "No" + NL;
 }
 
-System::String^ ObCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup)
+System::String^ ObCommand::Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup)
 {
 	std::vector<Vector> varr;
 	for (int i = 0; i < params.size(); i++) {
@@ -172,3 +172,89 @@ System::String^ ObCommand::Execute(std::vector<std::string>& params, const std::
 	}
 	return result_str;
 }
+
+System::String^ PrintmCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	return result.GetResult();
+}
+
+System::String^ RankCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	return Rank(result) + NL;
+}
+
+System::String^ TransposeCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = Transpose(cal<Matrix>(params[0], m_lookup));
+	return result.GetResult();
+}
+
+System::String^ SolveMCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	return result.GetResult();
+}
+
+System::String^ DeterminantsCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup) / cal<Matrix>(params[1], m_lookup);
+	return result.GetResult();
+}
+
+System::String^ InverseCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	return result.GetResult();
+}
+
+System::String^ AdjCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	return result.GetResult();
+}
+
+System::String^ PmCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	double db = 0;
+	result = Pm(result, db);
+	return "v = " + NL + result.GetResult() + NL + "d = " + NL + db + NL;
+}
+
+System::String^ EigenCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	std::vector<double> eigenValues;
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	result = Eigen(result, eigenValues);
+	System::String^ output_temp = "";
+	output_temp += "v =" + NL + result.GetResult() + NL + "d =" + NL;
+
+	for (int i = 0; i < eigenValues.size(); i++) {
+		for (int j = 0; j < eigenValues.size(); j++) {
+			output_temp += (i == j ? eigenValues[i] : 0);
+			output_temp += "\t";
+		}
+		output_temp += NL;
+	}
+	return output_temp;
+}
+
+System::String^ RrefCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = cal<Matrix>(params[0], m_lookup);
+	std::vector<Matrix> rref = Rref(result);
+	System::String^ output_temp = "";
+	output_temp += rref[1].GetResult() + NL;
+	output_temp += rref[0].GetResult() + NL;
+	return output_temp;
+}
+
+System::String^ LeastSquareCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
+{
+	Matrix result = LeastSquare(cal<Matrix>(params[0], m_lookup), cal<Matrix>(params[1], m_lookup));
+	return result.GetResult();
+}
+
+

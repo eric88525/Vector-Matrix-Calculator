@@ -150,7 +150,60 @@ public:
 
 
 #pragma region MatrixCommands
+class PrintmCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
 
+class RankCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class TransposeCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class SolveMCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class DeterminantsCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class InverseCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class AdjCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class PmCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class EigenCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class RrefCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
+
+class LeastSquareCommand : public ICommand {
+public:
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
+};
 #pragma endregion
 
 

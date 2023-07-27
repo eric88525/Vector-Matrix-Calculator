@@ -37,7 +37,7 @@ namespace WindowsFormsApplication_cpp {
 
 		void InitializeCommands() {
 			command_factory = new CommandFactory();
-
+			// vector
 			command_factory->RegisterCommand("printv", std::make_shared<PrintvCommand>());
 			command_factory->RegisterCommand("norm", std::make_shared<NormCommand>());
 			command_factory->RegisterCommand("normal", std::make_shared<NormalizationCommand>());
@@ -49,6 +49,18 @@ namespace WindowsFormsApplication_cpp {
 			command_factory->RegisterCommand("pn", std::make_shared<PNCommand>());
 			command_factory->RegisterCommand("isli", std::make_shared<IsLICommand>());
 			command_factory->RegisterCommand("ob", std::make_shared<ObCommand>());
+			// matrix
+			command_factory->RegisterCommand("printm", std::make_shared<PrintmCommand>());
+			command_factory->RegisterCommand("rank", std::make_shared<RankCommand>());
+			command_factory->RegisterCommand("trans", std::make_shared<TransposeCommand>());
+			command_factory->RegisterCommand("solve", std::make_shared<SolveMCommand>());
+			command_factory->RegisterCommand("det", std::make_shared<DeterminantsCommand>());
+			command_factory->RegisterCommand("inverse", std::make_shared<InverseCommand>());
+			command_factory->RegisterCommand("adj", std::make_shared<AdjCommand>());
+			command_factory->RegisterCommand("pm", std::make_shared<PmCommand>());
+			command_factory->RegisterCommand("eigen", std::make_shared<EigenCommand>());
+			command_factory->RegisterCommand("rref", std::make_shared<RrefCommand>());
+			command_factory->RegisterCommand("leastsquare", std::make_shared<LeastSquareCommand>());
 		}
 
 	protected:
@@ -667,88 +679,15 @@ namespace WindowsFormsApplication_cpp {
 		System::String^ output_temp = "[USER] " + userInput + NL;
 
 		try {
-
 			auto v_lookup = data_manager->GetVectors();
 			auto m_lookup = data_manager->GetMatrices();
+			auto cmd = command_factory->CreateCommand(command);
 
-			if (command == "printm") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				output_temp += mResult.GetResult();
-			}
-			else if (command == "rank") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				int rk = Rank(mResult);
-				output_temp += rk + NL;
-			}
-			else if (command == "trans") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				mResult = Transpose(mResult);
-				output_temp += mResult.GetResult();
-			}
-			else if (command == "sol") {
-				m = cal<Matrix>(params[0], m_lookup);
-				m1 = cal<Matrix>(params[1], m_lookup);
-				mResult = m / m1;
-				output_temp += mResult.GetResult();
-			}
-			else if (command == "det") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				double db = Determinants(mResult);
-				output_temp += db + NL;
-			}
-			else if (command == "inverse") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				mResult = Inverse(mResult);
-				output_temp += mResult.GetResult();
-			}
-			else if (command == "adj") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				mResult = Adj(mResult);
-				output_temp += mResult.GetResult();
-			}
-			else if (command == "pm") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				double db = 0;
-				mResult = Pm(mResult, db);
-				output_temp += "v=" + NL + mResult.GetResult() + NL;
-				output_temp += "d=" + NL + db + NL;
-			}
-			else if (command == "eigen") {
-				std::vector<double> eigenValues;
-				mResult = cal<Matrix>(params[0], m_lookup);
-				mResult = Eigen(mResult, eigenValues);
-				output_temp += "v =" + NL + mResult.GetResult() + NL + "d =" + NL;
-				for (int i = 0; i < eigenValues.size(); i++) {
-					for (int j = 0; j < eigenValues.size(); j++) {
-						output_temp += (i == j ? eigenValues[i] : 0);
-						output_temp += "\t";
-					}
-					output_temp += NL;
-				}
-			}
-			else if (command == "rref") {
-				mResult = cal<Matrix>(params[0], m_lookup);
-				std::vector<Matrix> result = Rref(mResult);
-				output_temp += result[1].GetResult() + NL;
-				output_temp += result[0].GetResult() + NL;
-			}
-			else if (command == "leastsquare") {
-				m = cal<Matrix>(params[0], m_lookup);
-				m1 = cal<Matrix>(params[1], m_lookup);
-				mResult = LeastSquare(m, m1);
-				output_temp += mResult.GetResult();
-			}
-			else {
-				auto cmd = command_factory->CreateCommand(command);
+			if (cmd)
+				output_temp += cmd->Execute(params, v_lookup, m_lookup);
+			else
+				output_temp += "[ERROR] Command not exist." + NL;
 
-				if (cmd)
-					output_temp += cmd->Execute(params, v_lookup, m_lookup);
-				else
-					output_temp += "[ERROR] Command not exist." + NL;
-			}
-			//else {
-			//	output_temp += "[ERROR] Command not exist." + NL;
-			//}
 		}
 		catch (Error err) {
 			switch (err) {
