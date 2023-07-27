@@ -33,7 +33,6 @@ const Vector operator+(const Vector &x, const Vector &y) {
 }
 
 const Vector operator-(const Vector &x, const Vector &y) {
-	int rankdiff;
 	std::vector<double> data;
 	if (x.data.size() != y.data.size()) {
 		throw v_rankdiff;
@@ -49,7 +48,6 @@ const Vector operator-(const Vector &x, const Vector &y) {
 
 const Vector operator*(const Vector &x, const Vector &y) {
 
-	int rankdiff;
 	std::vector<double> data;
 	if (x.data.size() == 1) {
 		for (int i = 0; i < y.data.size(); i++) {

@@ -124,7 +124,7 @@ const int Rank(Matrix  x)
 			}
 		}
 	}
-
+	return -1;
 }
 
 const Matrix Transpose(const Matrix & x)
