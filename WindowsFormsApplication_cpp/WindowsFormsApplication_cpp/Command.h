@@ -10,7 +10,7 @@ int priority(std::string op);
 std::vector<std::string> IntoPost(std::string str);
 
 template<typename T>
-inline T cal(std::string polynomial,  std::unordered_map<std::string, T>   &symbol_table)
+T cal(std::string polynomial,  const std::unordered_map<std::string, T> &symbol_table)
 {
 	std::vector<std::string> post = IntoPost(polynomial);
 	std::stack<T> op_stk;
@@ -19,7 +19,7 @@ inline T cal(std::string polynomial,  std::unordered_map<std::string, T>   &symb
 
 		if (op.size() > 1) {
 			if (symbol_table.find(op) != symbol_table.end()) {
-				auto item = symbol_table[op];
+				T item = symbol_table.at(op);
 				op_stk.push(item);
 			}
 			else {
@@ -55,7 +55,7 @@ class ICommand {
 protected:
 public:
 	ICommand() {}
-	virtual System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) = 0;
+	virtual System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) = 0;
 };
 
 class CommandFactory {
@@ -84,67 +84,67 @@ public:
 #pragma region VectorCommands
 class PrintvCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class NormCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class NormalizationCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class CrossProductCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class ComponentCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class ProjectionCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class  AreatCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class  IsParallelCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class IsOrthogonalCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class AngleCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class PNCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class IsLICommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 
 class ObCommand : public ICommand {
 public:
-	System::String^ Execute(std::vector<std::string>& params, std::unordered_map <std::string, Vector> v_lookup, std::unordered_map <std::string, Matrix> m_lookup) override;
+	System::String^ Execute(std::vector<std::string>& params, const std::unordered_map <std::string, Vector> &v_lookup, const std::unordered_map <std::string, Matrix> &m_lookup) override;
 };
 #pragma endregion
 
