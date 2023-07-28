@@ -193,25 +193,30 @@ System::String^ TransposeCommand::Execute(std::vector<std::string>& params, cons
 
 System::String^ SolveMCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
 {
-	Matrix result = cal<Matrix>(params[0], m_lookup);
+	Matrix left = cal<Matrix>(params[0], m_lookup);
+	Matrix right = cal<Matrix>(params[1], m_lookup);
+	Matrix result = left / right;
 	return result.GetResult();
 }
 
 System::String^ DeterminantsCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
 {
 	Matrix result = cal<Matrix>(params[0], m_lookup) / cal<Matrix>(params[1], m_lookup);
-	return result.GetResult();
+	double db = Determinants(result);
+	return db + NL;
 }
 
 System::String^ InverseCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
 {
 	Matrix result = cal<Matrix>(params[0], m_lookup);
+	result = Inverse(result);
 	return result.GetResult();
 }
 
 System::String^ AdjCommand::Execute(std::vector<std::string>& params, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
 {
 	Matrix result = cal<Matrix>(params[0], m_lookup);
+	result = Adj(result);
 	return result.GetResult();
 }
 
