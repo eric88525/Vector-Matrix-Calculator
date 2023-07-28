@@ -126,7 +126,7 @@ namespace WindowsFormsApplication_cpp {
 
 
 
-	private: System::Windows::Forms::TextBox^ Output;
+
 
 
 
@@ -146,6 +146,7 @@ namespace WindowsFormsApplication_cpp {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Value;
 	private: System::Windows::Forms::ToolStripMenuItem^ ClearDataBtn;
 	private: System::Windows::Forms::ToolStripMenuItem^ ClearOutputBtn;
+private: System::Windows::Forms::TextBox^ outputTextBox;
 
 
 
@@ -191,11 +192,11 @@ namespace WindowsFormsApplication_cpp {
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle6 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle7 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle10 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle8 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle9 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle51 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle52 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle55 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle53 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			   System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle54 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			   this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			   this->FileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->LoadVectorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -203,10 +204,10 @@ namespace WindowsFormsApplication_cpp {
 			   this->ClearOutputBtn = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			   this->menuStrip2 = (gcnew System::Windows::Forms::MenuStrip());
 			   this->runBtn = (gcnew System::Windows::Forms::Button());
-			   this->Output = (gcnew System::Windows::Forms::TextBox());
 			   this->InputLabel = (gcnew System::Windows::Forms::Label());
 			   this->Input = (gcnew System::Windows::Forms::TextBox());
 			   this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
+			   this->outputTextBox = (gcnew System::Windows::Forms::TextBox());
 			   this->label2 = (gcnew System::Windows::Forms::Label());
 			   this->splitContainer2 = (gcnew System::Windows::Forms::SplitContainer());
 			   this->dataTable = (gcnew System::Windows::Forms::DataGridView());
@@ -296,24 +297,6 @@ namespace WindowsFormsApplication_cpp {
 			   this->runBtn->UseVisualStyleBackColor = true;
 			   this->runBtn->Click += gcnew System::EventHandler(this, &WindowsForm::runBtn_Click);
 			   // 
-			   // Output
-			   // 
-			   this->Output->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-				   | System::Windows::Forms::AnchorStyles::Left)
-				   | System::Windows::Forms::AnchorStyles::Right));
-			   this->Output->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			   this->Output->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			   this->Output->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(0)));
-			   this->Output->Location = System::Drawing::Point(4, 57);
-			   this->Output->Margin = System::Windows::Forms::Padding(4);
-			   this->Output->Multiline = true;
-			   this->Output->Name = L"Output";
-			   this->Output->ReadOnly = true;
-			   this->Output->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-			   this->Output->Size = System::Drawing::Size(367, 475);
-			   this->Output->TabIndex = 1;
-			   // 
 			   // InputLabel
 			   // 
 			   this->InputLabel->AutoSize = true;
@@ -361,8 +344,9 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   // splitContainer1.Panel1
 			   // 
+			   this->splitContainer1->Panel1->AutoScroll = true;
+			   this->splitContainer1->Panel1->Controls->Add(this->outputTextBox);
 			   this->splitContainer1->Panel1->Controls->Add(this->label2);
-			   this->splitContainer1->Panel1->Controls->Add(this->Output);
 			   // 
 			   // splitContainer1.Panel2
 			   // 
@@ -370,6 +354,19 @@ namespace WindowsFormsApplication_cpp {
 			   this->splitContainer1->Size = System::Drawing::Size(1125, 538);
 			   this->splitContainer1->SplitterDistance = 375;
 			   this->splitContainer1->TabIndex = 14;
+			   // 
+			   // outputTextBox
+			   // 
+			   this->outputTextBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			   this->outputTextBox->Dock = System::Windows::Forms::DockStyle::Bottom;
+			   this->outputTextBox->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->outputTextBox->Location = System::Drawing::Point(0, 56);
+			   this->outputTextBox->Multiline = true;
+			   this->outputTextBox->Name = L"outputTextBox";
+			   this->outputTextBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+			   this->outputTextBox->Size = System::Drawing::Size(373, 480);
+			   this->outputTextBox->TabIndex = 10;
 			   // 
 			   // label2
 			   // 
@@ -409,36 +406,36 @@ namespace WindowsFormsApplication_cpp {
 			   // 
 			   this->dataTable->AllowUserToDeleteRows = false;
 			   this->dataTable->AllowUserToOrderColumns = true;
-			   dataGridViewCellStyle6->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
-			   this->dataTable->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+			   dataGridViewCellStyle51->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   this->dataTable->AlternatingRowsDefaultCellStyle = dataGridViewCellStyle51;
 			   this->dataTable->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				   | System::Windows::Forms::AnchorStyles::Left)
 				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->dataTable->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
 			   this->dataTable->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
-			   dataGridViewCellStyle7->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			   dataGridViewCellStyle7->BackColor = System::Drawing::SystemColors::Control;
-			   dataGridViewCellStyle7->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle52->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			   dataGridViewCellStyle52->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle52->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   dataGridViewCellStyle7->ForeColor = System::Drawing::SystemColors::WindowText;
-			   dataGridViewCellStyle7->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			   dataGridViewCellStyle7->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			   dataGridViewCellStyle7->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			   this->dataTable->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			   dataGridViewCellStyle52->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle52->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle52->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle52->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle52;
 			   this->dataTable->ColumnHeadersHeight = 40;
 			   this->dataTable->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->Variable, this->Value });
 			   this->dataTable->EditMode = System::Windows::Forms::DataGridViewEditMode::EditOnEnter;
 			   this->dataTable->Location = System::Drawing::Point(3, 55);
 			   this->dataTable->Name = L"dataTable";
-			   dataGridViewCellStyle10->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
-			   dataGridViewCellStyle10->BackColor = System::Drawing::SystemColors::Control;
-			   dataGridViewCellStyle10->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle55->Alignment = System::Windows::Forms::DataGridViewContentAlignment::TopLeft;
+			   dataGridViewCellStyle55->BackColor = System::Drawing::SystemColors::Control;
+			   dataGridViewCellStyle55->Font = (gcnew System::Drawing::Font(L"新細明體", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(136)));
-			   dataGridViewCellStyle10->ForeColor = System::Drawing::SystemColors::WindowText;
-			   dataGridViewCellStyle10->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			   dataGridViewCellStyle10->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			   dataGridViewCellStyle10->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			   this->dataTable->RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+			   dataGridViewCellStyle55->ForeColor = System::Drawing::SystemColors::WindowText;
+			   dataGridViewCellStyle55->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			   dataGridViewCellStyle55->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			   dataGridViewCellStyle55->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			   this->dataTable->RowHeadersDefaultCellStyle = dataGridViewCellStyle55;
 			   this->dataTable->RowHeadersWidth = 51;
 			   this->dataTable->RowTemplate->Height = 27;
 			   this->dataTable->Size = System::Drawing::Size(734, 162);
@@ -448,9 +445,9 @@ namespace WindowsFormsApplication_cpp {
 			   // Variable
 			   // 
 			   this->Variable->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			   dataGridViewCellStyle8->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle53->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Variable->DefaultCellStyle = dataGridViewCellStyle8;
+			   this->Variable->DefaultCellStyle = dataGridViewCellStyle53;
 			   this->Variable->HeaderText = L"Variable";
 			   this->Variable->MaxInputLength = 20;
 			   this->Variable->MinimumWidth = 6;
@@ -461,9 +458,9 @@ namespace WindowsFormsApplication_cpp {
 			   // Value
 			   // 
 			   this->Value->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
-			   dataGridViewCellStyle9->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   dataGridViewCellStyle54->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->Value->DefaultCellStyle = dataGridViewCellStyle9;
+			   this->Value->DefaultCellStyle = dataGridViewCellStyle54;
 			   this->Value->HeaderText = L"Value";
 			   this->Value->MinimumWidth = 6;
 			   this->Value->Name = L"Value";
@@ -619,7 +616,7 @@ namespace WindowsFormsApplication_cpp {
 				}
 
 			}
-			Output->Text += "[INFO] File loaded successfully" + NL;
+			outputTextBox->Text += "[INFO] File loaded successfully" + NL;
 		}
 	}
 	private: System::Void FileToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -719,7 +716,7 @@ namespace WindowsFormsApplication_cpp {
 				break;
 			}
 		}
-		Output->Text += output_temp;
+		outputTextBox->Text += output_temp;
 	}
 	private: System::Void runBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 
@@ -738,7 +735,7 @@ namespace WindowsFormsApplication_cpp {
 		Input->Text = "";
 	}
 	private: System::Void clearOutputBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		Output->Text = "";
+		outputTextBox->Text = "";
 	}
 	private: System::Void Input_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
@@ -752,7 +749,7 @@ namespace WindowsFormsApplication_cpp {
 		data_manager->clear();
 	}
 	private: System::Void ClearOutputBtn_Click_1(System::Object^ sender, System::EventArgs^ e) {
-		Output->Text = "";
+		outputTextBox->Text = "";
 	}
 
 	private: System::Void dataTable_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
@@ -760,7 +757,7 @@ namespace WindowsFormsApplication_cpp {
 		auto x = e->RowIndex;
 		auto row = dataTable->Rows[x];
 
-		Output->Text += x;
+		outputTextBox->Text += x;
 	}
 	};
 }
