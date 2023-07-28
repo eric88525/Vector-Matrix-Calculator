@@ -2,6 +2,10 @@
 
 # Vector & Matrix caculator
 
+
+
+![](./demo/overview.png)
+
 ## Input Format
 
 **Vector**
@@ -39,9 +43,9 @@ M 3 2 0 1 2 3 4 5
 ## Vector Operator
 |Command|Description|Example|
 |-|-| -|
-|+|向量相加|`printv (v[0]+v[1]+v[2])`|
-|-|向量相減|`printv (v[0]-v[1]-v[2])`|
-|\*|向量 dot product| `printv (v[0]*v[1])`|
+|+|Vector addition|`printv(v[0] + v[1] + v[2])`|
+|-|Vector subtraction|`printv(v[0] - v[1] - v[2])`|
+|\*|Vector dot product| `printv(v[0] * v[1])`|
 
 # Matrix
 ### printM
