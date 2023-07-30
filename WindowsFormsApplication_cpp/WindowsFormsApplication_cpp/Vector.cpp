@@ -72,13 +72,12 @@ const Vector operator*(const Vector &x, const Vector &y) {
 	return Vector(data);
 }
 
-const double Norm(const Vector &x) {
+const Vector Norm(const Vector &x) {
 	double sum = 0.0;
-	std::vector<double> data;
 	for (int i = 0; i < x.data.size(); i++) {
 		sum += std::abs(pow(x.data[i], 2));
 	}
-	return sqrt(sum);
+	return Vector(sqrt(sum));
 }
 const Vector Normalization(const Vector &x) {
 	double sum = 0;
@@ -109,7 +108,7 @@ const Vector Component(const Vector & x, const Vector & y)
 	Vector vec;
 	vec = x * y;
 	double n;
-	n = Norm(y);
+	n = Norm(y).data[0];
 	vec.data[0] /= n;
 	//return  Vector(vec.data);
 	return vec;
@@ -123,14 +122,14 @@ const Vector Projection(const Vector & x, const  Vector & y)
 	return vec;
 }
 
-const double Area(const Vector & x, const Vector & y)
+const Vector Area(const Vector & x, const Vector & y)
 {
 	// for eval: https://onlinemschool.com/math/assistance/vector/triangle_area/
-	double c = Norm(x);
+	double c = Norm(x).data[0];
 	double a = Component(x, y).data[0];
 	double b = sqrt(c*c - a * a);
-	double result = Norm(y)*b / 2;
-	return result;
+	double result = (Norm(y).data[0])*b / 2;
+	return Vector(result);
 
 }
 const Vector PN(const Vector & x, const Vector & y)
@@ -165,16 +164,16 @@ const bool IsOrthogonal(const Vector & x, const Vector & y)
 	return false;
 }
 
-const double Angle(const Vector & x, const Vector & y)
+const Vector Angle(const Vector & x, const Vector & y)
 {
 	Vector vec;
 	double result;
 	vec = x * y;
 	for (auto &i : vec.data) {
-		i = i / (Norm(x)*Norm(y));
+		i = i / ((Norm(x).data[0])*(Norm(y).data[0]));
 	}
 	result = acos(vec.data[0]) * 180.0 / PI;
-	return result;
+	return Vector(result);
 }
 
 const bool IsLI(const Vector & x, const Vector & y)
