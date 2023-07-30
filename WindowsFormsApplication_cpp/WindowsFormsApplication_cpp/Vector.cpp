@@ -21,7 +21,7 @@ System::String^ Vector::GetResult()
 const Vector operator+(const Vector& x, const Vector& y) {
 
 	std::vector<double> data;
-	if (x.data.size() != y.data.size()) {
+	if (x.GetRank() != y.GetRank()) {
 		throw v_rankdiff;
 	}
 	else {
@@ -34,7 +34,7 @@ const Vector operator+(const Vector& x, const Vector& y) {
 
 const Vector operator-(const Vector& x, const Vector& y) {
 	std::vector<double> data;
-	if (x.data.size() != y.data.size()) {
+	if (x.GetRank() != y.GetRank()) {
 		throw v_rankdiff;
 	}
 	else {
@@ -59,7 +59,7 @@ const Vector operator*(const Vector& x, const Vector& y) {
 			data.push_back(x.data[i] * y.data[0]);
 		}
 	}
-	else if (x.data.size() != y.data.size()) {
+	else if (x.GetRank() != y.GetRank()) {
 		throw v_rankdiff;
 	}
 	else {
@@ -72,7 +72,7 @@ const Vector operator*(const Vector& x, const Vector& y) {
 
 const Vector Dot(const Vector& x, const Vector& y)
 {
-	if (x.data.size() != y.data.size())
+	if (x.GetRank() != y.GetRank())
 		throw v_rankdiff;
 
 	double sum = 0;
@@ -173,20 +173,50 @@ const bool IsOrthogonal(const Vector& x, const Vector& y)
 	return false;
 }
 
+/*
+  Calculates the angle in degrees between two vectors x and y.
+
+  This function implements the formula to find the angle between two vectors
+  using the dot product and the norms of the vectors. The formula used can be
+  found at: https://mathsathome.com/angle-between-two-vectors/
+
+  @param x The first vector.
+  @param y The second vector.
+
+  @return A Vector object containing the angle between the two input vectors in degrees.
+
+  @remarks
+  - The input vectors (x and y) are expected to be of the same dimension.
+*/
 const Vector Angle(const Vector& x, const Vector& y)
 {
-	Vector vec;
-	double result;
+
+	if (x.GetRank() != y.GetRank())
+		throw v_rankdiff;
+
+	Vector vec;       // Variable to store the dot product of x and y
+	double result;    // Variable to store the final result in degrees
+
+	// Calculate the dot product of x and y and store it in 'vec'
 	vec = Dot(x, y);
+
+	// Normalize the dot product by dividing it by the product of the magnitudes of x and y
 	for (auto& i : vec.data) {
 		i = i / ((Norm(x).data[0]) * (Norm(y).data[0]));
 	}
+
+	// Calculate the angle in radians using the arccosine function and convert it to degrees
 	result = acos(vec.data[0]) * 180.0 / PI;
+
+	// Create a new Vector object containing the angle and return it
 	return Vector(result);
 }
 
+
 const bool IsLI(const Vector& x, const Vector& y)
 {
+	if (x.GetRank() != y.GetRank())
+		throw v_rankdiff;
 	return !IsParallel(x, y);
 }
 
