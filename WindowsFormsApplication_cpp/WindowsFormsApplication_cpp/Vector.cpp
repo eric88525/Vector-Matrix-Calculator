@@ -18,8 +18,8 @@ System::String^ Vector::GetResult()
 }
 
 
-const Vector operator+(const Vector &x, const Vector &y) {
-	
+const Vector operator+(const Vector& x, const Vector& y) {
+
 	std::vector<double> data;
 	if (x.data.size() != y.data.size()) {
 		throw v_rankdiff;
@@ -32,7 +32,7 @@ const Vector operator+(const Vector &x, const Vector &y) {
 	return Vector(data);
 }
 
-const Vector operator-(const Vector &x, const Vector &y) {
+const Vector operator-(const Vector& x, const Vector& y) {
 	std::vector<double> data;
 	if (x.data.size() != y.data.size()) {
 		throw v_rankdiff;
@@ -46,7 +46,7 @@ const Vector operator-(const Vector &x, const Vector &y) {
 }
 
 
-const Vector operator*(const Vector &x, const Vector &y) {
+const Vector operator*(const Vector& x, const Vector& y) {
 
 	std::vector<double> data;
 	if (x.data.size() == 1) {
@@ -63,23 +63,33 @@ const Vector operator*(const Vector &x, const Vector &y) {
 		throw v_rankdiff;
 	}
 	else {
-		double sum = 0;
 		for (int i = 0; i < x.data.size(); i++) {
-			sum += y.data[i] * x.data[i];
+			data.push_back(y.data[i] * x.data[i]);
 		}
-		data.push_back(sum);
 	}
 	return Vector(data);
 }
 
-const Vector Norm(const Vector &x) {
+const Vector Dot(const Vector& x, const Vector& y)
+{
+	if (x.data.size() != y.data.size())
+		throw v_rankdiff;
+
+	double sum = 0;
+	for (int i = 0; i < x.data.size(); i++) {
+		sum += y.data[i] * x.data[i];
+	}
+	return Vector(sum);
+}
+
+const Vector Norm(const Vector& x) {
 	double sum = 0.0;
 	for (int i = 0; i < x.data.size(); i++) {
 		sum += std::abs(pow(x.data[i], 2));
 	}
 	return Vector(sqrt(sum));
 }
-const Vector Normalization(const Vector &x) {
+const Vector Normalization(const Vector& x) {
 	double sum = 0;
 	std::vector<double>data;
 	for (auto i : x.data) {
@@ -87,14 +97,14 @@ const Vector Normalization(const Vector &x) {
 	}
 	sum = sqrt(sum);
 	data = x.data;
-	for (auto &i : data) {
+	for (auto& i : data) {
 		i /= sum;
 	}
 	return Vector(data);
 }
 
 
-const Vector CrossProduct(const Vector & x, const Vector & y)
+const Vector CrossProduct(const Vector& x, const Vector& y)
 {
 	double i = x.data[1] * y.data[2] - y.data[1] * x.data[2],
 		j = y.data[0] * x.data[2] - x.data[0] * y.data[2],
@@ -103,18 +113,17 @@ const Vector CrossProduct(const Vector & x, const Vector & y)
 	return Vector(data);
 }
 
-const Vector Component(const Vector & x, const Vector & y)
+const Vector Component(const Vector& x, const Vector& y)
 {
 	Vector vec;
-	vec = x * y;
+	vec = Dot(x, y);
 	double n;
 	n = Norm(y).data[0];
 	vec.data[0] /= n;
-	//return  Vector(vec.data);
 	return vec;
 }
 
-const Vector Projection(const Vector & x, const  Vector & y)
+const Vector Projection(const Vector& x, const  Vector& y)
 {
 	Vector vec;
 	vec = Component(x, y);
@@ -122,21 +131,21 @@ const Vector Projection(const Vector & x, const  Vector & y)
 	return vec;
 }
 
-const Vector Area(const Vector & x, const Vector & y)
+const Vector Area(const Vector& x, const Vector& y)
 {
 	// for eval: https://onlinemschool.com/math/assistance/vector/triangle_area/
 	double c = Norm(x).data[0];
 	double a = Component(x, y).data[0];
-	double b = sqrt(c*c - a * a);
-	double result = (Norm(y).data[0])*b / 2;
+	double b = sqrt(c * c - a * a);
+	double result = (Norm(y).data[0]) * b / 2;
 	return Vector(result);
 
 }
-const Vector PN(const Vector & x, const Vector & y)
+const Vector PN(const Vector& x, const Vector& y)
 {
 	return CrossProduct(x, y);
 }
-const bool IsParallel(const Vector & x, const Vector & y)
+const bool IsParallel(const Vector& x, const Vector& y)
 {
 	if (x.data.size() != y.data.size())return false;
 	double rate = -8763.30678;
@@ -145,7 +154,7 @@ const bool IsParallel(const Vector & x, const Vector & y)
 			if (rate == -8763.30678) {
 				rate = y.data[i] / x.data[i];
 			}
-			else if ((abs(rate*x.data[i] - y.data[i]) > misRange)) {
+			else if ((abs(rate * x.data[i] - y.data[i]) > misRange)) {
 				return false;
 			}
 		}
@@ -154,9 +163,9 @@ const bool IsParallel(const Vector & x, const Vector & y)
 	else return false;
 }
 
-const bool IsOrthogonal(const Vector & x, const Vector & y)
+const bool IsOrthogonal(const Vector& x, const Vector& y)
 {
-	double sum=0;
+	double sum = 0;
 	for (int i = 0; i < x.data.size(); i++) {
 		sum += x.data[i] * y.data[i];
 	}
@@ -164,19 +173,19 @@ const bool IsOrthogonal(const Vector & x, const Vector & y)
 	return false;
 }
 
-const Vector Angle(const Vector & x, const Vector & y)
+const Vector Angle(const Vector& x, const Vector& y)
 {
 	Vector vec;
 	double result;
-	vec = x * y;
-	for (auto &i : vec.data) {
-		i = i / ((Norm(x).data[0])*(Norm(y).data[0]));
+	vec = Dot(x, y);
+	for (auto& i : vec.data) {
+		i = i / ((Norm(x).data[0]) * (Norm(y).data[0]));
 	}
 	result = acos(vec.data[0]) * 180.0 / PI;
 	return Vector(result);
 }
 
-const bool IsLI(const Vector & x, const Vector & y)
+const bool IsLI(const Vector& x, const Vector& y)
 {
 	return !IsParallel(x, y);
 }

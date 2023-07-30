@@ -20,6 +20,7 @@ public:
 	friend const Vector operator+(const Vector& x, const Vector& y);
 	friend const Vector operator-(const Vector& x, const Vector& y);
 	friend const Vector operator*(const Vector& x, const Vector& y);
+	friend const Vector Dot(const Vector& x, const Vector& y);
 	friend const Vector Norm(const Vector& x);
 	friend const Vector Normalization(const Vector& x);
 	friend const Vector CrossProduct(const Vector& x, const Vector& y);
