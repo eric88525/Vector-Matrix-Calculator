@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
 #include"DataManager.h"
+#include "Operation.h"
 #include <string>
 #include <stack>
 #include <unordered_map>
@@ -38,11 +39,13 @@ namespace WindowsFormsApplication_cpp {
 		void InitializeCommands() {
 			command_factory = new CommandFactory();
 			// vector
-			command_factory->RegisterCommand("printv", std::make_shared<PrintvCommand>());
+			command_factory->RegisterCommand("dot", std::make_shared<DotCommand>());
 			command_factory->RegisterCommand("norm", std::make_shared<NormCommand>());
 			command_factory->RegisterCommand("normal", std::make_shared<NormalizationCommand>());
 			command_factory->RegisterCommand("cross", std::make_shared<CrossProductCommand>());
 			command_factory->RegisterCommand("com", std::make_shared<ComponentCommand>());
+			command_factory->RegisterCommand("proj", std::make_shared<ProjectionCommand>());
+			command_factory->RegisterCommand("area", std::make_shared<AreaCommand>());
 			command_factory->RegisterCommand("isparallel", std::make_shared<IsParallelCommand>());
 			command_factory->RegisterCommand("isorthogonal", std::make_shared<IsOrthogonalCommand>());
 			command_factory->RegisterCommand("angle", std::make_shared<AngleCommand>());
@@ -50,7 +53,7 @@ namespace WindowsFormsApplication_cpp {
 			command_factory->RegisterCommand("isli", std::make_shared<IsLICommand>());
 			command_factory->RegisterCommand("ob", std::make_shared<ObCommand>());
 			// matrix
-			command_factory->RegisterCommand("printm", std::make_shared<PrintmCommand>());
+		/*	command_factory->RegisterCommand("printm", std::make_shared<PrintmCommand>());
 			command_factory->RegisterCommand("rank", std::make_shared<RankCommand>());
 			command_factory->RegisterCommand("trans", std::make_shared<TransposeCommand>());
 			command_factory->RegisterCommand("solve", std::make_shared<SolveMCommand>());
@@ -60,7 +63,7 @@ namespace WindowsFormsApplication_cpp {
 			command_factory->RegisterCommand("pm", std::make_shared<PmCommand>());
 			command_factory->RegisterCommand("eigen", std::make_shared<EigenCommand>());
 			command_factory->RegisterCommand("rref", std::make_shared<RrefCommand>());
-			command_factory->RegisterCommand("leastsquare", std::make_shared<LeastSquareCommand>());
+			command_factory->RegisterCommand("leastsquare", std::make_shared<LeastSquareCommand>());*/
 		}
 
 	protected:
@@ -656,7 +659,7 @@ private: System::Windows::Forms::TextBox^ outputTextBox;
 		std::vector<std::string> params;
 		std::string command = "";
 
-		ReadInput(command, params);
+		//ReadInput(command, params);
 
 		Vector v, v1, vResult;
 		Matrix m, m1, mResult;
@@ -667,13 +670,26 @@ private: System::Windows::Forms::TextBox^ outputTextBox;
 		try {
 			auto v_lookup = data_manager->GetVectors();
 			auto m_lookup = data_manager->GetMatrices();
-			auto cmd = command_factory->CreateCommand(command);
 
-			if (cmd)
-				output_temp += cmd->Execute(params, v_lookup, m_lookup);
-			else
-				output_temp += "[ERROR] Command not exist." + NL;
+			Caculator caculator(*command_factory);
 
+			std::string input_str = "";
+			MarshalString(userInput, input_str);
+			std::vector<Token> tokens = caculator.Lex(input_str);
+			std::vector<Token> postfix_tokens = caculator.IntoPost(tokens);
+
+			System::String^ operate_result = "";
+			auto result = caculator.caculate<Vector>(postfix_tokens, v_lookup, operate_result);
+
+			int length = operate_result->Length;
+			if (length > 0) {
+				output_temp += operate_result;
+			}
+			else {
+				output_temp += result.GetResult();
+			}
+			output_temp += NL;
+			int x = 10;
 		}
 		catch (Error err) {
 			switch (err) {

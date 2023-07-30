@@ -1,9 +1,8 @@
 #pragma once
 #include "Command.h"
-#include <set>
 
 class Token;
-class Caculation;
+class Caculator;
 
 enum class TokenType
 {
@@ -20,7 +19,7 @@ private:
 	int index_;
 	TokenType  type_;
 public:
-	friend class Caculation;
+	friend class Caculator;
 
 	Token() {};
 	Token(std::string value) :value_(value), index_(0) {};
@@ -40,20 +39,14 @@ public:
 	}
 };
 
-class Caculation {
+class Caculator {
 	CommandFactory command_factory_;
 public:
 
-	Caculation(CommandFactory command_factory) :command_factory_(command_factory) {}
-	Caculation() {};
+	Caculator(CommandFactory command_factory) :command_factory_(command_factory) {}
+	Caculator() {};
 
 	int TokenPriority(const  Token& token);
-	/**
-	 * Converts an infix expression to postfix notation.
-	 *
-	 * @param str The infix expression to convert.
-	 * @return The equivalent postfix expression.
-	 */
 	std::vector<Token> IntoPost(std::vector<Token> tokens);
 	std::vector<Token> Lex(std::string expression);
 
@@ -62,4 +55,68 @@ public:
 	}
 
 	TokenType GetTokenType(std::string operand);
+	template<typename T>
+	T caculate(std::vector<Token> post_tokens, const std::unordered_map<std::string, T>& symbol_table, System::String^& result_str);
+
 };
+
+template<typename T>
+T Caculator::caculate(std::vector<Token> post_tokens, const std::unordered_map<std::string, T>& symbol_table, System::String^& result_str)
+{
+	std::stack<T> op_stk;
+
+	for (const auto& token : post_tokens) {
+
+		TokenType t_type = token.GetType();
+
+		if (t_type == TokenType::kOperator)
+		{
+			std::vector<T> operands;
+			T right = op_stk.top();
+			op_stk.pop();
+			T left = op_stk.top();
+			op_stk.pop();
+
+			switch (token.GetValue()[0]) {
+			case '+':
+				op_stk.push(left + right);
+				break;
+			case '-':
+				op_stk.push(left - right);
+				break;
+			case '*':
+				op_stk.push(left * right);
+				break;
+			default:
+				throw std::runtime_error("Invalid operator");
+			}
+		}
+		else if (t_type == TokenType::kCommand)
+		{
+			auto cmd = command_factory_.CreateCommand(token.value_);
+			std::vector<T> operands;
+			for (int i = 0; i < cmd->operand_count_; i++) {
+				operands.push_back(op_stk.top());
+				op_stk.pop();
+			}
+			if (cmd->return_type_ == ReturnType::String) {
+				result_str = cmd->ToString(operands);
+				return T();
+			}
+			else if (cmd->return_type_ == ReturnType::Operand) {
+				op_stk.push(cmd->operate(operands));
+			}
+		}
+		else if (t_type == TokenType::kVector || t_type == TokenType::kMatrix) {
+			op_stk.push(symbol_table.at(token.value_));
+		}
+	}
+
+	if (op_stk.size() == 1) {
+		return op_stk.top();
+	}
+	else {
+		throw std::runtime_error("Not a valid operation");
+	}
+}
+

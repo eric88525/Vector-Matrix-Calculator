@@ -8,7 +8,8 @@ enum Error{
 	eigen_cant_zero, 
 	vectors_empty, 
 	matrices_empty,
-	op_error
+	op_error,
+	not_valid_operation
 };
 
 
