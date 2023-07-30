@@ -1,6 +1,6 @@
 #include "Command.h"
 
-int priority(std::string op) {
+int priority(std::string &op) {
 	switch (op[0]) {
 	case '+': case '-': return 1;
 	case '*': return 2;
