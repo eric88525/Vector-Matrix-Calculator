@@ -96,7 +96,7 @@ T Caculator::caculate(std::vector<Token> post_tokens, const std::unordered_map<s
 			auto cmd = command_factory_.CreateCommand(token.value_);
 			std::vector<T> operands;
 			for (int i = 0; i < cmd->operand_count_; i++) {
-				operands.push_back(op_stk.top());
+				operands.insert(operands.begin(), op_stk.top());
 				op_stk.pop();
 			}
 			if (cmd->return_type_ == ReturnType::String) {
