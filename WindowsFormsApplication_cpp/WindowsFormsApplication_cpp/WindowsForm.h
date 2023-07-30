@@ -586,8 +586,9 @@ private: System::Windows::Forms::TextBox^ outputTextBox;
 					//VectorList->Items->Add(gcnew String(tempString.c_str()));
 
 					this->dataTable->Rows->Add(
-						gcnew array<String^>{gcnew String(v.first.c_str()),
-						gcnew String(temp_str.c_str())}
+						gcnew array<String^>{
+						gcnew String(v.first.c_str()),
+							vec.GetResult()}
 					);
 				}
 			}
@@ -595,23 +596,11 @@ private: System::Windows::Forms::TextBox^ outputTextBox;
 
 				for (const auto& m : matrices)
 				{
-					std::string temp_str = "";
-					temp_str += "[";
-					for (int row = 0; row < m.second.row; row++) {
-						temp_str += "[";
-						for (int col = 0; col < m.second.col; col++) {
-							std::string scalarString = std::to_string(m.second.data[row][col]);
-							temp_str += scalarString.substr(0, scalarString.size() - 5); // precision
-							if (!(row == m.second.row - 1 && col == m.second.col - 1))
-								temp_str += ", ";
-						}
-						temp_str += "],";
-					}
-					temp_str += "]";
-					//VectorList->Items->Add(gcnew String(tempString.c_str()));
+					Matrix matrix = m.second;
 					this->dataTable->Rows->Add(
-						gcnew array<String^>{gcnew String(m.first.c_str()),
-						gcnew String(temp_str.c_str())}
+						gcnew array<String^>{
+						gcnew String(m.first.c_str()),
+							matrix.GetResult()}
 					);
 				}
 
