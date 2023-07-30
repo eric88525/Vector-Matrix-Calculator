@@ -25,10 +25,9 @@ bool DataManager::LoadData()
 					fin >> value;
 					tempVectorData.push_back(value);
 				}
-				Vector tempVector;
-				tempVector.name = "v[" + std::to_string(currentLoadVectorID++) + "]";
-				tempVector.data = tempVectorData;
-				vectors[tempVector.name]=tempVector;
+				std::string v_name = "v[" + std::to_string(currentLoadVectorID++) + "]";
+				Vector tempVector(v_name, tempVectorData);
+				vectors[v_name] = tempVector;
 			}
 			else if (tempSring == "M") {
 				fin >> rows >> cols;
