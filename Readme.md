@@ -1,8 +1,6 @@
 
 
-# Vector & Matrix caculator
-
-
+# Vector & Matrix calculator
 
 ![](./demo/overview.png)
 
@@ -13,39 +11,57 @@
 // V {dimention} {value}
 V 3 1 2 3
 ```
+$$
+v=\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}
+$$
+
 **Matrix**
 ```cpp
-// M {row} {col} {value}
-M 3 2 0 1 2 3 4 5
+// M {rows} {cols} {value}
+M 3 2 0 1 2 3 4 5 // row=3, col=2
 ```
+$$
+m=
+\begin{bmatrix}
+0 & 1 \\
+2 & 3 \\
+4 & 5 \\
+\end{bmatrix}
+$$
+## Vector Functions
 
-## Vector Function
-+ a, b is expression, for example `v[0]+v[1]*(v[2]-v[3])`
+The following functionalities have been implemented in the vector functions:
 
-|Command|Description|Example| Output |
-|-|-| -| -|
-|`printv(a)`|Print vector.|`printv(v[0])`| Vector|
-|`norm(a)`|Norm of Vector.|`norm(v[0])`| Double value|
-|`normal(a)`|Vector normalization.|`normal(v[0])`| Vector|
-|`cross(a, b)`|Cross product.|`cross(v[0],v[1]+v[2])`| Vector|
-|`com(a, b)`|Component of a along b.|`com(v[0],v[1])`| Double value|
-|`proj(a, b)`|Projection of a on b.|`proj(v[0],v[1])`| Vector|
-|`Area(a, b)`|Area of triangle formed by vector a and vector b. |`area(a,b)`| Double value|
-|`angle(a, b)`|Angle between two vectors.|`angle(v[0],v[1])`| Double value|
-|`pn(a, b)`|The plane normal that is produced by two vectors|`pn(v[0],v[1])`| Vector|
-|`ob(a, b, c ...)`|Use Gram-schmidt to find orthonormal basis|`ob($v[0],$v[1],$v[2]`| Vector array|
+|Function|Description|Input|Output|
+|-|-|-|-|
+|`dot(a, b)`|[Compute the dot product of two vectors.](https://en.wikipedia.org/wiki/Dot_product)|$\vec{a}, \vec{b} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^n$|
+|`norm(a)`|Calculate the norm (magnitude) of a vector.|$\vec{a} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^1$|
+|`normal(a)`|Normalize a vector to a unit vector.|$\vec{a} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^n$|
+|`cross(a, b)`|Compute the cross product of two 3D vectors.|$\vec{a}, \vec{b} \in \mathbb{R}^3$| $\vec{v} \in \mathbb{R}^3$|
+|`com(a, b)`|Find the component of vector a along vector b.|$\vec{a}, \vec{b} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^1$|
+|`proj(a, b)`|Compute the projection of vector a onto vector b.|$\vec{a}, \vec{b} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^n$|
+|`Area(a, b)`|Calculate the area of the triangle formed by vectors a and b.|$\vec{a}, \vec{b} \in \mathbb{R}^n, n\in\{2,3\}$| $\vec{v} \in \mathbb{R}^1$|
+|`angle(a, b)`|Determine the angle (in radians) between two vectors.|$\vec{a}, \vec{b} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^1$|
+|`pn(a, b)`|Compute the normal vector of the plane formed by two 3D vectors.|$\vec{a}, \vec{b} \in \mathbb{R}^3$| $\vec{v} \in \mathbb{R}^3$|
+|`ob(a, b, c ...)`|Use Gram-Schmidt process to find orthonormal basis from multiple vectors.|$\vec{a}, \vec{b}, \vec{c}, \ldots  \in \mathbb{R}^n$| Vector array|
+
 ## Vector judgement
-|Command|Description|Example| Output |
++ Not for operation
+
+|Function|Description|Input| Output |
 |-|-| -| -|
-|`isparallel(a,b)`|Parallel judgement.|`isparallel(v[0],v[1])`|Yes,No|
-|`isorthogonal(a,b)`|Orthogonal judgement.|`isorthogonal(v[0],v[1])`|Yes,No|
-|`isli(a, b)`|Linear independent judgement|`isli(v[0], v[1])`| Yes, No|
+|`isparallel(a,b)`|Parallel judgement.| $\vec{a}, \vec{b} \in \mathbb{R}^n$|String `Yes` or `No`|
+|`isorthogonal(a,b)`|Orthogonal judgement.|$\vec{a}, \vec{b} \in \mathbb{R}^n$|String `Yes` or `No`|
+|`isli(a, b)`|Linear independent judgement|$\vec{a}, \vec{b} \in \mathbb{R}^n$|String `Yes` or `No`|
+
 ## Vector Operator
-|Command|Description|Example|
-|-|-| -|
-|+|Vector addition|`printv(v[0] + v[1] + v[2])`|
-|-|Vector subtraction|`printv(v[0] - v[1] - v[2])`|
-|\*|Vector dot product| `printv(v[0] * v[1])`|
+The table below outlines the vector operators and their respective descriptions, input, and output:
+
+| Operator | Description | Input | Output |
+|---|---|---|---|
+| + | Vector Addition | $\vec{a}, \vec{b} \in \mathbb{R}^n$ | $\vec{v} \in \mathbb{R}^n$ |
+| - | Vector Subtraction | $\vec{a}, \vec{b} \in \mathbb{R}^n$ | $\vec{v} \in \mathbb{R}^n$ |
+| * | [Vector Element-wise Product](https://en.wikipedia.org/wiki/Hadamard_product_(matrices)) | $\vec{a}, \vec{b} \in \mathbb{R}^n$ | $\vec{v} \in \mathbb{R}^n$ |
 
 # Matrix
 ### printM
