@@ -1,6 +1,6 @@
 #include "Operation.h"
 
-int Caculator::TokenPriority(const Token& token)
+int Calculator::TokenPriority(const Token& token)
 {
 	if (token == "+" || token == "-") {
 		return 1;
@@ -19,7 +19,7 @@ int Caculator::TokenPriority(const Token& token)
  * @param str The infix expression to convert.
  * @return The equivalent postfix expression.
  */
-std::vector<Token> Caculator::IntoPost(std::vector<Token> tokens)
+std::vector<Token> Calculator::IntoPost(std::vector<Token> tokens)
 {
 
 	std::stack<Token> token_stack;  // The stack used for storing operators.
@@ -76,7 +76,7 @@ std::vector<Token> Caculator::IntoPost(std::vector<Token> tokens)
 	return postfix;  // Return the converted postfix expression.
 }
 
-std::vector<Token> Caculator::Lex(std::string expression)
+std::vector<Token> Calculator::Lex(std::string expression)
 {
 	std::string operand = "";
 	std::vector<Token> tokens;
@@ -107,7 +107,7 @@ std::vector<Token> Caculator::Lex(std::string expression)
 	return tokens;
 }
 
-TokenType Caculator::GetTokenType(std::string operand)
+TokenType Calculator::GetTokenType(std::string operand)
 {
 	TokenType t_type;
 	if (operand[0] == 'v')

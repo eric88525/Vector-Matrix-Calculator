@@ -2,7 +2,7 @@
 #include "Command.h"
 
 class Token;
-class Caculator;
+class Calculator;
 
 enum class TokenType
 {
@@ -19,7 +19,7 @@ private:
 	int index_;
 	TokenType  type_;
 public:
-	friend class Caculator;
+	friend class Calculator;
 
 	Token() {};
 	Token(std::string value) :value_(value), index_(0) {};
@@ -39,12 +39,12 @@ public:
 	}
 };
 
-class Caculator {
+class Calculator {
 	CommandFactory command_factory_;
 public:
 
-	Caculator(CommandFactory command_factory) :command_factory_(command_factory) {}
-	Caculator() {};
+	Calculator(CommandFactory command_factory) :command_factory_(command_factory) {}
+	Calculator() {};
 
 	int TokenPriority(const  Token& token);
 	std::vector<Token> IntoPost(std::vector<Token> tokens);
@@ -56,12 +56,12 @@ public:
 
 	TokenType GetTokenType(std::string operand);
 	template<typename T>
-	T caculate(std::vector<Token> post_tokens, const std::unordered_map<std::string, T>& symbol_table, System::String^& result_str);
+	T calculate(std::vector<Token> post_tokens, const std::unordered_map<std::string, T>& symbol_table, System::String^& result_str);
 
 };
 
 template<typename T>
-T Caculator::caculate(std::vector<Token> post_tokens, const std::unordered_map<std::string, T>& symbol_table, System::String^& result_str)
+T Calculator::calculate(std::vector<Token> post_tokens, const std::unordered_map<std::string, T>& symbol_table, System::String^& result_str)
 {
 	std::stack<T> op_stk;
 

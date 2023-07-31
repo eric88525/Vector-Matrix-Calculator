@@ -671,15 +671,15 @@ private: System::Windows::Forms::TextBox^ outputTextBox;
 			auto v_lookup = data_manager->GetVectors();
 			auto m_lookup = data_manager->GetMatrices();
 
-			Caculator caculator(*command_factory);
+			Calculator calculator(*command_factory);
 
 			std::string input_str = "";
 			MarshalString(userInput, input_str);
-			std::vector<Token> tokens = caculator.Lex(input_str);
-			std::vector<Token> postfix_tokens = caculator.IntoPost(tokens);
+			std::vector<Token> tokens = calculator.Lex(input_str);
+			std::vector<Token> postfix_tokens = calculator.IntoPost(tokens);
 
 			System::String^ operate_result = "";
-			auto result = caculator.caculate<Vector>(postfix_tokens, v_lookup, operate_result);
+			auto result = calculator.calculate<Vector>(postfix_tokens, v_lookup, operate_result);
 
 			int length = operate_result->Length;
 			if (length > 0) {
