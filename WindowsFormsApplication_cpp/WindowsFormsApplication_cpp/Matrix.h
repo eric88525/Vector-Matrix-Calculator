@@ -15,8 +15,8 @@
 class Matrix {
 	std::string name_;
 	std::vector<std::vector<double>> data_;
-	int row;
-	int col;
+	size_t row;
+	size_t col;
 public:
 
 	Matrix() {};
@@ -39,7 +39,7 @@ public:
 	friend const Matrix LeastSquare(const Matrix& x, const Matrix& y);
 	friend const std::vector<Matrix> Rref(Matrix x);
 
-	int GetRow() const { return row; };
-	int GetCol() const { return col; }
+	size_t GetRow() const { return row; };
+	size_t GetCol() const { return col; }
 };
 

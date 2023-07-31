@@ -36,7 +36,7 @@ public:
 	//設置檔案路徑名稱
 	void SetFileName(std::string fileName);
 
-	int VectorCount();
-	int MatrixCount();
+	size_t VectorCount();
+	size_t MatrixCount();
 	void clear();
 };

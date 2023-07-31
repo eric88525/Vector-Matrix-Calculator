@@ -14,7 +14,7 @@ bool DataManager::LoadData()
 	}
 	else
 	{
-		int currentLoadVectorID = VectorCount(), currentLoadMatrixID = MatrixCount(), vector_dim, rows, cols;
+		size_t currentLoadVectorID = VectorCount(), currentLoadMatrixID = MatrixCount(), vector_dim, rows, cols;
 		std::string tempSring;
 		while (fin >> tempSring) {
 			if (tempSring == "V") {
@@ -72,12 +72,12 @@ void DataManager::SetFileName(std::string fileName)
 	FileName = fileName;
 }
 
-int DataManager::VectorCount()
+size_t DataManager::VectorCount()
 {
 	return vectors.size();
 }
 
-int DataManager::MatrixCount()
+size_t DataManager::MatrixCount()
 {
 	return matrices.size();
 }
