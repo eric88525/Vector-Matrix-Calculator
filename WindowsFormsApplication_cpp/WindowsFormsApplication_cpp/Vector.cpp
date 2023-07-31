@@ -134,11 +134,24 @@ const Vector Projection(const Vector& x, const  Vector& y)
 const Vector Area(const Vector& x, const Vector& y)
 {
 	// for eval: https://onlinemschool.com/math/assistance/vector/triangle_area/
+	if (x.GetDim() != y.GetDim())
+		throw v_rankdiff;
+
+	if (x.GetDim()==2) {
+		double result = abs(x.data[0] * y.data[1] - x.data[1] * y.data[0]);
+		return Vector(result);
+	}
+	else if (x.GetDim() == 3) {
 	double c = Norm(x).data[0];
 	double a = Component(x, y).data[0];
 	double b = sqrt(c * c - a * a);
 	double result = (Norm(y).data[0]) * b / 2;
 	return Vector(result);
+	}
+	else {
+		throw v_rankdiff;
+	}
+
 
 }
 const Vector PN(const Vector& x, const Vector& y)
