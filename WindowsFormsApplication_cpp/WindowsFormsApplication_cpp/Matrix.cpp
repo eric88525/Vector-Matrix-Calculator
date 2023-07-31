@@ -1,5 +1,6 @@
 #include"Matrix.h"
 
+
 System::String^ Matrix::GetResult()
 {
 
@@ -9,7 +10,7 @@ System::String^ Matrix::GetResult()
 	{
 		outputTemp += "[";
 		for (int c = 0; c < col; c++) {
-			System::String^ buff = data[r][c].ToString();
+			System::String^ buff = data_[r][c].ToString();
 			outputTemp += buff;
 			if (c != col - 1)
 				outputTemp += ", ";
@@ -29,7 +30,7 @@ const Matrix operator+(const Matrix& x, const Matrix& y)
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; i++) {
 		for (int j = 0; j < x.col; j++) {
-			data[i].push_back(x.data[i][j] + y.data[i][j]);
+			data[i].push_back(x.data_[i][j] + y.data_[i][j]);
 		}
 	}
 	return Matrix(data);
@@ -40,7 +41,7 @@ const Matrix operator-(const Matrix& x, const Matrix& y)
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; i++) {
 		for (int j = 0; j < x.col; j++) {
-			data[i].push_back(x.data[i][j] - y.data[i][j]);
+			data[i].push_back(x.data_[i][j] - y.data_[i][j]);
 		}
 	}
 	return Matrix(data);
@@ -57,7 +58,7 @@ const Matrix operator*(const Matrix& x, const Matrix& y)
 			double sum = 0;
 			for (int k = 0; k < x.col; ++k)
 			{
-				sum += x.data[i][k] * y.data[k][j];
+				sum += x.data_[i][k] * y.data_[k][j];
 			}
 			data[i].push_back(sum);
 		}
@@ -72,20 +73,20 @@ const int Rank(Matrix  x)
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			return row;
-		if (x.data[row][row + fixP]) {
+		if (x.data_[row][row + fixP]) {
 			if (row == x.row - 1)return row + 1;
-			double temp = x.data[row][row + fixP];
-			for (auto& piv : x.data[row]) {
+			double temp = x.data_[row][row + fixP];
+			for (auto& piv : x.data_[row]) {
 				piv /= temp;
 			}
 
 			for (int eli = row + 1; eli < x.row; eli++) {
-				double r1 = x.data[eli][row + fixP],
-					r2 = x.data[row][row + fixP];
+				double r1 = x.data_[eli][row + fixP],
+					r2 = x.data_[row][row + fixP];
 				for (int i = 0; i < x.col; i++) {
-					x.data[eli][i] -= x.data[row][i] * r1 / r2;
-					if (x.data[eli][i]<misRange && x.data[eli][i]>-misRange) {
-						x.data[eli][i] = 0;
+					x.data_[eli][i] -= x.data_[row][i] * r1 / r2;
+					if (x.data_[eli][i]<misRange && x.data_[eli][i]>-misRange) {
+						x.data_[eli][i] = 0;
 					}
 				}
 			}
@@ -94,10 +95,10 @@ const int Rank(Matrix  x)
 		else {
 			int chg;
 			for (chg = row + 1; chg < x.row; chg++) {
-				if (x.data[chg][row])
+				if (x.data_[chg][row])
 				{
 					/*  Find non zero elements in the same column */
-					swap(x.data[row], x.data[chg]);
+					swap(x.data_[row], x.data_[chg]);
 					row--;
 					break;
 				}
@@ -116,7 +117,7 @@ const Matrix Transpose(const Matrix& x)
 	std::vector<std::vector<double>> data(x.col);
 	for (int row = 0; row < x.row; row++) {
 		for (int col = 0; col < x.col; col++) {
-			data[col].push_back(x.data[row][col]);
+			data[col].push_back(x.data_[row][col]);
 		}
 
 	}
@@ -136,15 +137,15 @@ const double Determinants(Matrix  x)
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			break;
-		if (x.data[row][row + fixP]) {
-			double temp = x.data[row][row + fixP];
+		if (x.data_[row][row + fixP]) {
+			double temp = x.data_[row][row + fixP];
 			for (int eli = row + 1; eli < x.row; eli++) {
-				double r1 = x.data[eli][row + fixP],
-					r2 = x.data[row][row + fixP];
+				double r1 = x.data_[eli][row + fixP],
+					r2 = x.data_[row][row + fixP];
 				for (int i = 0; i < x.col; i++) {
-					x.data[eli][i] -= x.data[row][i] * r1 / r2;
-					if (x.data[eli][i]<0.000000001 && x.data[eli][i]>-0.000000001) {
-						x.data[eli][i] = 0;
+					x.data_[eli][i] -= x.data_[row][i] * r1 / r2;
+					if (x.data_[eli][i]<0.000000001 && x.data_[eli][i]>-0.000000001) {
+						x.data_[eli][i] = 0;
 					}
 				}
 			}
@@ -153,10 +154,10 @@ const double Determinants(Matrix  x)
 		else {
 			int chg;
 			for (chg = row + 1; chg < x.row; chg++) {
-				if (x.data[chg][row])
+				if (x.data_[chg][row])
 				{
 					/*  Find non zero elements in the same column */
-					swap(x.data[row], x.data[chg]);
+					swap(x.data_[row], x.data_[chg]);
 					row--;
 					break;
 				}
@@ -169,7 +170,7 @@ const double Determinants(Matrix  x)
 	}
 	double det = 1;
 	for (int row = 0; row < x.row; row++) {
-		det *= x.data[row][row];
+		det *= x.data_[row][row];
 	}
 	return det;
 }
@@ -185,8 +186,8 @@ const Matrix Inverse(Matrix x)
 	Matrix m(data);
 	for (int row = 0; row < x.row; row++) {
 		for (int col = 0; col < x.col; col++) {
-			if (row == col)m.data[row].push_back(1);
-			else m.data[row].push_back(0);
+			if (row == col)m.data_[row].push_back(1);
+			else m.data_[row].push_back(0);
 		}
 	}
 	m.col = x.row;
@@ -196,24 +197,24 @@ const Matrix Inverse(Matrix x)
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			break;
-		if (x.data[row][row + fixP]) {
-			double temp = x.data[row][row + fixP];
-			double ti = m.data[row][row + fixP];
-			for (auto& piv : x.data[row]) {
+		if (x.data_[row][row + fixP]) {
+			double temp = x.data_[row][row + fixP];
+			double ti = m.data_[row][row + fixP];
+			for (auto& piv : x.data_[row]) {
 				piv /= temp;
 			}
-			for (auto& pivi : m.data[row]) {
+			for (auto& pivi : m.data_[row]) {
 				pivi /= temp;
 			}
 			for (int eli = 0; eli < x.row; eli++) {
 				if (eli != row) {
-					double r1 = x.data[eli][row + fixP],
-						r2 = x.data[row][row + fixP];
+					double r1 = x.data_[eli][row + fixP],
+						r2 = x.data_[row][row + fixP];
 					for (int i = 0; i < x.col; i++) {
-						x.data[eli][i] -= x.data[row][i] * r1 / r2;
-						m.data[eli][i] -= m.data[row][i] * r1 / r2;
-						if (abs(x.data[eli][i]) < misRange) {
-							x.data[eli][i] = 0;
+						x.data_[eli][i] -= x.data_[row][i] * r1 / r2;
+						m.data_[eli][i] -= m.data_[row][i] * r1 / r2;
+						if (abs(x.data_[eli][i]) < misRange) {
+							x.data_[eli][i] = 0;
 						}
 					}
 				}
@@ -223,11 +224,11 @@ const Matrix Inverse(Matrix x)
 		else {
 			int chg;
 			for (chg = row + 1; chg < x.row; chg++) {
-				if (x.data[chg][row])
+				if (x.data_[chg][row])
 				{
 					/*  Find non zero elements in the same column */
-					swap(x.data[row], x.data[chg]);
-					swap(m.data[row], m.data[chg]);
+					swap(x.data_[row], x.data_[chg]);
+					swap(m.data_[row], m.data_[chg]);
 					row--;
 					break;
 				}
@@ -244,7 +245,7 @@ const Matrix Inverse(Matrix x)
 
 const Matrix Adj(const Matrix& x)
 {
-	Matrix result(x.data);
+	Matrix result(x.data_);
 	for (int row = 0; row < x.row; row++) {
 		for (int col = 0; col < x.col; col++) {
 
@@ -253,7 +254,7 @@ const Matrix Adj(const Matrix& x)
 			for (int Arow = 0; Arow < x.row; Arow++) {
 				for (int Acol = 0; Acol < x.col; Acol++) {
 					if (Arow != row && Acol != col) {
-						vbuff[ArowIndex].push_back(x.data[Arow][Acol]);
+						vbuff[ArowIndex].push_back(x.data_[Arow][Acol]);
 					}
 				}
 				if (Arow != row)ArowIndex++;
@@ -261,7 +262,7 @@ const Matrix Adj(const Matrix& x)
 			}
 			Matrix A(vbuff);
 			double Adet = Determinants(A);
-			result.data[row][col] = pow(-1, row + col + 2) * Adet;
+			result.data_[row][col] = pow(-1, row + col + 2) * Adet;
 		}
 	}
 	return Transpose(result);
@@ -281,10 +282,10 @@ const Matrix Pm(const Matrix& x, double& returnEv)
 		d = 0;
 		for (int i = 0; i < xx.row; i++)
 		{
-			if (fabs(xx.data[i][0]) > fabs(d))
-				d = xx.data[i][0];
+			if (fabs(xx.data_[i][0]) > fabs(d))
+				d = xx.data_[i][0];
 		}
-		for (auto& i : xx.data) {
+		for (auto& i : xx.data_) {
 			i[0] /= d;
 		}
 	} while (fabs(d - temp) > misRange);
@@ -302,7 +303,7 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 
 	if (x.row == 1) {
 		std::vector<std::vector<double>> tempVector;
-		eigenValues.push_back(x.data[0][0]);
+		eigenValues.push_back(x.data_[0][0]);
 		tempVector[0].push_back(1);
 		Matrix result(tempVector);
 		return result;
@@ -311,7 +312,7 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 
 		std::vector<Matrix> M(2);
 		std::vector<std::vector<double>> tempVector(2);
-		double X03 = x.data[0][0] + x.data[1][1];
+		double X03 = x.data_[0][0] + x.data_[1][1];
 		double detX = Determinants(x);
 		eigenValues.push_back((X03 + sqrt(pow(X03, 2) - 4 * detX)) / 2);
 		eigenValues.push_back((X03 - sqrt(pow(X03, 2) - 4 * detX)) / 2);
@@ -321,11 +322,11 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 
 		for (int i = 0; i < 2; i++) {
 			M[i] = x;
-			M[i].data[0][0] -= eigenValues[i]; M[i].data[1][1] -= eigenValues[i];
-			if (M[i].data[0][0]) {
+			M[i].data_[0][0] -= eigenValues[i]; M[i].data_[1][1] -= eigenValues[i];
+			if (M[i].data_[0][0]) {
 				double v[2];
-				v[0] = -M[i].data[0][1];
-				v[1] = M[i].data[0][0];
+				v[0] = -M[i].data_[0][1];
+				v[1] = M[i].data_[0][0];
 				double normD = sqrt(v[0] * v[0] + v[1] * v[1]);
 				v[0] /= normD; v[1] /= normD;
 				if (abs(v[0]) < misRange) {
@@ -347,14 +348,14 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 		std::vector<Matrix> M(3);
 		std::vector<std::vector<double>> tempVector(3);
 		//--
-		a = x.data[0][0] + x.data[1][1] + x.data[2][2];
+		a = x.data_[0][0] + x.data_[1][1] + x.data_[2][2];
 		a *= -1;
-		b = -1 * (x.data[2][2] * (x.data[0][0] + x.data[1][1]) + x.data[0][0] * x.data[1][1])
-			+ (x.data[0][2] * x.data[2][0]) + (x.data[1][2] * x.data[2][1]) + (x.data[0][1] * x.data[1][0]);
+		b = -1 * (x.data_[2][2] * (x.data_[0][0] + x.data_[1][1]) + x.data_[0][0] * x.data_[1][1])
+			+ (x.data_[0][2] * x.data_[2][0]) + (x.data_[1][2] * x.data_[2][1]) + (x.data_[0][1] * x.data_[1][0]);
 		b *= -1;
-		c = x.data[0][0] * x.data[1][1] * x.data[2][2]
-			+ x.data[1][0] * x.data[2][1] * x.data[0][2] + x.data[0][1] * x.data[1][2] * x.data[2][0]
-			- (x.data[0][2] * x.data[1][1] * x.data[2][0] + x.data[0][0] * x.data[1][2] * x.data[2][1] + x.data[1][0] * x.data[0][1] * x.data[2][2]);
+		c = x.data_[0][0] * x.data_[1][1] * x.data_[2][2]
+			+ x.data_[1][0] * x.data_[2][1] * x.data_[0][2] + x.data_[0][1] * x.data_[1][2] * x.data_[2][0]
+			- (x.data_[0][2] * x.data_[1][1] * x.data_[2][0] + x.data_[0][0] * x.data_[1][2] * x.data_[2][1] + x.data_[1][0] * x.data_[0][1] * x.data_[2][2]);
 		c *= -1;
 		Q = (pow(a, 2) - 3 * b) / 9;
 		R = (2 * a * a * a - 9 * a * b + 27 * c) / 54;
@@ -372,15 +373,15 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 
 		for (int i = 0; i < 3; i++) {
 			M[i] = x;
-			M[i].data[0][0] -= eigenValues[i];
-			M[i].data[1][1] -= eigenValues[i];
-			M[i].data[2][2] -= eigenValues[i];
+			M[i].data_[0][0] -= eigenValues[i];
+			M[i].data_[1][1] -= eigenValues[i];
+			M[i].data_[2][2] -= eigenValues[i];
 			M[i] = Rref(M[i])[0];
-			if (M[i].data[0][0]) {
+			if (M[i].data_[0][0]) {
 				double v[3], t;
-				v[0] = (M[i].data[1][1] * M[i].data[0][2] - M[i].data[1][2] * M[i].data[0][1]) / M[i].data[0][0];
-				v[1] = M[i].data[1][2];
-				v[2] = -M[i].data[1][1];
+				v[0] = (M[i].data_[1][1] * M[i].data_[0][2] - M[i].data_[1][2] * M[i].data_[0][1]) / M[i].data_[0][0];
+				v[1] = M[i].data_[1][2];
+				v[2] = -M[i].data_[1][1];
 				t = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 				v[0] /= t; v[1] /= t; v[2] /= t;
 				for (int vv = 0; vv < 3; vv++) {
@@ -408,27 +409,27 @@ const Matrix LeastSquare(const Matrix& x, const Matrix& y)
 const std::vector<Matrix>  Rref(Matrix  x)
 {
 
-	Matrix tempm(x.data);
+	Matrix tempm = x;
 	int fixP = 0;
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
 			break;
-		if (x.data[row][row + fixP]) {
+		if (x.data_[row][row + fixP]) {
 			if (row == x.row - 1)break;
-			double temp = x.data[row][row + fixP];
-			/*for (auto &piv : x.data[row]) {
+			double temp = x.data_[row][row + fixP];
+			/*for (auto &piv : x.data_[row]) {
 				piv /= temp;
 			}*/
 
 			for (int eli = row + 1; eli < x.row; eli++) {
-				double r1 = x.data[eli][row + fixP],
-					r2 = x.data[row][row + fixP];
+				double r1 = x.data_[eli][row + fixP],
+					r2 = x.data_[row][row + fixP];
 				for (int i = 0; i < x.col; i++) {
-					x.data[eli][i] -= x.data[row][i] * r1 / r2;
-					if (abs(x.data[eli][i]) < misRange) {
-						x.data[eli][i] = 0;
+					x.data_[eli][i] -= x.data_[row][i] * r1 / r2;
+					if (abs(x.data_[eli][i]) < misRange) {
+						x.data_[eli][i] = 0;
 					}
-					x.data[eli][row + fixP] = 0;
+					x.data_[eli][row + fixP] = 0;
 				}
 			}
 			int zz = 0;
@@ -436,10 +437,10 @@ const std::vector<Matrix>  Rref(Matrix  x)
 		else {
 			int chg;
 			for (chg = row + 1; chg < x.row; chg++) {
-				if (x.data[chg][row])
+				if (x.data_[chg][row])
 				{
 					/*  Find non zero elements in the same column */
-					swap(x.data[row], x.data[chg]);
+					swap(x.data_[row], x.data_[chg]);
 					row--;
 					break;
 				}
@@ -455,23 +456,23 @@ const std::vector<Matrix>  Rref(Matrix  x)
 	for (int row = 0; row < tempm.row; row++) {
 		if ((row + fixQ) > tempm.col - 1)
 			break;
-		if (tempm.data[row][row + fixQ]) {
+		if (tempm.data_[row][row + fixQ]) {
 			if (row == tempm.row - 1) {
-				tempm.data[row][row + fixQ] = 1;
+				tempm.data_[row][row + fixQ] = 1;
 				break;
 			}
-			double temp = tempm.data[row][row + fixQ];
+			double temp = tempm.data_[row][row + fixQ];
 			for (int i = 0; i < tempm.row; i++) {
-				tempm.data[i][row] /= temp;
+				tempm.data_[i][row] /= temp;
 			}
 
 			for (int eli = row + 1; eli < tempm.col; eli++) {
-				double r1 = tempm.data[row + fixP][eli],
-					r2 = tempm.data[row][row + fixP];
+				double r1 = tempm.data_[row + fixP][eli],
+					r2 = tempm.data_[row][row + fixP];
 				for (int i = 0; i < tempm.row; i++) {
-					tempm.data[i][eli] -= tempm.data[i][row] * r1 / r2;
-					if (tempm.data[i][eli]<misRange && tempm.data[i][eli]>-misRange) {
-						tempm.data[i][eli] = 0;
+					tempm.data_[i][eli] -= tempm.data_[i][row] * r1 / r2;
+					if (tempm.data_[i][eli]<misRange && tempm.data_[i][eli]>-misRange) {
+						tempm.data_[i][eli] = 0;
 					}
 				}
 			}
@@ -480,10 +481,10 @@ const std::vector<Matrix>  Rref(Matrix  x)
 		else {
 			int chg;
 			for (chg = row + 1; chg < tempm.row; chg++) {
-				if (tempm.data[chg][row])
+				if (tempm.data_[chg][row])
 				{
 					/*  Find non zero elements in the same column */
-					swap(tempm.data[row], tempm.data[chg]);
+					swap(tempm.data_[row], tempm.data_[chg]);
 					row--;
 					break;
 				}

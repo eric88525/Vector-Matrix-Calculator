@@ -13,20 +13,16 @@
 
 // google naming style https://google.github.io/styleguide/cppguide.html#Naming
 class Matrix {
-
-
-
-public:
-	std::string name;
-	std::vector<std::vector<double>> data;
+	std::string name_;
+	std::vector<std::vector<double>> data_;
 	int row;
 	int col;
 public:
 
 	Matrix() {};
-	Matrix(std::vector<std::vector<double>> data) :data(data), row(data.size()), col(data[0].size()) {};
-	Matrix(std::string name, std::vector<std::vector<double>> data) :name(name), data(data), row(data.size()), col(data[0].size()) {};
-	Matrix(const Matrix& t) :row(t.row), col(t.col), data(t.data) {};
+	Matrix(std::vector<std::vector<double>> data) :data_(data), row(data.size()), col(data[0].size()) {};
+	Matrix(std::string name, std::vector<std::vector<double>> data) :name_(name), data_(data), row(data.size()), col(data[0].size()) {};
+	Matrix(const Matrix& t) :row(t.row), col(t.col), data_(t.data_) {};
 	System::String^ GetResult();
 
 	friend const Matrix operator+(const Matrix& x, const Matrix& y);
