@@ -13,8 +13,11 @@
 
 // google naming style https://google.github.io/styleguide/cppguide.html#Naming
 class Matrix {
+
+
+
 public:
-	std::string name = "";
+	std::string name;
 	std::vector<std::vector<double>> data;
 	int row;
 	int col;
@@ -35,5 +38,8 @@ public:
 	friend const Matrix Eigen(const Matrix& x, std::vector<double>&);
 	friend const Matrix LeastSquare(const Matrix& x, const Matrix& y);
 	friend const std::vector<Matrix> Rref(Matrix x);
+
+	int GetRow() const { return row; };
+	int GetCol() const { return col; }
 };
 
