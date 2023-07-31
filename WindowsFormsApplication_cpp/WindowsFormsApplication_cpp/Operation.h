@@ -10,7 +10,8 @@ enum class TokenType
 	kCommand,
 	kOperand,
 	kVector,
-	kMatrix
+	kMatrix,
+	kNone,
 };
 
 class Token {

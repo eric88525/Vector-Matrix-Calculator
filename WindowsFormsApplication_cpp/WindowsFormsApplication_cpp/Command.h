@@ -18,6 +18,7 @@ public:
 	int operand_count_;
 	ReturnType return_type_;
 	ICommand() {}
+	ICommand(int operand_count, ReturnType return_type) :operand_count_(operand_count), return_type_(return_type) {}
 
 	virtual System::String^ ToString(std::vector<Vector>& operands) {
 		return "";
@@ -69,170 +70,139 @@ public:
 
 class NormCommand : public ICommand {
 public:
-	NormCommand() {
-		operand_count_ = 1;
-		return_type_ = ReturnType::Operand;
-	}
+	NormCommand() :ICommand(1, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class NormalizationCommand : public ICommand {
 public:
-	NormalizationCommand() {
-		operand_count_ = 1;
-		return_type_ = ReturnType::Operand;
-	}
+	NormalizationCommand() : ICommand(1, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class CrossProductCommand : public ICommand {
 public:
-	CrossProductCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::Operand;
-	}
+	CrossProductCommand() : ICommand(2, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class ComponentCommand : public ICommand {
 public:
-	ComponentCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::Operand;
-	}
+	ComponentCommand() : ICommand(2, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class ProjectionCommand : public ICommand {
 public:
-	ProjectionCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::Operand;
-	}
+	ProjectionCommand() : ICommand(2, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class  AreaCommand : public ICommand {
 public:
-	AreaCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::Operand;
-	}
+	AreaCommand() : ICommand(2, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class AngleCommand : public ICommand {
 public:
-	AngleCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::Operand;
-	}
+	AngleCommand() : ICommand(2, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class PNCommand : public ICommand {
 public:
-	PNCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::Operand;
-	}
+	PNCommand() : ICommand(2, ReturnType::Operand) {}
 	Vector operate(std::vector<Vector>& operands) override;
 };
 
 class ObCommand : public ICommand {
 public:
-	ObCommand() {
-		operand_count_ = -1;
-		return_type_ = ReturnType::String;
-	}
+	ObCommand() : ICommand(-1, ReturnType::String) {}
 	System::String^ ToString(std::vector<Vector>& operands) override;
 };
 
 class  IsParallelCommand : public ICommand {
 public:
-	IsParallelCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::String;
-	}
+	IsParallelCommand() : ICommand(2, ReturnType::String) {}
 	System::String^ ToString(std::vector<Vector>& operands) override;
 };
 
 class IsOrthogonalCommand : public ICommand {
 public:
-	IsOrthogonalCommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::String;
-	}
+	IsOrthogonalCommand() : ICommand(2, ReturnType::String) {}
 	System::String^ ToString(std::vector<Vector>& operands) override;
 };
 
 class IsLICommand : public ICommand {
 public:
-	IsLICommand() {
-		operand_count_ = 2;
-		return_type_ = ReturnType::String;
-	}
+	IsLICommand() : ICommand(2, ReturnType::String) {}
 	System::String^ ToString(std::vector<Vector>& operands) override;
 };
 #pragma endregion
 
 
-//#pragma region MatrixCommands
-//class PrintmCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class RankCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class TransposeCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class SolveMCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class DeterminantsCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class InverseCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class AdjCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class PmCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class EigenCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class RrefCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//
-//class LeastSquareCommand : public ICommand {
-//public:
-//	System::String^ ToString(std::vector<std::string>& operands, const std::unordered_map <std::string, Vector>& v_lookup, const std::unordered_map <std::string, Matrix>& m_lookup) override;
-//};
-//#pragma endregion
+#pragma region MatrixCommands
+class EigenCommand :public ICommand {
+public:
+	EigenCommand():ICommand(1, ReturnType::String) {}
+	System::String^ ToString(std::vector<Matrix>& operands) override;
+};
+
+class RankCommand : public ICommand {
+public:
+	RankCommand(): ICommand(1, ReturnType::String){}
+	System::String^ ToString(std::vector<Matrix>& operands) override;
+};
+
+class TransposeCommand : public ICommand {
+public:
+	TransposeCommand():ICommand(1, ReturnType::Operand) {}
+	Matrix operate(std::vector<Matrix>& operands) override;
+};
+
+class SolveMCommand : public ICommand {
+public:
+	SolveMCommand() :ICommand(2, ReturnType::Operand) {}
+	Matrix operate(std::vector<Matrix>& operands) override;
+};
+
+class DeterminantsCommand : public ICommand {
+public:
+	DeterminantsCommand():ICommand(1, ReturnType::Operand) {}
+	Matrix operate(std::vector<Matrix>& operands) override;
+};
+
+class InverseCommand : public ICommand {
+public:
+	InverseCommand() :ICommand(1, ReturnType::Operand) {}
+	Matrix operate(std::vector<Matrix>& operands) override;
+};
+
+class AdjCommand : public ICommand {
+public:
+	AdjCommand() :ICommand(1, ReturnType::Operand) {}
+	Matrix operate(std::vector<Matrix>& operands) override;
+};
+
+class PmCommand : public ICommand {
+public:
+	PmCommand() :ICommand(1, ReturnType::String) {}
+	System::String^ ToString(std::vector<Matrix>& operands) override;
+};
+
+class RrefCommand : public ICommand {
+public:
+	RrefCommand() :ICommand(1, ReturnType::String) {}
+	System::String^ ToString(std::vector<Matrix>& operands) override;
+};
+
+class LeastSquareCommand : public ICommand {
+public:
+	LeastSquareCommand() :ICommand(2, ReturnType::String) {}
+	System::String^ ToString(std::vector<Matrix>& operands) override;
+};
+#pragma endregion
 
 
 

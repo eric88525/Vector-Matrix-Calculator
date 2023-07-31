@@ -142,61 +142,7 @@ System::String^ IsLICommand::ToString(std::vector<Vector>& operands)
 	return IsLI(operands[0], operands[1]) ? "Yes" : "No";
 }
 
-//System::String^ PrintmCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = cal<Matrix>(operands[0], m_lookup);
-//	return result.GetResult();
-//}
-//
-//System::String^ RankCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = cal<Matrix>(operands[0], m_lookup);
-//	return Rank(result) + NL;
-//}
-//
-//System::String^ TransposeCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = Transpose(cal<Matrix>(operands[0], m_lookup));
-//	return result.GetResult();
-//}
-//
-//System::String^ SolveMCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix left = cal<Matrix>(operands[0], m_lookup);
-//	Matrix right = cal<Matrix>(operands[1], m_lookup);
-//	Matrix result = left / right;
-//	return result.GetResult();
-//}
-//
-//System::String^ DeterminantsCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = cal<Matrix>(operands[0], m_lookup) / cal<Matrix>(operands[1], m_lookup);
-//	double db = Determinants(result);
-//	return db + NL;
-//}
-//
-//System::String^ InverseCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = cal<Matrix>(operands[0], m_lookup);
-//	result = Inverse(result);
-//	return result.GetResult();
-//}
-//
-//System::String^ AdjCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = cal<Matrix>(operands[0], m_lookup);
-//	result = Adj(result);
-//	return result.GetResult();
-//}
-//
-//System::String^ PmCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = cal<Matrix>(operands[0], m_lookup);
-//	double db = 0;
-//	result = Pm(result, db);
-//	return "v = " + NL + result.GetResult() + NL + "d = " + NL + db + NL;
-//}
-//
+
 //System::String^ EigenCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
 //{
 //	std::vector<double> eigenValues;
@@ -214,7 +160,7 @@ System::String^ IsLICommand::ToString(std::vector<Vector>& operands)
 //	}
 //	return output_temp;
 //}
-//
+
 //System::String^ RrefCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
 //{
 //	Matrix result = cal<Matrix>(operands[0], m_lookup);
@@ -231,4 +177,72 @@ System::String^ IsLICommand::ToString(std::vector<Vector>& operands)
 //	return result.GetResult();
 //}
 
+System::String^ EigenCommand::ToString(std::vector<Matrix>& operands)
+{
+	std::vector<double> eigenValues;
+	Matrix result = Eigen(operands[0], eigenValues);
+	System::String^ output_temp = "";
+	output_temp += "v =" + NL + result.GetResult() + NL + "d =" + NL;
 
+	for (int i = 0; i < eigenValues.size(); i++) {
+		for (int j = 0; j < eigenValues.size(); j++) {
+			output_temp += (i == j ? eigenValues[i] : 0);
+			output_temp += "\t";
+		}
+		output_temp += NL;
+	}
+	return output_temp;
+}
+
+System::String^ RankCommand::ToString(std::vector<Matrix>& operands)
+{
+	return "" + Rank(operands[0]);
+}
+
+Matrix TransposeCommand::operate(std::vector<Matrix>& operands)
+{
+	return Transpose(operands[0]);
+}
+
+Matrix SolveMCommand::operate(std::vector<Matrix>& operands)
+{
+	return Solve(operands[0], operands[1]);
+}
+
+Matrix DeterminantsCommand::operate(std::vector<Matrix>& operands)
+{
+	return Determinants(operands[0]);
+}
+
+Matrix InverseCommand::operate(std::vector<Matrix>& operands)
+{
+	return Inverse(operands[0]);
+}
+
+Matrix AdjCommand::operate(std::vector<Matrix>& operands)
+{
+	return Adj(operands[0]);
+}
+
+System::String^ PmCommand::ToString(std::vector<Matrix>& operands)
+{
+	double db = 0;
+	Matrix result = Pm(operands[0], db);
+	return "v = " + NL + result.GetResult() + NL + "d = " + NL + db;
+}
+
+System::String^ RrefCommand::ToString(std::vector<Matrix>& operands)
+{
+	std::vector<Matrix> rref = Rref(operands[0]);
+	System::String^ output_temp = "";
+	output_temp += rref[1].GetResult() + NL;
+	output_temp += rref[0].GetResult() + NL;
+	return output_temp;
+}
+
+
+System::String^ LeastSquareCommand::ToString(std::vector<Matrix>& operands)
+{
+	Matrix result = LeastSquare(operands[0], operands[1]);
+	return result.GetResult();
+}

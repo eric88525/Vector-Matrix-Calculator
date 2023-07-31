@@ -23,6 +23,9 @@ public:
 	Matrix(std::vector<std::vector<double>> data) :data_(data), row(data.size()), col(data[0].size()) {};
 	Matrix(std::string name, std::vector<std::vector<double>> data) :name_(name), data_(data), row(data.size()), col(data[0].size()) {};
 	Matrix(const Matrix& t) :row(t.row), col(t.col), data_(t.data_) {};
+	Matrix(double v) : row(1), col(1) {
+		data_.push_back(std::vector<double>(1, v));
+	}
 	System::String^ GetResult();
 
 	friend const Matrix operator+(const Matrix& x, const Matrix& y);
@@ -30,9 +33,9 @@ public:
 	friend const Matrix operator*(const Matrix& x, const Matrix& y);
 	friend const int Rank(Matrix x);
 	friend const Matrix Transpose(const Matrix& x);
-	friend const Matrix operator/(Matrix x, Matrix y);  // Linear system
-	friend const double Determinants(Matrix x);
-	friend const Matrix Inverse(Matrix x);
+	friend const Matrix Solve(const Matrix& x, const Matrix& y);
+	friend const Matrix Determinants(const Matrix &x);
+	friend const Matrix Inverse(const Matrix &x);
 	friend const Matrix Adj(const Matrix& x);
 	friend const Matrix Pm(const Matrix& x, double&);
 	friend const Matrix Eigen(const Matrix& x, std::vector<double>&);
