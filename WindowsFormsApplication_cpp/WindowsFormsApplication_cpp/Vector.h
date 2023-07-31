@@ -35,6 +35,6 @@ public:
 	friend const std::vector<Vector> Ob(std::vector<Vector>);
 
 	void SetName(std::string name) { name = name; }
-	int GetRank() const { return data.size(); }
+	int GetDim() const { return data.size(); }
 
 };

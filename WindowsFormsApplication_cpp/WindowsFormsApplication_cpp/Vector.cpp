@@ -117,8 +117,7 @@ const Vector Component(const Vector& x, const Vector& y)
 {
 	Vector vec;
 	vec = Dot(x, y);
-	double n;
-	n = Norm(y).data[0];
+	double n = Norm(y).data[0];
 	vec.data[0] /= n;
 	return vec;
 }
@@ -137,16 +136,16 @@ const Vector Area(const Vector& x, const Vector& y)
 	if (x.GetDim() != y.GetDim())
 		throw v_rankdiff;
 
-	if (x.GetDim()==2) {
+	if (x.GetDim() == 2) {
 		double result = abs(x.data[0] * y.data[1] - x.data[1] * y.data[0]);
 		return Vector(result);
 	}
 	else if (x.GetDim() == 3) {
-	double c = Norm(x).data[0];
-	double a = Component(x, y).data[0];
-	double b = sqrt(c * c - a * a);
-	double result = (Norm(y).data[0]) * b / 2;
-	return Vector(result);
+		double c = Norm(x).data[0];
+		double a = Component(x, y).data[0];
+		double b = sqrt(c * c - a * a);
+		double result = (Norm(y).data[0]) * b / 2;
+		return Vector(result);
 	}
 	else {
 		throw v_rankdiff;
