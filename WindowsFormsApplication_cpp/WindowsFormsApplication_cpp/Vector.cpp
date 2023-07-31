@@ -21,7 +21,7 @@ System::String^ Vector::GetResult()
 const Vector operator+(const Vector& x, const Vector& y) {
 
 	std::vector<double> data;
-	if (x.GetRank() != y.GetRank()) {
+	if (x.GetDim() != y.GetDim()) {
 		throw v_rankdiff;
 	}
 	else {
@@ -34,7 +34,7 @@ const Vector operator+(const Vector& x, const Vector& y) {
 
 const Vector operator-(const Vector& x, const Vector& y) {
 	std::vector<double> data;
-	if (x.GetRank() != y.GetRank()) {
+	if (x.GetDim() != y.GetDim()) {
 		throw v_rankdiff;
 	}
 	else {
@@ -59,7 +59,7 @@ const Vector operator*(const Vector& x, const Vector& y) {
 			data.push_back(x.data[i] * y.data[0]);
 		}
 	}
-	else if (x.GetRank() != y.GetRank()) {
+	else if (x.GetDim() != y.GetDim()) {
 		throw v_rankdiff;
 	}
 	else {
@@ -72,7 +72,7 @@ const Vector operator*(const Vector& x, const Vector& y) {
 
 const Vector Dot(const Vector& x, const Vector& y)
 {
-	if (x.GetRank() != y.GetRank())
+	if (x.GetDim() != y.GetDim())
 		throw v_rankdiff;
 
 	double sum = 0;
@@ -191,7 +191,7 @@ const bool IsOrthogonal(const Vector& x, const Vector& y)
 const Vector Angle(const Vector& x, const Vector& y)
 {
 
-	if (x.GetRank() != y.GetRank())
+	if (x.GetDim() != y.GetDim())
 		throw v_rankdiff;
 
 	Vector vec;       // Variable to store the dot product of x and y
@@ -215,7 +215,7 @@ const Vector Angle(const Vector& x, const Vector& y)
 
 const bool IsLI(const Vector& x, const Vector& y)
 {
-	if (x.GetRank() != y.GetRank())
+	if (x.GetDim() != y.GetDim())
 		throw v_rankdiff;
 	return !IsParallel(x, y);
 }
