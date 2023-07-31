@@ -39,11 +39,9 @@ bool DataManager::LoadData()
 						tempMatrixData[i].push_back(value);
 					}
 				}
-				Matrix tempMatrix(tempMatrixData);
-				tempMatrix.name = "m[" + std::to_string(currentLoadMatrixID++) + "]";
-				tempMatrix.row = rows;
-				tempMatrix.col = cols;
-				matrices[tempMatrix.name] = tempMatrix;
+				std::string m_name = "m[" + std::to_string(currentLoadMatrixID++) + "]";
+				Matrix tempMatrix(m_name, tempMatrixData);
+				matrices[m_name] = tempMatrix;
 			}
 		}
 		return true;
