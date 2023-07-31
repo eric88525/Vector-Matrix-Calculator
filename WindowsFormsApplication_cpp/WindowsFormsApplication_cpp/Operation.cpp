@@ -36,11 +36,17 @@ std::vector<Token> Calculator::IntoPost(std::vector<Token> tokens)
 			}
 			else if (token == ")") {
 				// Pop operators from the stack and append them to the postfix expression until '(' is encountered.
-				while (!token_stack.empty() && token_stack.top() != "(") {
+				while (!token_stack.empty() && token_stack.top() != "(" ) {
 					postfix.push_back(token_stack.top());
 					token_stack.pop();
 				}
 				if (!token_stack.empty() && token_stack.top() == "(") token_stack.pop();  // Remove the '(' from the stack.
+
+				if (!token_stack.empty() && token_stack.top().GetType() == TokenType::kCommand) {
+					postfix.push_back(token_stack.top());
+					token_stack.pop();
+				}
+
 				break;
 			}
 			else if (token == ",") {
