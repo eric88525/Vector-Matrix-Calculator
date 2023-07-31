@@ -88,7 +88,8 @@ T Calculator::calculate(std::vector<Token> post_tokens, const std::unordered_map
 				op_stk.push(left * right);
 				break;
 			default:
-				throw std::runtime_error("Invalid operator");
+				throw std::invalid_argument("Error: Invalid operand.");
+				break;		   
 			}
 		}
 		else if (t_type == TokenType::kCommand)
@@ -116,7 +117,7 @@ T Calculator::calculate(std::vector<Token> post_tokens, const std::unordered_map
 		return op_stk.top();
 	}
 	else {
-		throw std::runtime_error("Not a valid operation");
+		throw std::invalid_argument("Error: Input error.");
 	}
 }
 

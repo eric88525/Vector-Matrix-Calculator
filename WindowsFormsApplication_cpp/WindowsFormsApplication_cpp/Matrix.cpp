@@ -24,7 +24,8 @@ System::String^ Matrix::GetResult()
 
 const Matrix operator+(const Matrix& x, const Matrix& y)
 {
-	if (x.row != y.row || x.col != y.col)throw m_Rank_different;
+	if (x.row != y.row || x.col != y.col)
+		throw std::invalid_argument("Error: Matrices must have the same dimensions for the '+' operator.");
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; i++) {
 		for (int j = 0; j < x.col; j++) {
@@ -48,7 +49,7 @@ const Matrix operator-(const Matrix& x, const Matrix& y)
 const Matrix operator*(const Matrix& x, const Matrix& y)
 {
 	if (x.col != y.row) {
-		throw m_Rank_different;
+		throw std::invalid_argument("Error: Matrix multiplication requires the number of columns in the left matrix to be equal to the number of rows in the right matrix.");
 	}
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; ++i) {
@@ -63,6 +64,7 @@ const Matrix operator*(const Matrix& x, const Matrix& y)
 	}
 	return Matrix(data);
 }
+
 
 const int Rank(Matrix  x)
 {
@@ -177,8 +179,7 @@ const Matrix Inverse(Matrix x)
 	int rL = Rank(x);
 
 	if (rL != x.row || x.row != x.col) {
-
-		throw no_inverse;
+		throw std::invalid_argument("Error: Inverse matrix not exist.");
 	}
 	std::vector<std::vector<double>> data(x.row);
 	Matrix m(data);
@@ -296,14 +297,17 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 	std::vector<std::vector<double>> eigenVectors;
 	//std::vector<Matrix> result;
 
-	if (x.data.size() == 1) {
+	if (x.row != 1 && x.row != 2 && x.row != 3)
+		throw std::invalid_argument("Error: Eigen decomposition only supports matrices with 1, 2, or 3 rows.");
+
+	if (x.row == 1) {
 		std::vector<std::vector<double>> tempVector;
 		eigenValues.push_back(x.data[0][0]);
 		tempVector[0].push_back(1);
 		Matrix result(tempVector);
 		return result;
 	}
-	else if (x.data.size() == 2) {
+	else if (x.row == 2) {
 
 		std::vector<Matrix> M(2);
 		std::vector<std::vector<double>> tempVector(2);
@@ -311,7 +315,10 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 		double detX = Determinants(x);
 		eigenValues.push_back((X03 + sqrt(pow(X03, 2) - 4 * detX)) / 2);
 		eigenValues.push_back((X03 - sqrt(pow(X03, 2) - 4 * detX)) / 2);
-		if (eigenValues[0] == 0 || eigenValues[1] == 0)throw eigen_cant_zero;
+
+		if (eigenValues[0] == 0 || eigenValues[1] == 0)
+			throw std::invalid_argument("Error: Eigen value can't be zero.");
+
 		for (int i = 0; i < 2; i++) {
 			M[i] = x;
 			M[i].data[0][0] -= eigenValues[i]; M[i].data[1][1] -= eigenValues[i];
@@ -335,14 +342,13 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 		result = Transpose(result);
 		return result;
 	}
-	else if (x.data.size() == 3) {
+	else if (x.row == 3) {
 		double a, b, c, d, Q, R;
 		std::vector<Matrix> M(3);
 		std::vector<std::vector<double>> tempVector(3);
 		//--
 		a = x.data[0][0] + x.data[1][1] + x.data[2][2];
 		a *= -1;
-
 		b = -1 * (x.data[2][2] * (x.data[0][0] + x.data[1][1]) + x.data[0][0] * x.data[1][1])
 			+ (x.data[0][2] * x.data[2][0]) + (x.data[1][2] * x.data[2][1]) + (x.data[0][1] * x.data[1][0]);
 		b *= -1;
@@ -360,20 +366,10 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 			eigenValues.push_back(qq * cos(agl / 3 + 2 * M_PI / 3) - a / 3);
 			eigenValues.push_back(qq * cos(agl / 3 - 2 * M_PI / 3) - a / 3);
 		}
-		/*else
-		{
-			double f, g, h, r, s, t, u;
-			f = (3 * c / a - b * b / a * a) / 3;
-			g = (2 * (b*b*b) / (a*a*a) - (9 * b*c) / (a*a) + (27 * d / a)) / 27;
-			h = (g*g / 4) + (f*f*f / 27);
-			r = -(g / 2) + sqrt(h);
-			s = pow(r, 1 / 3);
-			t = -(g / 2) - sqrt(h);
-			u = pow(t, 1 / 3);
-			eigenValues.push_back(s+u-(b/(3*a)));
-			eigenValues.push_back( -(s+u)/2 -(b/3a) + ) );
-		}*/
-		if (eigenValues[0] == 0 || eigenValues[1] == 1 || eigenValues[2] == 2)throw eigen_cant_zero;
+
+		if (eigenValues[0] == 0 || eigenValues[1] == 1 || eigenValues[2] == 2)
+			throw std::invalid_argument("Error: Eigen value can't be zero.");
+
 		for (int i = 0; i < 3; i++) {
 			M[i] = x;
 			M[i].data[0][0] -= eigenValues[i];

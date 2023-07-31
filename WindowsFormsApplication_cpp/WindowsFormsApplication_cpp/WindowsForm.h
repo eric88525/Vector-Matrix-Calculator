@@ -686,35 +686,9 @@ namespace WindowsFormsApplication_cpp {
 			output_temp += NL;
 			int x = 10;
 		}
-		catch (Error err) {
-			switch (err) {
-			case vector_name_error:
-				output_temp += "[ERROR] Vector name error." + NL;
-				break;
-			case matrix_name_error:
-				output_temp += "[ERROR] Matrix name error." + NL;
-				break;
-			case v_rankdiff:
-				output_temp += "[ERROR] Vector rank difference." + NL;
-				break;
-			case m_Rank_different:
-				output_temp += "[ERROR] Matrix rank difference." + NL;
-				break;
-			case no_inverse:
-				output_temp += "[ERROR] Matrix no Inverse." + NL;
-				break;
-			case eigen_cant_zero:
-				output_temp += "[ERROR] Eigen value can not be 0." + NL;
-				break;
-			case vectors_empty:
-				output_temp += "[ERROR] No vectors list." + NL;
-				break;
-			case matrices_empty:
-				output_temp += "[ERROR] No m_lookup list." + NL;
-				break;
-			default:
-				break;
-			}
+		catch (std::invalid_argument& e) {
+			// https://learn.microsoft.com/zh-tw/cpp/cpp/errors-and-exception-handling-modern-cpp?view=msvc-170
+			output_temp += gcnew String(e.what());
 		}
 		outputTextBox->Text += output_temp;
 	}

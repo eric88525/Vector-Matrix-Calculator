@@ -7,8 +7,6 @@ System::String^ Vector::GetResult()
 	for (unsigned int j = 0; j < data.size(); j++)
 	{
 		System::String^ buff = data[j].ToString();
-
-		//if (buff->Length > 8)buff = buff->Substring(0, 8);
 		outputTemp += buff;
 		if (j != data.size() - 1)
 			outputTemp += ", ";
@@ -22,7 +20,7 @@ const Vector operator+(const Vector& x, const Vector& y) {
 
 	std::vector<double> data;
 	if (x.GetDim() != y.GetDim()) {
-		throw v_rankdiff;
+		throw std::invalid_argument("Error: Vectors must have the same dimensions for the '+' operator.");
 	}
 	else {
 		for (int i = 0; i < x.data.size(); i++) {
@@ -35,7 +33,7 @@ const Vector operator+(const Vector& x, const Vector& y) {
 const Vector operator-(const Vector& x, const Vector& y) {
 	std::vector<double> data;
 	if (x.GetDim() != y.GetDim()) {
-		throw v_rankdiff;
+		throw std::invalid_argument("Error: Vectors must have the same dimensions for the '-' operator.");
 	}
 	else {
 		for (int i = 0; i < x.data.size(); i++) {
@@ -60,7 +58,7 @@ const Vector operator*(const Vector& x, const Vector& y) {
 		}
 	}
 	else if (x.GetDim() != y.GetDim()) {
-		throw v_rankdiff;
+		throw std::invalid_argument("Error: Vectors must have the same dimensions or one of the vectors must be 1D for the '*' operator.");
 	}
 	else {
 		for (int i = 0; i < x.data.size(); i++) {
@@ -73,7 +71,7 @@ const Vector operator*(const Vector& x, const Vector& y) {
 const Vector Dot(const Vector& x, const Vector& y)
 {
 	if (x.GetDim() != y.GetDim())
-		throw v_rankdiff;
+		throw std::invalid_argument("Error: The dot product requires two vectors with the same dimensions.");
 
 	double sum = 0;
 	for (int i = 0; i < x.data.size(); i++) {
@@ -103,13 +101,15 @@ const Vector Normalization(const Vector& x) {
 	return Vector(data);
 }
 
-
 const Vector CrossProduct(const Vector& x, const Vector& y)
 {
-	double i = x.data[1] * y.data[2] - y.data[1] * x.data[2],
-		j = y.data[0] * x.data[2] - x.data[0] * y.data[2],
-		k = x.data[0] * y.data[1] - y.data[0] * x.data[1];
-	std::vector<double>data = { i,j,k };
+	if (x.GetDim() != 3 || y.GetDim() != 3) {
+		throw std::invalid_argument("Error: The cross product requires two 3-dimensional vectors.");
+	}
+	double i = x.data[1] * y.data[2] - y.data[1] * x.data[2];
+	double j = y.data[0] * x.data[2] - x.data[0] * y.data[2];
+	double k = x.data[0] * y.data[1] - y.data[0] * x.data[1];
+	std::vector<double> data = { i, j, k };
 	return Vector(data);
 }
 
@@ -134,7 +134,7 @@ const Vector Area(const Vector& x, const Vector& y)
 {
 	// for eval: https://onlinemschool.com/math/assistance/vector/triangle_area/
 	if (x.GetDim() != y.GetDim())
-		throw v_rankdiff;
+		throw std::invalid_argument("Error: The area calculation requires two vectors with the same dimensions (either 2D or 3D).");
 
 	if (x.GetDim() == 2) {
 		double result = abs(x.data[0] * y.data[1] - x.data[1] * y.data[0]);
@@ -148,18 +148,20 @@ const Vector Area(const Vector& x, const Vector& y)
 		return Vector(result);
 	}
 	else {
-		throw v_rankdiff;
+		throw std::invalid_argument("Error: The area calculation requires two vectors with the same dimensions (either 2D or 3D).");
 	}
-
-
 }
+
 const Vector PN(const Vector& x, const Vector& y)
 {
 	return CrossProduct(x, y);
 }
+
 const bool IsParallel(const Vector& x, const Vector& y)
 {
-	if (x.data.size() != y.data.size())return false;
+	if (x.GetDim() != y.GetDim())
+		return false;
+
 	double rate = -8763.30678;
 	for (int i = 0; i < x.data.size(); i++) {
 		if (!(x.data[i] == 0 || y.data[i] == 0)) {
@@ -171,7 +173,8 @@ const bool IsParallel(const Vector& x, const Vector& y)
 			}
 		}
 	}
-	if (rate != -8763.30678)return true;
+	if (rate != -8763.30678)
+		return true;
 	else return false;
 }
 
@@ -204,7 +207,7 @@ const Vector Angle(const Vector& x, const Vector& y)
 {
 
 	if (x.GetDim() != y.GetDim())
-		throw v_rankdiff;
+		throw std::invalid_argument("Error: The angle calculation requires two vectors with the same dimensions.");
 
 	Vector vec;       // Variable to store the dot product of x and y
 	double result;    // Variable to store the final result in degrees
@@ -228,7 +231,7 @@ const Vector Angle(const Vector& x, const Vector& y)
 const bool IsLI(const Vector& x, const Vector& y)
 {
 	if (x.GetDim() != y.GetDim())
-		throw v_rankdiff;
+		std::invalid_argument("Error: The isli calculation requires two vectors with the same dimensions.");
 	return !IsParallel(x, y);
 }
 
@@ -241,6 +244,5 @@ const std::vector<Vector> Ob(std::vector<Vector>list)
 		}
 		list[i] = Normalization(list[i]);
 	}
-	//va_end(ptr);
 	return list;
 }
