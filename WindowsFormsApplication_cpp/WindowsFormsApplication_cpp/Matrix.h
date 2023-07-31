@@ -21,10 +21,14 @@ public:
 	std::vector<std::vector<double>> data;
 	int row;
 	int col;
-	Matrix();
-	Matrix(std::vector<std::vector<double>> data);
-	Matrix(const Matrix& t);
+public:
+
+	Matrix() {};
+	Matrix(std::vector<std::vector<double>> data) :data(data), row(data.size()), col(data[0].size()) {};
+	Matrix(std::string name, std::vector<std::vector<double>> data) :name(name), data(data), row(data.size()), col(data[0].size()) {};
+	Matrix(const Matrix& t) :row(t.row), col(t.col), data(t.data) {};
 	System::String^ GetResult();
+
 	friend const Matrix operator+(const Matrix& x, const Matrix& y);
 	friend const Matrix operator-(const Matrix& x, const Matrix& y);
 	friend const Matrix operator*(const Matrix& x, const Matrix& y);
