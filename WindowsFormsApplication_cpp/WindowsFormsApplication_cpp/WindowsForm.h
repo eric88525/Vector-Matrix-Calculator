@@ -663,8 +663,7 @@ namespace WindowsFormsApplication_cpp {
 		System::String^ output_temp = "[USER] " + userInput + NL;
 
 		try {
-			auto v_lookup = data_manager->GetVectors();
-			auto m_lookup = data_manager->GetMatrices();
+			
 
 			Calculator calculator(*command_factory);
 
@@ -673,15 +672,44 @@ namespace WindowsFormsApplication_cpp {
 			std::vector<Token> tokens = calculator.Lex(input_str);
 			std::vector<Token> postfix_tokens = calculator.IntoPost(tokens);
 
+			TokenType operation_type = TokenType::kNone;
+
+			for(const auto &token: tokens){
+				if (token.GetType() == TokenType::kVector) {
+					operation_type = TokenType::kVector;
+					break;
+				}
+				else if(token.GetType() == TokenType::kMatrix){
+					operation_type = TokenType::kMatrix;
+					break;
+				}
+			}
+
 			System::String^ operate_result = "";
 			auto result = calculator.calculate<Vector>(postfix_tokens, v_lookup, operate_result);
 
-			int length = operate_result->Length;
-			if (length > 0) {
+			if (operation_type == TokenType::kVector) {
+				auto symbol_table = data_manager->GetVectors();
+				auto result = calculator.calculate<Vector>(postfix_tokens, symbol_table, operate_result);
+				if (operate_result->Length > 0) {
+					output_temp += operate_result;
+				}
+				else {
+					output_temp += result.GetResult();
+				}
+			}
+			else if (operation_type == TokenType::kMatrix) {
+				auto symbol_table = data_manager->GetMatrices();
+				auto result = calculator.calculate<Matrix>(postfix_tokens, symbol_table, operate_result);
+				if (operate_result->Length > 0) {
 				output_temp += operate_result;
 			}
 			else {
 				output_temp += result.GetResult();
+			}
+			}
+			else {
+				throw std::invalid_argument("Calculation type must be Vector or Matrix");
 			}
 			output_temp += NL;
 			int x = 10;
