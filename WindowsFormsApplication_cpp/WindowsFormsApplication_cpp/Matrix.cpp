@@ -131,11 +131,13 @@ const Matrix Solve(const Matrix& x, const Matrix& y)
 	return m;
 }
 
-
+/*
+	For eval: https://www.mathsisfun.com/algebra/matrix-calculator.html
+*/
 const Matrix Determinants(const Matrix &x)
 {
 	int row = 0, col = 0, fixP = 0;
-	Matrix m = m;
+	Matrix m = x;
 	for (int row = 0; row < m.row; row++) {
 		if ((row + fixP) > m.col - 1)
 			break;
