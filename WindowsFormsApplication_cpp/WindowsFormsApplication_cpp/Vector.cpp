@@ -19,6 +19,17 @@ System::String^ Vector::GetResult()
 const Vector operator+(const Vector& x, const Vector& y) {
 
 	std::vector<double> data;
+	if (x.IsConstant()) {
+		for (int i = 0; i < y.data.size(); i++) {
+			data.push_back(y.data[i] + x.data[0]);
+		}
+	}
+	else if (y.IsConstant()) {
+		for (int i = 0; i < x.data.size(); i++) {
+			data.push_back(x.data[i] + y.data[0]);
+		}
+	}
+
 	if (x.GetDim() != y.GetDim()) {
 		throw std::invalid_argument("Error: Vectors must have the same dimensions for the '+' operator.");
 	}
@@ -31,8 +42,19 @@ const Vector operator+(const Vector& x, const Vector& y) {
 }
 
 const Vector operator-(const Vector& x, const Vector& y) {
+
 	std::vector<double> data;
-	if (x.GetDim() != y.GetDim()) {
+	if (x.IsConstant()) {
+		for (int i = 0; i < y.data.size(); i++) {
+			data.push_back(y.data[i] - x.data[0]);
+		}
+	}
+	else if (y.IsConstant()) {
+		for (int i = 0; i < x.data.size(); i++) {
+			data.push_back(x.data[i] - y.data[0]);
+		}
+	}
+	else if (x.GetDim() != y.GetDim()) {
 		throw std::invalid_argument("Error: Vectors must have the same dimensions for the '-' operator.");
 	}
 	else {
@@ -47,12 +69,12 @@ const Vector operator-(const Vector& x, const Vector& y) {
 const Vector operator*(const Vector& x, const Vector& y) {
 
 	std::vector<double> data;
-	if (x.data.size() == 1) {
+	if (x.IsConstant()) {
 		for (int i = 0; i < y.data.size(); i++) {
 			data.push_back(y.data[i] * x.data[0]);
 		}
 	}
-	else if (y.data.size() == 1) {
+	else if (y.IsConstant()) {
 		for (int i = 0; i < x.data.size(); i++) {
 			data.push_back(x.data[i] * y.data[0]);
 		}

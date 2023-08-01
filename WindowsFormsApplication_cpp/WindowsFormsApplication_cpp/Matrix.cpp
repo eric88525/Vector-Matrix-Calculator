@@ -25,8 +25,27 @@ System::String^ Matrix::GetResult()
 
 const Matrix operator+(const Matrix& x, const Matrix& y)
 {
+	if (x.IsConstant() || y.IsConstant()) {
+		Matrix result;
+		double scale = 0;
+		if (x.IsConstant()) {
+			result = y;
+			scale = x.data_[0][0];
+		}
+		else {
+			result = x;
+			scale = y.data_[0][0];
+		}
+		for (int i = 0; i < result.row; ++i) {
+			for (int j = 0; j < result.col; ++j) {
+				result.data_[i][j] += scale;
+			}
+		}
+		return result;
+	}
 	if (x.row != y.row || x.col != y.col)
 		throw std::invalid_argument("Error: Matrices must have the same dimensions for the '+' operator.");
+
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; i++) {
 		for (int j = 0; j < x.col; j++) {
@@ -38,6 +57,27 @@ const Matrix operator+(const Matrix& x, const Matrix& y)
 
 const Matrix operator-(const Matrix& x, const Matrix& y)
 {
+	if (x.IsConstant() || y.IsConstant()) {
+		Matrix result;
+		double scale = 0;
+		if (x.IsConstant()) {
+			result = y;
+			scale = x.data_[0][0];
+		}
+		else {
+			result = x;
+			scale = y.data_[0][0];
+		}
+		for (int i = 0; i < result.row; ++i) {
+			for (int j = 0; j < result.col; ++j) {
+				result.data_[i][j] -= scale;
+			}
+		}
+		return result;
+	}
+	else if (x.row != y.row || x.col != y.col)
+		throw std::invalid_argument("Error: Matrices must have the same dimensions for the '-' operator.");
+
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; i++) {
 		for (int j = 0; j < x.col; j++) {
@@ -49,9 +89,28 @@ const Matrix operator-(const Matrix& x, const Matrix& y)
 
 const Matrix operator*(const Matrix& x, const Matrix& y)
 {
-	if (x.col != y.row) {
+	if (x.IsConstant() || y.IsConstant()) {
+		Matrix result;
+		double scale = 0;
+		if (x.IsConstant()) {
+			result = y;
+			scale = x.data_[0][0];
+		}
+		else {
+			result = x;
+			scale = y.data_[0][0];
+		}
+		for (int i = 0; i < result.row; ++i) {
+			for (int j = 0; j < result.col; ++j) {
+				result.data_[i][j] *= scale;
+			}
+		}
+		return result;
+	}
+	else if (x.col != y.row) {
 		throw std::invalid_argument("Error: Matrix multiplication requires the number of columns in the left matrix to be equal to the number of rows in the right matrix.");
 	}
+
 	std::vector<std::vector<double>> data(x.row);
 	for (int i = 0; i < x.row; ++i) {
 		for (int j = 0; j < y.col; ++j) {
@@ -134,8 +193,11 @@ const Matrix Solve(const Matrix& x, const Matrix& y)
 /*
 	For eval: https://www.mathsisfun.com/algebra/matrix-calculator.html
 */
-const Matrix Determinants(const Matrix &x)
+const Matrix Determinants(const Matrix& x)
 {
+	if (x.row != x.col)
+		throw std::invalid_argument("Error: The input must be a square matrix for determinants.");
+
 	int row = 0, col = 0, fixP = 0;
 	Matrix m = x;
 	for (int row = 0; row < m.row; row++) {
@@ -179,7 +241,7 @@ const Matrix Determinants(const Matrix &x)
 	return det;
 }
 
-const Matrix Inverse(const Matrix &x)
+const Matrix Inverse(const Matrix& x)
 {
 	Matrix copy_x(x);
 	int rL = Rank(copy_x);
@@ -193,7 +255,7 @@ const Matrix Inverse(const Matrix &x)
 		for (int col = 0; col < copy_x.col; col++) {
 			if (row == col)
 				inverse_m.data_[row].push_back(1);
-			else 
+			else
 				inverse_m.data_[row].push_back(0);
 		}
 	}
