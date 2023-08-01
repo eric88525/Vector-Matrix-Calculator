@@ -36,5 +36,5 @@ public:
 
 	void SetName(std::string name) { name = name; }
 	size_t GetDim() const { return data.size(); }
-
+	bool IsConstant() const { return data.size() == 1; };
 };

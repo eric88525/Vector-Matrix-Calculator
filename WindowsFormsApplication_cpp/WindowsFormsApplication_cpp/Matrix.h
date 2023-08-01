@@ -44,5 +44,6 @@ public:
 
 	size_t GetRow() const { return row; };
 	size_t GetCol() const { return col; }
+	bool IsConstant() const { return row == 1 && col == 1; };
 };
 
