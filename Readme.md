@@ -16,7 +16,7 @@ This project is a C++ library that implements data types for vectors and matrice
 #### Data Format
 The input text file can contain two data types: vectors and matrices. Each row in the text file represents a vector or a matrix in the following format:
 
-#### - Vector
+#### Vector
 To represent a vector, use the following format:
 - `{dimension}`: The dimension of the vector (number of elements).
 - `{value1} {value2} ... {valueN}`: The values of the vector's elements.
@@ -28,7 +28,7 @@ $$
 v=\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}
 $$
 
-#### - Matrix
+#### Matrix
 To represent a matrix, use the following format:
 - `{rows}`: The number of rows in the matrix.
 - `{cols}`: The number of columns in the matrix.
