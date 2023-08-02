@@ -33,13 +33,13 @@ public:
 	friend const Matrix operator*(const Matrix& x, const Matrix& y);
 	
 	friend const Matrix MatMul(const Matrix& x, const Matrix& y);
-	friend const int Rank(Matrix x);
+	friend const Matrix Rank(Matrix x);
 	friend const Matrix Transpose(const Matrix& x);
 	friend const Matrix Solve(const Matrix& x, const Matrix& y);
 	friend const Matrix Determinants(const Matrix &x);
 	friend const Matrix Inverse(const Matrix &x);
 	friend const Matrix Adj(const Matrix& x);
-	friend const Matrix Pm(const Matrix& x, double&);
+	friend const Matrix PowerMethod(const Matrix& x, double&);
 	friend const Matrix Eigen(const Matrix& x, std::vector<double>&);
 	friend const Matrix LeastSquare(const Matrix& x, const Matrix& y);
 	friend const std::vector<Matrix> Rref(Matrix x);

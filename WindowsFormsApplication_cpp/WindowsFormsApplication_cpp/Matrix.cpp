@@ -142,15 +142,15 @@ const Matrix MatMul(const Matrix& x, const Matrix& y)
 }
 
 
-const int Rank(Matrix  x)
+const Matrix Rank(Matrix  x)
 {
 	int row = 0, col = 0, fixP = 0;
 	for (int row = 0; row < x.row; row++) {
 		if ((row + fixP) > x.col - 1)
-			return row;
+			return Matrix(row);
 		if (x.data_[row][row + fixP]) {
 			if (row == x.row - 1)
-				return row + 1;
+				return Matrix(row + 1);
 			double temp = x.data_[row][row + fixP];
 			for (auto& piv : x.data_[row]) {
 				piv /= temp;
@@ -353,29 +353,51 @@ const Matrix Adj(const Matrix& x)
 	return Transpose(result);
 }
 
-const Matrix Pm(const Matrix& x, double& returnEv)
-{
-	std::vector<std::vector<double>> data(x.row);
-	for (auto& i : data) {
-		i.push_back(static_cast <double> (rand()) / static_cast <double> (RAND_MAX));
+// Function to calculate the dominant eigenvalue and corresponding eigenvector using the Power Method
+const Matrix PowerMethod(const Matrix& inputMatrix, double& maxEigenValue) {
+	// Vector to store the randomly generated initial vector, used as the starting point for power iteration
+	std::vector<std::vector<double>> initialVector(inputMatrix.row);
+	for (auto& row : initialVector) {
+		row.push_back(static_cast<double>(rand()) / static_cast<double>(RAND_MAX));
 	}
-	Matrix xx(data);
-	double temp = 0, d = 0;
+
+	// Convert the randomly generated initial vector into a Matrix object, representing the current vector during power iteration
+	Matrix currentVector(initialVector);
+
+	double previousEigenValue = 0; // The approximate value of the eigenvalue from the previous iteration
+	double currentEigenValue = 0;  // The approximate value of the eigenvalue from the current iteration
+	int maxIterations = 1000;      // Maximum number of iterations
+	double convergenceThreshold = 1e-8; // Convergence threshold, when the change in the eigenvalue's approximate value is below this threshold, it is considered converged
+
 	do {
-		xx = x * xx;
-		temp = d;
-		d = 0;
-		for (int i = 0; i < xx.row; i++)
+		// Main step of power iteration, multiply the input matrix with the current vector to get a new vector
+		currentVector = MatMul(inputMatrix, currentVector);
+
+		// Store the approximate value of the eigenvalue from the previous iteration for later error comparison
+		previousEigenValue = currentEigenValue;
+
+		currentEigenValue = 0; // Clear the current approximate value of the eigenvalue, ready for re-calculation
+
+		// Find the element with the largest absolute value in the new vector, which serves as the approximate value of the eigenvalue for the current iteration
+		for (int i = 0; i < currentVector.row; i++)
 		{
-			if (fabs(xx.data_[i][0]) > fabs(d))
-				d = xx.data_[i][0];
+			if (fabs(currentVector.data_[i][0]) > fabs(currentEigenValue))
+				currentEigenValue = currentVector.data_[i][0];
 		}
-		for (auto& i : xx.data_) {
-			i[0] /= d;
+
+		// Normalize the new vector to make its elements sum up to 1, for the next iteration
+		for (auto& row : currentVector.data_) {
+			row[0] /= currentEigenValue;
 		}
-	} while (fabs(d - temp) > misRange);
-	returnEv = d;
-	return xx;
+
+		maxIterations--; // Reduce the number of iterations left
+	} while (fabs(currentEigenValue - previousEigenValue) > convergenceThreshold && maxIterations > 0);
+
+	// Store the approximate value of the maximum eigenvalue in maxEigenValue
+	maxEigenValue = currentEigenValue;
+
+	// Return the final approximate value of the eigenvector
+	return currentVector;
 }
 
 const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
