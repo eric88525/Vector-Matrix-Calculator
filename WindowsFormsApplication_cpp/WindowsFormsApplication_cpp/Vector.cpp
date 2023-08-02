@@ -28,9 +28,7 @@ const Vector operator+(const Vector& x, const Vector& y) {
 		for (int i = 0; i < x.data.size(); i++) {
 			data.push_back(x.data[i] + y.data[0]);
 		}
-	}
-
-	if (x.GetDim() != y.GetDim()) {
+	}else if (x.GetDim() != y.GetDim()) {
 		throw std::invalid_argument("Error: Vectors must have the same dimensions for the '+' operator.");
 	}
 	else {
