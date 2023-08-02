@@ -189,11 +189,11 @@ Matrix AdjCommand::operate(std::vector<Matrix>& operands)
 	return Adj(operands[0]);
 }
 
-System::String^ PmCommand::ToString(std::vector<Matrix>& operands)
+System::String^ PowerMethodCommand::ToString(std::vector<Matrix>& operands)
 {
 	double db = 0;
-	Matrix result = Pm(operands[0], db);
-	return "v = " + NL + result.GetResult() + NL + "d = " + NL + db;
+	Matrix result = PowerMethod(operands[0], db);
+	return "Eigenvector = " + NL + result.GetResult() + NL + "Eigenvalue = " + NL + db;
 }
 
 System::String^ RrefCommand::ToString(std::vector<Matrix>& operands)

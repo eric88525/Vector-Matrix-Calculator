@@ -192,9 +192,9 @@ public:
 	Matrix operate(std::vector<Matrix>& operands) override;
 };
 
-class PmCommand : public ICommand {
+class PowerMethodCommand : public ICommand {
 public:
-	PmCommand() :ICommand(1, ReturnType::String) {}
+	PowerMethodCommand() :ICommand(1, ReturnType::String) {}
 	System::String^ ToString(std::vector<Matrix>& operands) override;
 };
 
