@@ -158,8 +158,8 @@ public:
 
 class RankCommand : public ICommand {
 public:
-	RankCommand(): ICommand(1, ReturnType::String){}
-	System::String^ ToString(std::vector<Matrix>& operands) override;
+	RankCommand() : ICommand(1, ReturnType::Operand) {}
+	Matrix operate(std::vector<Matrix>& operands) override;
 };
 
 class TransposeCommand : public ICommand {

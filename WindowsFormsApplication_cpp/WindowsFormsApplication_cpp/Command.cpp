@@ -159,9 +159,9 @@ System::String^ EigenCommand::ToString(std::vector<Matrix>& operands)
 	return output_temp;
 }
 
-System::String^ RankCommand::ToString(std::vector<Matrix>& operands)
+Matrix RankCommand::operate(std::vector<Matrix>& operands)
 {
-	return "" + Rank(operands[0]);
+	return Rank(operands[0]);
 }
 
 Matrix TransposeCommand::operate(std::vector<Matrix>& operands)
