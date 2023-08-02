@@ -26,7 +26,7 @@ std::vector<Token> Calculator::IntoPost(std::vector<Token> tokens)
 	std::vector<Token> postfix;  // The resulting postfix expression.
 
 	// Iterate through each character in the input string.
-	for (const auto&  token : tokens) {
+	for (const auto& token : tokens) {
 
 		switch (token.GetType())
 		{
@@ -36,7 +36,7 @@ std::vector<Token> Calculator::IntoPost(std::vector<Token> tokens)
 			}
 			else if (token == ")") {
 				// Pop operators from the stack and append them to the postfix expression until '(' is encountered.
-				while (!token_stack.empty() && token_stack.top() != "(" ) {
+				while (!token_stack.empty() && token_stack.top() != "(") {
 					postfix.push_back(token_stack.top());
 					token_stack.pop();
 				}
@@ -116,12 +116,12 @@ std::vector<Token> Calculator::Lex(std::string expression)
 TokenType Calculator::GetTokenType(std::string operand)
 {
 	TokenType t_type;
-	if (operand[0] == 'v')
+	if (IsCommand(operand))
+		t_type = TokenType::kCommand;
+	else if (operand[0] == 'v')
 		t_type = TokenType::kVector;
 	else if (operand[0] == 'm')
 		t_type = TokenType::kMatrix;
-	else if (IsCommand(operand))
-		t_type = TokenType::kCommand;
 	else
 		t_type = TokenType::kOperand;
 
