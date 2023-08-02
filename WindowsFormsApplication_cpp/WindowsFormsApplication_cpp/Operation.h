@@ -96,6 +96,10 @@ T Calculator::calculate(std::vector<Token> post_tokens, const std::unordered_map
 		else if (t_type == TokenType::kCommand)
 		{
 			auto cmd = command_factory_.CreateCommand(token.value_);
+
+			if (cmd == nullptr)
+				throw std::invalid_argument("Error: Invalid command " + token.value_);
+
 			std::vector<T> operands;
 			for (int i = 0; i < cmd->operand_count_; i++) {
 				operands.insert(operands.begin(), op_stk.top());
@@ -112,13 +116,16 @@ T Calculator::calculate(std::vector<Token> post_tokens, const std::unordered_map
 		else if (t_type == TokenType::kVector || t_type == TokenType::kMatrix) {
 			op_stk.push(symbol_table.at(token.value_));
 		}
+		else {
+			throw std::invalid_argument("Error: Invalid token " + token.value_);
+		}
 	}
 
 	if (op_stk.size() == 1) {
 		return op_stk.top();
 	}
 	else {
-		throw std::invalid_argument("Error: Input error.");
+		throw std::invalid_argument("Error: Input format error.");
 	}
 }
 
