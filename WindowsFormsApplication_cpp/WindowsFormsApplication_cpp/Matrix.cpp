@@ -185,7 +185,7 @@ const Matrix Rank(Matrix  x)
 			}
 		}
 	}
-	return -1;
+	return Matrix(- 1);
 }
 
 const Matrix Transpose(const Matrix& x)
@@ -202,7 +202,7 @@ const Matrix Transpose(const Matrix& x)
 const Matrix Solve(const Matrix& x, const Matrix& y)
 {
 	Matrix m;
-	m = Inverse(x) * y;
+	m = MatMul(Inverse(x), y);
 	return m;
 }
 
@@ -260,7 +260,7 @@ const Matrix Determinants(const Matrix& x)
 const Matrix Inverse(const Matrix& x)
 {
 	Matrix copy_x(x);
-	int rL = Rank(copy_x);
+	int rL = Rank(copy_x).data_[0][0];
 
 	if (rL != copy_x.row || copy_x.row != copy_x.col) {
 		throw std::invalid_argument("Error: Inverse matrix not exist.");
@@ -508,8 +508,8 @@ const Matrix Eigen(const Matrix& x, std::vector<double>& eigenValues)
 
 const Matrix LeastSquare(const Matrix& x, const Matrix& y)
 {
-	Matrix a = Transpose(x) * x;
-	Matrix b = Transpose(x) * y;
+	Matrix a = MatMul(Transpose(x), x);
+	Matrix b = MatMul(Transpose(x), y);
 	return Solve(a, b);
 }
 
