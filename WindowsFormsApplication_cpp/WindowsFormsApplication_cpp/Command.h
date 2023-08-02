@@ -146,7 +146,7 @@ public:
 #pragma region MatrixCommands
 class EigenCommand :public ICommand {
 public:
-	EigenCommand():ICommand(1, ReturnType::String) {}
+	EigenCommand() :ICommand(1, ReturnType::String) {}
 	System::String^ ToString(std::vector<Matrix>& operands) override;
 };
 
@@ -164,7 +164,7 @@ public:
 
 class TransposeCommand : public ICommand {
 public:
-	TransposeCommand():ICommand(1, ReturnType::Operand) {}
+	TransposeCommand() :ICommand(1, ReturnType::Operand) {}
 	Matrix operate(std::vector<Matrix>& operands) override;
 };
 
@@ -176,7 +176,7 @@ public:
 
 class DeterminantsCommand : public ICommand {
 public:
-	DeterminantsCommand():ICommand(1, ReturnType::Operand) {}
+	DeterminantsCommand() :ICommand(1, ReturnType::Operand) {}
 	Matrix operate(std::vector<Matrix>& operands) override;
 };
 
