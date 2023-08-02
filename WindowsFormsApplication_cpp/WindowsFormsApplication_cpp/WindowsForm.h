@@ -53,7 +53,7 @@ namespace WindowsFormsApplication_cpp {
 			command_factory->RegisterCommand("isli", std::make_shared<IsLICommand>());
 			command_factory->RegisterCommand("ob", std::make_shared<ObCommand>());
 			// matrix
-		/*	command_factory->RegisterCommand("printm", std::make_shared<PrintmCommand>());
+			command_factory->RegisterCommand("matmul", std::make_shared<MatMulCommand>());
 			command_factory->RegisterCommand("rank", std::make_shared<RankCommand>());
 			command_factory->RegisterCommand("trans", std::make_shared<TransposeCommand>());
 			command_factory->RegisterCommand("solve", std::make_shared<SolveMCommand>());
@@ -63,7 +63,7 @@ namespace WindowsFormsApplication_cpp {
 			command_factory->RegisterCommand("pm", std::make_shared<PmCommand>());
 			command_factory->RegisterCommand("eigen", std::make_shared<EigenCommand>());
 			command_factory->RegisterCommand("rref", std::make_shared<RrefCommand>());
-			command_factory->RegisterCommand("leastsquare", std::make_shared<LeastSquareCommand>());*/
+			command_factory->RegisterCommand("leastsquare", std::make_shared<LeastSquareCommand>());
 		}
 
 	protected:

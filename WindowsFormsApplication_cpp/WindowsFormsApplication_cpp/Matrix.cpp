@@ -107,21 +107,37 @@ const Matrix operator*(const Matrix& x, const Matrix& y)
 		}
 		return result;
 	}
-	else if (x.col != y.row) {
-		throw std::invalid_argument("Error: Matrix multiplication requires the number of columns in the left matrix to be equal to the number of rows in the right matrix.");
+	else if (x.row != y.row || x.col != y.col) {
+		throw std::invalid_argument("Error: Matrix element-wise product requires two matrices of the same size. The matrices provided have different dimensions: Matrix x(" + std::to_string(x.row) + "x" + std::to_string(x.col) + ") and Matrix y(" + std::to_string(y.row) + "x" + std::to_string(y.col) + ").");
 	}
 
-	std::vector<std::vector<double>> data(x.row);
+	std::vector<std::vector<double>> data(x.row, std::vector<double>(x.col, 0));
+	for (int i = 0; i < x.row; ++i) {
+		for (int j = 0; j < x.col; ++j) {
+			data[i][j] = x.data_[i][j] * y.data_[i][j];
+		}
+	}
+	return Matrix(data);
+}
+
+const Matrix MatMul(const Matrix& x, const Matrix& y)
+{
+	if (x.col != y.row) {
+		throw std::invalid_argument("Error: Matrix multiplication requires the number of columns in the left matrix (x) to be equal to the number of rows in the right matrix (y). The dimensions are: Matrix x(" + std::to_string(x.row) + "x" + std::to_string(x.col) + ") and Matrix y(" + std::to_string(y.row) + "x" + std::to_string(y.col) + ").");
+	}
+
+	std::vector<std::vector<double>> data(x.row, std::vector<double>(y.col, 0));
+
 	for (int i = 0; i < x.row; ++i) {
 		for (int j = 0; j < y.col; ++j) {
 			double sum = 0;
-			for (int k = 0; k < x.col; ++k)
-			{
+			for (int k = 0; k < x.col; ++k) {
 				sum += x.data_[i][k] * y.data_[k][j];
 			}
-			data[i].push_back(sum);
+			data[i][j] = sum;
 		}
 	}
+
 	return Matrix(data);
 }
 

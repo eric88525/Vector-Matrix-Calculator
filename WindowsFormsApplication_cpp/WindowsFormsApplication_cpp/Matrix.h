@@ -31,6 +31,8 @@ public:
 	friend const Matrix operator+(const Matrix& x, const Matrix& y);
 	friend const Matrix operator-(const Matrix& x, const Matrix& y);
 	friend const Matrix operator*(const Matrix& x, const Matrix& y);
+	
+	friend const Matrix MatMul(const Matrix& x, const Matrix& y);
 	friend const int Rank(Matrix x);
 	friend const Matrix Transpose(const Matrix& x);
 	friend const Matrix Solve(const Matrix& x, const Matrix& y);
