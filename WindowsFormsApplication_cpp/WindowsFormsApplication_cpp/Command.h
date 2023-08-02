@@ -59,6 +59,7 @@ public:
 
 
 #pragma region VectorCommands
+
 class DotCommand : public ICommand {
 public:
 	DotCommand() {
@@ -147,6 +148,12 @@ class EigenCommand :public ICommand {
 public:
 	EigenCommand():ICommand(1, ReturnType::String) {}
 	System::String^ ToString(std::vector<Matrix>& operands) override;
+};
+
+class MatMulCommand : public ICommand {
+public:
+	MatMulCommand() : ICommand(2, ReturnType::Operand) {}
+	Matrix operate(std::vector<Matrix>& operands) override;
 };
 
 class RankCommand : public ICommand {

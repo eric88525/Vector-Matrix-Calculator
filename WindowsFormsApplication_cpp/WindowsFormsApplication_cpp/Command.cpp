@@ -142,41 +142,6 @@ System::String^ IsLICommand::ToString(std::vector<Vector>& operands)
 	return IsLI(operands[0], operands[1]) ? "Yes" : "No";
 }
 
-
-//System::String^ EigenCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	std::vector<double> eigenValues;
-//	Matrix result = cal<Matrix>(operands[0], m_lookup);
-//	result = Eigen(result, eigenValues);
-//	System::String^ output_temp = "";
-//	output_temp += "v =" + NL + result.GetResult() + NL + "d =" + NL;
-//
-//	for (int i = 0; i < eigenValues.size(); i++) {
-//		for (int j = 0; j < eigenValues.size(); j++) {
-//			output_temp += (i == j ? eigenValues[i] : 0);
-//			output_temp += "\t";
-//		}
-//		output_temp += NL;
-//	}
-//	return output_temp;
-//}
-
-//System::String^ RrefCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = cal<Matrix>(operands[0], m_lookup);
-//	std::vector<Matrix> rref = Rref(result);
-//	System::String^ output_temp = "";
-//	output_temp += rref[1].GetResult() + NL;
-//	output_temp += rref[0].GetResult() + NL;
-//	return output_temp;
-//}
-//
-//System::String^ LeastSquareCommand::ToString(std::vector<std::string>& operands, const std::unordered_map<std::string, Vector>& v_lookup, const std::unordered_map<std::string, Matrix>& m_lookup)
-//{
-//	Matrix result = LeastSquare(cal<Matrix>(operands[0], m_lookup), cal<Matrix>(operands[1], m_lookup));
-//	return result.GetResult();
-//}
-
 System::String^ EigenCommand::ToString(std::vector<Matrix>& operands)
 {
 	std::vector<double> eigenValues;
@@ -245,4 +210,9 @@ System::String^ LeastSquareCommand::ToString(std::vector<Matrix>& operands)
 {
 	Matrix result = LeastSquare(operands[0], operands[1]);
 	return result.GetResult();
+}
+
+Matrix MatMulCommand::operate(std::vector<Matrix>& operands)
+{
+	return MatMul(operands[0], operands[1]);
 }
