@@ -63,7 +63,7 @@ The following functionalities have been implemented in the vector functions:
 
 |Function|Description|Input|Output|
 |-|-|-|-|
-|`dot(a, b)`|[Compute the dot product of two vectors.](https://en.wikipedia.org/wiki/Dot_product)|$\vec{a}, \vec{b} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^n$|
+|`dot(a, b)`|[Compute the dot product of two vectors.](https://en.wikipedia.org/wiki/Dot_product)|$\vec{a}, \vec{b} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^1$|
 |`norm(a)`|Calculate the norm (magnitude) of a vector.|$\vec{a} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^1$|
 |`normal(a)`|Normalize a vector to a unit vector.|$\vec{a} \in \mathbb{R}^n$| $\vec{v} \in \mathbb{R}^n$|
 |`cross(a, b)`|Compute the cross product of two 3D vectors.|$\vec{a}, \vec{b} \in \mathbb{R}^3$| $\vec{v} \in \mathbb{R}^3$|
