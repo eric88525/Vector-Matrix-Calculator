@@ -90,9 +90,9 @@ If one of the matrices has a size of 1x1, the library will perform a **scalar pr
 
 | Operator | Description | Input | Output |
 |---|---|---|---|
-| `+` | Element-wise addition. | $\mathbf{A} \in \mathbb{R}^{n \times m}$, $\mathbf{B} \in \mathbb{R}^{n \times m}$ | $\mathbf{C} \in \mathbb{R}^{n \times m}$ |
-| `-` | Element-wise subtraction. | $\mathbf{A} \in \mathbb{R}^{n \times m}$, $\mathbf{B} \in \mathbb{R}^{n \times m}$ | $\mathbf{C} \in \mathbb{R}^{n \times m}$ |
-| `*` | [Element-wise product.](https://en.wikipedia.org/wiki/Hadamard_product_(matrices)) | $\mathbf{A} \in \mathbb{R}^{n \times m}$, $\mathbf{B} \in \mathbb{R}^{n \times m}$ | $\mathbf{C} \in \mathbb{R}^{n \times m}$ |
+| `+` | Element-wise addition. | $\mathbf{A} \in \mathbb{R}^{m \times n}$, $\mathbf{B} \in \mathbb{R}^{m \times n}$ | $\mathbf{C} \in \mathbb{R}^{m \times n}$ |
+| `-` | Element-wise subtraction. | $\mathbf{A} \in \mathbb{R}^{m \times n}$, $\mathbf{B} \in \mathbb{R}^{m \times n}$ | $\mathbf{C} \in \mathbb{R}^{m \times n}$ |
+| `*` | [Element-wise product.](https://en.wikipedia.org/wiki/Hadamard_product_(matrices)) | $\mathbf{A} \in \mathbb{R}^{m \times n}$, $\mathbf{B} \in \mathbb{R}^{m \times n}$ | $\mathbf{C} \in \mathbb{R}^{m \times n}$ |
 
 #### 🔧 Functions 
 |Function|Description|Input|Output|
@@ -105,7 +105,8 @@ If one of the matrices has a size of 1x1, the library will perform a **scalar pr
 |`inverse(A)`|Finds the [inverse matrix](https://www.mathsisfun.com/algebra/matrix-inverse.html) of a square matrix A.|$A \in \mathbb{R}^{n \times n}$|$C \in \mathbb{R}^{n \times n}$ |
 |`adj(A)`|Computes the [adjoint of a matrix](https://en.wikipedia.org/wiki/Adjugate_matrix)|$A \in \mathbb{R}^{n \times n}$| $C \in \mathbb{R}^{n \times n}$|
 |`pm(A)`|Finds Largest Eigenvalue and Eigenvector by using the [power method](https://youtu.be/EGNuu2LFeeM)|$A \in \mathbb{R}^{n \times n}$| String: `Eigenvalue` and `Eigenvector`|
-|`leastq`|Applies [The Method of Least Squares](https://math.libretexts.org/Bookshelves/Linear_Algebra/Interactive_Linear_Algebra_(Margalit_and_Rabinoff)/06%3A_Orthogonality/6.5%3A_The_Method_of_Least_Squares)|$A \in \mathbb{R}^{n \times n}$, $B \in \mathbb{R}^{n \times 1}$   |  $x \in \mathbb{R}^{n \times 1}$  |
+|`eigen(A)`|Find Eigenvalue and Eigenvector of matrix A.|$A \in \mathbb{R}^{n \times n}, n \in \{1, 2, 3\}$| String: `Eigenvalue` and `Eigenvector`|
+|`leastq`|Applies [The Method of Least Squares.](https://math.libretexts.org/Bookshelves/Linear_Algebra/Interactive_Linear_Algebra_(Margalit_and_Rabinoff)/06%3A_Orthogonality/6.5%3A_The_Method_of_Least_Squares)|$A \in \mathbb{R}^{n \times n}$, $B \in \mathbb{R}^{n \times 1}$   |  $x \in \mathbb{R}^{n \times 1}$  |
 |`rref(A)`|Converts matrix A to its [reduced row echelon form.](https://www.statlect.com/matrix-algebra/reduced-row-echelon-form)|$A \in \mathbb{R}^{m \times n}$| $C \in \mathbb{R}^{m \times n}$|
 
 
